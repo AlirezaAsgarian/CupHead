@@ -20,7 +20,7 @@ public class HouseBossBird extends BossBird {
         if (bossBirdState == BossBirdStates.Death) {
             BossBird.setInstance(null);
             this.getBossBirdTransitions().stop();
-            GameSceneView.anchorPane.getChildren().remove(this);
+              GameSceneView.anchorPane.getChildren().remove(this);
             BossBird.getInstance().initializeNewBossBird();
             return;
         }
