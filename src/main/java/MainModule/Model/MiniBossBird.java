@@ -1,6 +1,7 @@
 package MainModule.Model;
 
 import MainModule.Enums.Bullets;
+import MainModule.Util.BossBirdStack;
 import MainModule.Util.Constants;
 import MainModule.Util.SetConstants;
 import MainModule.View.BossBirdTransitions.BulletTransition;
@@ -37,16 +38,25 @@ public class MiniBossBird extends BossBird {
         return miniBossBirdBullets;
     }
 
+    /***
+     * @inheritDoc <p>this function first detects if avatar is right side of the boss or the left, if side of avatar matches the state it would be
+     *               change from flying to shooting and conversely, else it would turn to the correct side, if boss bird hasn't enough health its state would change to death and explodes the eggs of it
+     *                and in death state first we set the instance of boss bird null then we pop the above element of boss bird stack and then
+     *                remove boss bird from anchor pane and then we initialize new boss bird</p>
+     */
     @Override
     public void changeState() {
+        System.out.println(health);
         if (bossBirdState == BossBirdStates.Death) {
             BossBird.setInstance(null);
+            BossBirdStack.bossBirdStack.pop();
             this.getBossBirdTransitions().stop();
             GameSceneView.anchorPane.getChildren().remove(this);
             BossBird.getInstance().initializeNewBossBird();
             return;
         }
         if (hasHealth()) {
+            this.bossBirdState = BossBirdStates.Death;
             SetConstants.setMiniBossDeathSpeed((int) Math.ceil((this.getX() + this.getWidth()) / 85.0));
             for (MiniBossBirdBullet miniBossBirdBullet :
                     this.getMiniBossBirdBullet()) {
@@ -118,12 +128,13 @@ public class MiniBossBird extends BossBird {
 
     @Override
     public void initializeNewBossBird() {
+        System.out.println(this.bossBirdState);
         this.getBossBirdTransitions().play();
         GameSceneView.anchorPane.getChildren().add(this);
         for (MiniBossBirdBullet miniBossBirdBullet :
                 this.getMiniBossBirdBullet()) {
             miniBossBirdBullet.getMiniBulletTransition().play();
-            new BulletTransition(miniBossBirdBullet,true).play();
+            new BulletTransition(miniBossBirdBullet, true).play();
         }
     }
 
@@ -138,6 +149,8 @@ public class MiniBossBird extends BossBird {
 
     @Override
     protected boolean hasHealth() {
+        System.out.println("Constants.BOSS_BIRD3_HEALTH = " + Constants.BOSS_BIRD3_HEALTH);
+        ;
         return health < Constants.BOSS_BIRD3_HEALTH;
     }
 

@@ -1,6 +1,7 @@
 package MainModule.Model;
 
 import MainModule.Enums.Bullets;
+import MainModule.Util.BossBirdStack;
 import MainModule.Util.Constants;
 import MainModule.View.GameSceneView;
 import javafx.scene.paint.ImagePattern;
@@ -15,13 +16,22 @@ public class HouseBossBird extends BossBird {
         this.bossBirdState = BossBirdStates.FLYING;
     }
 
+    /***
+     * @inheritDoc <p>this function changes shooting to flying and conversely, if boss bird hasn't enough health its state would change to death
+     *                and in death state first we set the instance of boss bird null then we pop the above element of boss bird stack and then
+     *                remove boss bird from anchor pane and then we initialize new boss bird</p>
+     */
     @Override
     public void changeState() {
         if (bossBirdState == BossBirdStates.Death) {
+            System.out.println("hello2");
             BossBird.setInstance(null);
+            BossBirdStack.bossBirdStack.pop();
             this.getBossBirdTransitions().stop();
-              GameSceneView.anchorPane.getChildren().remove(this);
+            System.out.println("hello3");
+            GameSceneView.anchorPane.getChildren().remove(this);
             BossBird.getInstance().initializeNewBossBird();
+            System.out.println("hello4");
             return;
         }
         if (hasHealth()) {

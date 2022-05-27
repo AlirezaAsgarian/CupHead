@@ -25,7 +25,11 @@ public class BedBossBird extends BossBird {
         doctorBossBirds = new ArrayList<>(List.of((DoctorBossBird) BossBirdEnums.DOCTOR_BOSS_BIRD_LEFT.getBossBird(), (DoctorBossBird) BossBirdEnums.DOCTOR_BOSS_BIRD_RIGHT.getBossBird()));
         this.setFill(this.getBossBirdAnimations().get(this.bossBirdState).get(0));
     }
-
+     /***
+     * @inheritDoc <p>this function changes shooting to flying and conversely, if boss bird hasn't enough health its state would change to death
+     *                and in death state first we set the instance of boss bird null then we pop the above element of boss bird stack and then
+     *                remove boss bird from anchor pane and then ends to the game</p>
+     */
     @Override
     public void changeState() {
          if (bossBirdState == BossBirdStates.Death) {
@@ -34,6 +38,7 @@ public class BedBossBird extends BossBird {
             return;
         }
         if (hasHealth()) {
+            this.bossBirdState = BossBirdStates.Death;
             this.doctorBossBirds.forEach(doctorBossBird -> {
                 GameSceneView.anchorPane.getChildren().remove(doctorBossBird);
                 doctorBossBird.getBossBirdTransitions().stop();
@@ -87,4 +92,3 @@ public class BedBossBird extends BossBird {
         return health < 0;
     }
 }
-//683 102
