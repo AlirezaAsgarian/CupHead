@@ -24,7 +24,10 @@ public class HouseBossBird extends BossBird {
             BossBird.getInstance().initializeNewBossBird();
             return;
         }
-        if (hasHealth()) return;
+        if (hasHealth()) {
+            this.bossBirdState = BossBirdStates.Death;
+            return;
+        }
         if (bossBirdState == BossBirdStates.FLYING) {
             bossBirdState = BossBirdStates.SHOOTING;
         } else if (bossBirdState == BossBirdStates.SHOOTING) {
