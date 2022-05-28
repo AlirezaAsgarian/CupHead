@@ -7,7 +7,8 @@ public class SetConstants {
     public static int AVATAR_BOMB_DAMAGE_RATIO = 5;
     public static int MINI_BOSS_DEATH_SPEED = 0;
     public static int AVATAR_TIR_HAVAII_DAMAGE_RATIO = 5;
-    public static int MINI_BOSS_BULLET_DAMAGE_RATIO = 5;
+    public static int AVATAR_MISSLE_DAMAGE_RATIO = 5;
+    public static int MINI_BOSS_BULLET_DAMAGE_RATIO = 10;
     public static int MINI_BOSS_EGG_DAMAGE_RATIO = 5;
     public static int POULTRY_BOSS_BIRD_SPEED = 5;
     public static int BOSS_BIRD_POULTRY_Y = 5;

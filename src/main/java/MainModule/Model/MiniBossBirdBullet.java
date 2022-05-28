@@ -18,12 +18,6 @@ public class MiniBossBirdBullet extends Bullet {
         this.getTransforms().add(bulletRotate);
         this.health = Constants.MINI_BOSS_EGG_HEALTH;
     }
-    public void decreaseHealth(int value){
-        this.health -= value;
-    }
-    public boolean hasHealth(){
-        return this.health >= 0;
-    }
 
     Transition miniBulletTransition;
 

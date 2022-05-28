@@ -60,7 +60,7 @@ public class MiniBossBird extends BossBird {
             SetConstants.setMiniBossDeathSpeed((int) Math.ceil((this.getX() + this.getWidth()) / 85.0));
             for (MiniBossBirdBullet miniBossBirdBullet :
                     this.getMiniBossBirdBullet()) {
-                miniBossBirdBullet.setCollision(true);
+                miniBossBirdBullet.getShoot().stop();
                 miniBossBirdBullet.getExplosion(event -> GameSceneView.anchorPane.getChildren().remove(miniBossBirdBullet)).play();
             }
             return;
@@ -134,7 +134,8 @@ public class MiniBossBird extends BossBird {
         for (MiniBossBirdBullet miniBossBirdBullet :
                 this.getMiniBossBirdBullet()) {
             miniBossBirdBullet.getMiniBulletTransition().play();
-            new BulletTransition(miniBossBirdBullet, true).play();
+            miniBossBirdBullet.setShoot(new BulletTransition(miniBossBirdBullet, true));
+            miniBossBirdBullet.getShoot().play();
         }
     }
 
@@ -150,7 +151,6 @@ public class MiniBossBird extends BossBird {
     @Override
     protected boolean hasHealth() {
         System.out.println("Constants.BOSS_BIRD3_HEALTH = " + Constants.BOSS_BIRD3_HEALTH);
-        ;
         return health < Constants.BOSS_BIRD3_HEALTH;
     }
 
