@@ -1,7 +1,9 @@
 package MainModule.Model;
 
+import MainModule.Enums.AvatarStates;
 import MainModule.Enums.Bullets;
 import MainModule.Enums.MoveFuncs;
+import MainModule.View.AvatarTransitions.MoveTheAvatar;
 import MainModule.View.GameSceneView;
 import javafx.animation.Transition;
 import javafx.event.EventHandler;
@@ -52,22 +54,8 @@ public class Bullet extends Rectangle {
      * if this bullet has collision with its enemy or enemy bullet set isCollision of bullet true
      */
     public void checkForCollision() {
-        if (isCollisionWithEnemy()) {
-            EventHandler eventHandler = event -> {
-                if (enemies.get(0) instanceof Avatar avatar) {
-                    avatar.getHittTheBullet().play();
-                    avatar.decreaseHealth(damageRatio);
-                } else if (enemies.get(0) instanceof BossBird bossBird) {
-                    bossBird.decreaseHealth(damageRatio);
-                }
-                GameSceneView.anchorPane.getChildren().remove(Bullet.this);
-            };
-            this.getShoot().stop();
-            this.getExplosion(eventHandler).play();
-            return;
-        } else {
-            checkForCollisionWithBullets();
-        }
+        checkForCollisionWithEnemy();
+        checkForCollisionWithBullets();
     }
 
     public void decreaseHealth(int value) {
@@ -81,13 +69,26 @@ public class Bullet extends Rectangle {
     /***
      * if this bullet has collision with its enemy
      */
-    public Boolean isCollisionWithEnemy() {
+    public void checkForCollisionWithEnemy() {
         for (Rectangle enemy : enemies) {
             if (this.getBoundsInParent().intersects(enemy.getBoundsInParent())) {
-                return true;
+                EventHandler eventHandler = event -> {
+                    if (enemies.get(0) instanceof Avatar avatar) {
+
+                        avatar.setAvatarStates(AvatarStates.BLINK);
+                        avatar.decreaseHealth(damageRatio);
+                    } else if (enemies.get(0) instanceof BossBird bossBird) {
+                        bossBird.decreaseHealth(damageRatio);
+                    }
+                    GameSceneView.anchorPane.getChildren().remove(Bullet.this);
+                };
+                if(enemy instanceof Avatar avatar && !avatar.canGetDamage()) return;
+                this.getShoot().stop();
+                this.getExplosion(eventHandler).play();
+                return;
             }
         }
-        return false;
+        return;
     }
 
     /***

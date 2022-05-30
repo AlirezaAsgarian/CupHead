@@ -1,13 +1,45 @@
 package MainModule.Enums;
 
+import MainModule.Model.Avatar;
+import MainModule.Model.BossBird;
 import MainModule.Util.Constants;
 
 public enum AvatarStates {
-//    BLIND,
-    NORMAL(true, AvatarShootingKeySettings.NORMAL_BULLETS,true,AvatarMoveKeySettings.NORMAL, Constants.AVATAR_NORMAL_STATE_DURATION),
-    NORMAL_BOMBING(true,AvatarShootingKeySettings.AVATAR_BOMB,true,AvatarMoveKeySettings.NORMAL, Constants.AVATAR_NORMAL_BOMBING_STATE_DURATION);
-//    LITTLE,
-//    MISSLE;
+    BLINK(false, AvatarShootingKeySettings.NORMAL_BULLETS, true, AvatarMoveKeySettings.NORMAL, Constants.AVATAR_BLINK_STATE_DURATION, 5, v -> {
+        if (v > 0.5) {
+            Avatar.getInstance().setOpacity(1.0);
+        } else {
+            Avatar.getInstance().setOpacity(0.3);
+        }
+    }),
+    NORMAL(true, AvatarShootingKeySettings.NORMAL_BULLETS, true, AvatarMoveKeySettings.NORMAL, Constants.AVATAR_NORMAL_STATE_DURATION, 1, v -> {
+    }),
+    NORMAL_BOMBING(true, AvatarShootingKeySettings.AVATAR_BOMB, true, AvatarMoveKeySettings.NORMAL, Constants.AVATAR_NORMAL_BOMBING_STATE_DURATION, 1, v -> {
+    }),
+    //    LITTLE,
+    MISSLE(false, AvatarShootingKeySettings.MISSLE, true, AvatarMoveKeySettings.MISSLE, Constants.AVATAR_MISSLE_STATE_DURATION, 1, v -> {
+        if (v * 26 > 8 && !Avatar.getInstance().getCurrentTransition().isUniqueActionExecuteOnce()) {
+            Thread thread = Thread.currentThread();
+            synchronized (thread) {
+                try {
+                    Avatar.getInstance().getCurrentTransition().setUniqueActionExecuteOnce(true);
+                    Avatar.getInstance().getCurrentTransition().pause();
+                    thread.wait(2000);
+                    Avatar.getInstance().getCurrentTransition().play();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }else if(v * 26 > 8){
+            Avatar.getInstance().moveRight(Constants.AVATAR_MISLLE_SPEED);
+            if(Avatar.getInstance().getBoundsInParent().intersects(BossBird.getInstance().getBoundsInParent())){
+                Avatar.getInstance().getCurrentTransition().stop();
+                BossBird.getInstance().decreaseHealth(Constants.AVATAR_MISSLE_DAMAGE_RATIO);
+                AvatarShootingKeySettings.boom().play();
+            }
+        }
+        return;
+    });
 
 
     final boolean isShoot;
@@ -15,12 +47,17 @@ public enum AvatarStates {
     final AvatarShootingKeySettings shootingKeySettings;
     final AvatarMoveKeySettings moveKeySettings;
     final int duration;
-    AvatarStates(boolean isShoot, AvatarShootingKeySettings shootingKeySettings, boolean isMove, AvatarMoveKeySettings moveKeySettings, int duration) {
+    final int cycleCount;
+    final UniqueActions uniqueActions;
+
+    AvatarStates(boolean isShoot, AvatarShootingKeySettings shootingKeySettings, boolean isMove, AvatarMoveKeySettings moveKeySettings, int duration, int count, UniqueActions uniqueActions) {
         this.isShoot = isShoot;
         this.isMove = isMove;
         this.shootingKeySettings = shootingKeySettings;
         this.moveKeySettings = moveKeySettings;
         this.duration = duration;
+        this.cycleCount = count;
+        this.uniqueActions = uniqueActions;
     }
 
     public AvatarMoveKeySettings getMoveKeySettings() {
@@ -42,4 +79,14 @@ public enum AvatarStates {
     public int getDuration() {
         return duration;
     }
+
+    public int getCycleCount() {
+        return cycleCount;
+    }
+
+    public UniqueActions getUniqueActions() {
+        return uniqueActions;
+    }
+
+
 }

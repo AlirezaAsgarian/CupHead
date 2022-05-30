@@ -27,12 +27,25 @@ public enum AvatarMoveKeySettings {
         for (int i = 0; i <= 3; i++) {
             add(new ImagePattern(new Image(Main.class.getResource("cuphead_frames/frames/Plane/Idle/mugman_plane_idle_down_0001-00" + i + ".png").toExternalForm())));
         }
+    }}))),
+    MISSLE(new HashMap<KeyCode, Boolean>(Map.of(KeyCode.RIGHT, false, KeyCode.UP, false, KeyCode.DOWN, false)), new HashMap<>(Map.of(KeyCode.RIGHT, new ArrayList<ImagePattern>() {{
+        for (int i = 1; i <= 26; i++) {
+            add(new ImagePattern(new Image(Main.class.getResource("cuphead_frames/frames/Plane/Mini/Super/Bomb/Intro/00" + i + ".png").toExternalForm())));
+        }
+    }}, KeyCode.UP, new ArrayList<ImagePattern>() {{
+        for (int i = 1; i <= 26; i++) {
+            add(new ImagePattern(new Image(Main.class.getResource("cuphead_frames/frames/Plane/Mini/Super/Bomb/Intro/00" + i + ".png").toExternalForm())));
+        }
+    }}, KeyCode.DOWN, new ArrayList<ImagePattern>() {{
+       for (int i = 1; i <= 26; i++) {
+            add(new ImagePattern(new Image(Main.class.getResource("cuphead_frames/frames/Plane/Mini/Super/Bomb/Intro/00" + i + ".png").toExternalForm())));
+        }
     }})));
 
 
+    final HashMap<KeyCode, Boolean> keyEvents;
+    final HashMap<KeyCode, ArrayList<ImagePattern>> keyMoves;
 
-    final HashMap<KeyCode, Boolean> keyEvents ;
-   final HashMap<KeyCode, ArrayList<ImagePattern>> keyMoves;
     AvatarMoveKeySettings(HashMap<KeyCode, Boolean> keyEvents, HashMap<KeyCode, ArrayList<ImagePattern>> keyMoves) {
         this.keyEvents = keyEvents;
         this.keyMoves = keyMoves;
