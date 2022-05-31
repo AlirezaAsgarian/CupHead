@@ -37,7 +37,6 @@ public class GameSceneView extends Application {
         URL url = Main.class.getResource("FXML/Game.fxml");
         FXMLLoader fxmlLoader = new FXMLLoader(url);
         anchorPane = fxmlLoader.load();
-        initializeProgressBar();
         initializeBackground();
         Scene scene = new Scene(anchorPane);
         stage.setScene(scene);
@@ -48,6 +47,8 @@ public class GameSceneView extends Application {
 //        ColorAdjust colorAdjust = new ColorAdjust();
 //        colorAdjust.setSaturation(-1);
 //        stage.getScene().getRoot().setEffect(colorAdjust);
+                initializeProgressBar();
+
         stage.show();
     }
 

@@ -4,9 +4,15 @@ import java.util.Date;
 
 @SuppressWarnings("SpellCheckingInspection")
 public class Constants {
-    public static final int BACKGROUND_IMAGES_SPEED = 5;
+    public static final int FAR_FROM_OWNER_X = 0;
+    public static final int FAR_FROM_OWNER_Y = 10;
+    public static final int FAR_FROM_OWNER_WIDTH = 0;
+    public static final int FAR_FROM_OWNER_HEIGHT = 0;
+    public static final int BACKGROUND_IMAGES_SPEED = 10;
     public static final int Max_Width = 1280;
     public static final int Max_Height = 720;
+    public static final int MAX_HEIGHT_BACKGROUND = 740;
+    public static final int MAX_WIDTH_BACKGROUND = 1420;
     public static final int ATTACK_RATE = 150;
     public static final int AVATAR_SPEED = 4;
     public static final int BOSSBIRD_SPEED = 5;
@@ -81,7 +87,7 @@ public class Constants {
     public static final int MINI_BOSS_BULLET_X = -33;
     public static final int MINI_BOSS_BULLET_Y = 75;
     public static final int MINI_BOSS_BULLET_SPEED = 5;
-    public static final int MINI_BOSS_BULLET_DURATION  = 3200;
+    public static final int MINI_BOSS_BULLET_DURATION = 3200;
     public static final int MINI_BOSS_EXPLOSION_SIZE = 100;
     public static final int MINI_BOSS_EXPLOSION_TIME = 100;
 
@@ -129,9 +135,10 @@ public class Constants {
     public static final int BOSS_BIRD_POULTRY_EXPLOSION_TIME = 300;
     public static final int BOSS_BIRD_POULTRY_PROBABILITY = 400;
     public static final int BOSS_BIRD_POULTRY_DISTANCE = 140;
-    public static final int BOSS_BIRD_POULTRY_DURATION = 8200;
+    public static final int BOSS_BIRD_POULTRY_DURATION = 10200;
     public static final int BOSS_BIRD_POULTRY_X = Constants.Max_Width;
     public static final int BOSS_BIRDS_HEALTH = Constants.BOSS_BIRD2_HEALTH + Constants.BOSS_BIRD3_HEALTH + Constants.BOSS_BIRD1_HEALTH;
+
     public static Long getCurrentTime() {
         return new Date().getTime();
     }
