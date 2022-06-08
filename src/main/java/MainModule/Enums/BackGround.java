@@ -13,15 +13,14 @@ import static javafx.scene.layout.BackgroundRepeat.NO_REPEAT;
 
 public enum BackGround {
     BACK_GROUND(new ArrayList<>() {{
-        for (int i = 1; i <= 15; i++) {
-            add(new Image(Main.class.getResource("PC_Computer_Cuphead_Dont_Deal_With_the_Devil_Wally_Warbles/Background/images (2)/" + i + ".png").toExternalForm()));
-        }
+            add(new Image(Main.class.getResource("PC_Computer_Cuphead_Dont_Deal_With_the_Devil_Wally_Warbles/Background/images (2)/" + "1" + ".png").toExternalForm()));
+            add(new Image(Main.class.getResource("PC_Computer_Cuphead_Dont_Deal_With_the_Devil_Wally_Warbles/Background/images (2)/" + "15" + ".png").toExternalForm()));
     }});
 
     final ArrayList<Background> backgrounds;
-
+    final ArrayList<Image> images;
     BackGround( ArrayList<Image> imagesAhead) {
-
+        this.images = imagesAhead;
         this.backgrounds = new ArrayList<>() {{
             imagesAhead.forEach(image -> {
 
@@ -37,7 +36,7 @@ public enum BackGround {
 
 
 
-    public ArrayList<Background> getBackgrounds() {
-        return backgrounds;
+    public ArrayList<Image> getBackgrounds() {
+        return images;
     }
 }

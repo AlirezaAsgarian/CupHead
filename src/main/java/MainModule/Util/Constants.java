@@ -132,6 +132,8 @@ public class Constants {
     public static final int BOSS_BIRD_POULTRY_DURATION = 8200;
     public static final int BOSS_BIRD_POULTRY_X = Constants.Max_Width;
     public static final int BOSS_BIRDS_HEALTH = Constants.BOSS_BIRD2_HEALTH + Constants.BOSS_BIRD3_HEALTH + Constants.BOSS_BIRD1_HEALTH;
+    public static final double FAR_FROM_OWNER_Y = 50;
+
     public static Long getCurrentTime() {
         return new Date().getTime();
     }
