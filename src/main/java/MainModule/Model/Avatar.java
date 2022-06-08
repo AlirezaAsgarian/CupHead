@@ -24,6 +24,7 @@ public class Avatar extends Rectangle {
     private static Avatar instance;
     int health;
     Bullets bullet;
+    HealthBar healthBar;
 
     AvatarShootingKeySettings keyShootings;
     AvatarStates avatarStates = AvatarStates.NORMAL;
@@ -44,6 +45,7 @@ public class Avatar extends Rectangle {
         iconOfShootingSetting.setY(10);
         iconOfShootingSetting.setX(10);
         health = Constants.AVATAR_HEALTH;
+        this.healthBar = new HealthBar(this);
     }
 
     public static Avatar getInstance() {

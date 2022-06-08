@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 public enum BossBirdEnums {
-    FIRST_BOSS_BIRD(new HouseBossBird(Constants.Max_Width - 500, Constants.Max_Height - 500, Constants.BOSS_1_WIDTH, Constants.BOSS_1_HEIGHT, new HashMap<>(Map.of(BossBirdStates.FLYING, new ArrayList<ImagePattern>() {{
+    FIRST_BOSS_BIRD(new HouseBossBird(Constants.Max_Width - Constants.BOSS_1_WIDTH, Constants.Max_Height - Constants.BOSS_1_HEIGHT, Constants.BOSS_1_WIDTH, Constants.BOSS_1_HEIGHT, new HashMap<>(Map.of(BossBirdStates.FLYING, new ArrayList<ImagePattern>() {{
         for (int i = 1; i <= 6; i++) {
             add(new ImagePattern(new Image(Main.class.getResource("cuphead_frames/frames/BossFly/" + i + ".png").toExternalForm())));
         }

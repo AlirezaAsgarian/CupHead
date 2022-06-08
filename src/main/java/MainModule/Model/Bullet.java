@@ -113,7 +113,6 @@ public class Bullet extends Rectangle {
         }
     }
 
-
     //getter and setters
     public MoveFuncs getMoveFuncs() {
         return moveFuncs;

@@ -18,12 +18,13 @@ public abstract class BossBird extends Rectangle {
     BossBirdStates bossBirdState;
     BossBirdTransitions bossBirdTransitions;
     static int health = Constants.BOSS_BIRDS_HEALTH;
-
+    HealthBar healthBar;
     HashMap<BossBirdStates, ArrayList<ImagePattern>> bossBirdAnimations;
 
     public BossBird(double v, double v1, double v2, double v3, HashMap<BossBirdStates, ArrayList<ImagePattern>> bossBirdAnimations) {
         super(v, v1, v2, v3);
         this.bossBirdAnimations = bossBirdAnimations;
+
     }
 
 
