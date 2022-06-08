@@ -6,12 +6,11 @@ import MainModule.Enums.Bullets;
 import MainModule.Util.Constants;
 import MainModule.View.AvatarTransitions.MoveTheAvatar;
 import MainModule.View.GameSceneView;
-import javafx.animation.Transition;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
-import javafx.util.Duration;
 import javafx.util.Pair;
 
 import java.util.*;
@@ -29,7 +28,7 @@ public class Avatar extends Rectangle {
     AvatarShootingKeySettings keyShootings;
     AvatarStates avatarStates = AvatarStates.NORMAL;
     ImageView iconOfShootingSetting = new ImageView();
-    Transition hittTheBullet;
+    MoveTheAvatar currentTransition;
 
     public Bullets getBullet() {
         return bullet;
@@ -42,22 +41,8 @@ public class Avatar extends Rectangle {
     public Avatar(double v, double v1, double v2, double v3) {
         super(v, v1, v2, v3);
         GameSceneView.anchorPane.getChildren().add(iconOfShootingSetting);
-        iconOfShootingSetting.setY(10); iconOfShootingSetting.setX(10);
-        hittTheBullet = new Transition() {
-            {
-                setCycleDuration(Duration.millis(200));
-                setCycleCount(5);
-            }
-
-            @Override
-            protected void interpolate(double v) {
-                if (v > 0.5) {
-                    Avatar.this.setOpacity(1.0);
-                } else {
-                    Avatar.this.setOpacity(0.3);
-                }
-            }
-        };
+        iconOfShootingSetting.setY(10);
+        iconOfShootingSetting.setX(10);
         health = Constants.AVATAR_HEALTH;
     }
 
@@ -96,22 +81,48 @@ public class Avatar extends Rectangle {
         if (this.getX() - Constants.AVATAR_SPEED <= 0) return;
         this.setX(this.getX() - Constants.AVATAR_SPEED);
     }
+    public void moveUp(int speed) {
+        if (this.getY() - speed <= 0) return;
+        this.setY(this.getY() - speed);
+    }
+
+    public void moveDown(int speed) {
+        if (this.getY() + this.getHeight() + speed >= Constants.Max_Height) return;
+        this.setY(this.getY() + speed);
+    }
+
+    public void moveRight(int speed) {
+        if (this.getX() + this.getWidth() + speed >= Constants.Max_Width) return;
+        this.setX(this.getX() + speed);
+    }
+
+    public void moveLeft(int speed) {
+        if (this.getX() - speed <= 0) return;
+        this.setX(this.getX() - speed);
+    }
 
 
     public void setIconOfShootingSetting(ImageView iconOfShootingSetting) {
         this.iconOfShootingSetting = iconOfShootingSetting;
     }
-
+    public void resetState(){
+        for (Map.Entry<KeyCode, Boolean> key:
+             this.avatarStates.getMoveKeySettings().getKeyEvents().entrySet()) {
+            this.avatarStates.getMoveKeySettings().getKeyEvents().put(key.getKey(),false);
+        };
+    }
+    public boolean canGetDamage(){
+        return (avatarStates == AvatarStates.NORMAL || avatarStates == AvatarStates.NORMAL_BOMBING);
+    }
 
     //getter and setters
-    public Transition getHittTheBullet() {
-        return hittTheBullet;
-    }
 
 
     public void setAvatarStates(AvatarStates avatarStates) {
+        this.resetState();
         this.avatarStates = avatarStates;
-        System.out.println(avatarStates.toString());
+        currentTransition = new MoveTheAvatar(this);
+        currentTransition.play();
         iconOfShootingSetting.setImage(avatarStates.getShootingKeySettings().getImageView().getImage());
     }
 
@@ -174,11 +185,35 @@ public class Avatar extends Rectangle {
     }
 
     public void updateState() {
-        if(this.avatarStates == AvatarStates.NORMAL){
+        if (this.avatarStates == AvatarStates.NORMAL) {
             new MoveTheAvatar(this).play();
         }
-        if(this.avatarStates == AvatarStates.NORMAL_BOMBING) {
+        if (this.avatarStates == AvatarStates.NORMAL_BOMBING) {
             new MoveTheAvatar(this).play();
         }
+        if (this.avatarStates == AvatarStates.BLINK) {
+            this.avatarStates = AvatarStates.NORMAL;
+            new MoveTheAvatar(this).play();
+            return;
+        }
+        if (this.avatarStates == AvatarStates.MISSLE) {
+            this.avatarStates = AvatarStates.NORMAL;
+            new MoveTheAvatar(this).play();
+            return;
+        }
+
+    }
+
+
+    private void setFill(Image image) {
+        this.setFill(image);
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public MoveTheAvatar getCurrentTransition() {
+        return currentTransition;
     }
 }

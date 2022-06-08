@@ -1,5 +1,6 @@
 package MainModule.View.AvatarTransitions;
 
+import MainModule.Enums.AvatarStates;
 import MainModule.Enums.MoveFuncs;
 import MainModule.Main;
 import MainModule.Model.Avatar;
@@ -23,8 +24,11 @@ import java.util.Map;
 public class MoveTheAvatar extends Transition {
 
     Avatar avatar;
+    AvatarStates startAvatarState;
     EventHandler<KeyEvent> keyEventEventHandler;
     static MoveTheAvatar instance;
+    boolean isUniqueActionExecuteOnce;
+
     public static MoveTheAvatar getInstance(Avatar avatar) {
         if (instance == null) {
             instance = new MoveTheAvatar(avatar);
@@ -42,10 +46,20 @@ public class MoveTheAvatar extends Transition {
         }
     };
 
+    public void setUniqueActionExecuteOnce(boolean uniqueActionExecuteOnce) {
+        isUniqueActionExecuteOnce = uniqueActionExecuteOnce;
+    }
+
+    public boolean isUniqueActionExecuteOnce() {
+        return isUniqueActionExecuteOnce;
+    }
+
     public MoveTheAvatar(Avatar avatar) {
         setCycleDuration(Duration.millis(avatar.getState().getDuration()));
-        setCycleCount(1);
+        setCycleCount(avatar.getState().getCycleCount());
+        this.startAvatarState = avatar.getState();
         this.avatar = avatar;
+        this.isUniqueActionExecuteOnce = false;
         keyEventEventHandler = new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
@@ -58,22 +72,27 @@ public class MoveTheAvatar extends Transition {
 
     @Override
     protected void interpolate(double v) {
-        int frame = (int) Math.ceil(v * 4);
-        if(avatar.getState().isMove()) {
+        if (startAvatarState != avatar.getState()) {
+            v = 1;
+            this.stop();
+            return;
+        }
+            Avatar.getInstance().getState().getUniqueActions().uniqueAction(v);
+        if (avatar.getState().isMove()) {
             boolean isPressedKey = false;
             for (Map.Entry<KeyCode, Boolean> entry :
                     avatar.getKeyEvents().entrySet()) {
                 if (entry.getValue()) {
-                    updateFrame(entry.getKey(), frame);
+                    updateFrame(entry.getKey(), v);
                     avatar.move(entry.getKey());
                     isPressedKey = true;
                 }
             }
             if (!isPressedKey) {
-                updateFrame(KeyCode.RIGHT, frame);
+                updateFrame(KeyCode.RIGHT, v);
             }
         }
-        if(avatar.getState().isShoot()) {
+        if (avatar.getState().isShoot()) {
             for (Map.Entry<KeyCode, Boolean> entry :
                     avatar.getShootingKeyEvents().entrySet()) {
                 if (entry.getValue() && (Constants.getCurrentTime() - avatar.getShootingTimeLine().get(entry.getKey())) >= Constants.ATTACK_RATE) {
@@ -84,13 +103,17 @@ public class MoveTheAvatar extends Transition {
                 }
             }
         }
+        if(Avatar.getInstance().getHealth() < 0){
+            System.exit(0);
+        }
         setOnFinished(actionEvent -> {
             avatar.updateState();
         });
     }
 
 
-    public void updateFrame(KeyCode keyCode, int frame) {
+    public void updateFrame(KeyCode keyCode, double v) {
+        int frame = (int) Math.ceil(v * avatar.getKeyMoves().get(keyCode).size());
         if (frame == 0) frame = 1;
         avatar.setFill(avatar.getKeyMoves().get(keyCode).get(frame - 1));
     }

@@ -70,14 +70,14 @@ public enum MoveFuncs {
             bullet.setSpeed(-bullet.getSpeed());
         }
         if (Avatar.getInstance().getX() > BossBird.getInstance().getX()) {
-            bullet.setX(BossBird.getInstance().getX() + bullet.getSpeed() * Math.cos(new Date().getTime()) + Constants.BOSS_MINI_BIRD_SPEED);
+            bullet.setX(BossBird.getInstance().getX()  + Constants.BOSS_MINI_BIRD_SPEED);
         } else {
-            bullet.setX(BossBird.getInstance().getX() + bullet.getSpeed() * Math.cos(new Date().getTime()) - Constants.BOSS_MINI_BIRD_SPEED);
+            bullet.setX(BossBird.getInstance().getX() - Constants.BOSS_MINI_BIRD_SPEED);
         }
         if (Avatar.getInstance().getY() > BossBird.getInstance().getY()) {
-            bullet.setY(BossBird.getInstance().getY() + bullet.getSpeed() * Math.sin(new Date().getTime()) + Constants.BOSS_MINI_BIRD_SPEED);
+            bullet.setY(BossBird.getInstance().getY()  + Constants.BOSS_MINI_BIRD_SPEED);
         } else {
-            bullet.setY(BossBird.getInstance().getY() + bullet.getSpeed() * Math.sin(new Date().getTime()) - Constants.BOSS_MINI_BIRD_SPEED);
+            bullet.setY(BossBird.getInstance().getY() - Constants.BOSS_MINI_BIRD_SPEED);
         }
       },KeyCode.W,new ArrayList<>(){{
         for (int i = 1; i <= 9; i++) {

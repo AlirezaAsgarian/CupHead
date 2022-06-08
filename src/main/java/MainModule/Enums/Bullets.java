@@ -67,12 +67,12 @@ public enum Bullets {
         for (int i = 1; i <= 100 ; i++) {
             add(new ImagePattern(new Image(Main.class.getResource("cuphead_frames/frames/MiniBossFly/purple/"+i+".png").toExternalForm())));
         }
-    }}, 1,Constants.BOSS_BIRD_POULTRY_DURATION,0),
+    }}, 1,Constants.BOSS_BIRD_POULTRY_DURATION,7),
     BOSS_BIRD_POULTRY_YELLOW(Constants.BOSS_BIRD_POULTRY_HEIGHT,Constants.BOSS_BIRD_POULTRY_WIDTH,SetConstants.POULTRY_BOSS_BIRD_SPEED,SetConstants.MINI_BOSS_EGG_DAMAGE_RATIO,MoveFuncs.POULTRY_BOSS_BIRD,new ArrayList<>(){{
         for (int i = 1; i <= 100 ; i++) {
             add(new ImagePattern(new Image(Main.class.getResource("cuphead_frames/frames/MiniBossFly/yellow/"+i+".png").toExternalForm())));
         }
-    }}, 1,Constants.BOSS_BIRD_POULTRY_DURATION,0);
+    }}, 1,Constants.BOSS_BIRD_POULTRY_DURATION,7);
     public int getHeight() {
         return height;
     }

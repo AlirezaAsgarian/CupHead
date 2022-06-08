@@ -4,6 +4,7 @@ import java.util.Date;
 
 @SuppressWarnings("SpellCheckingInspection")
 public class Constants {
+    public static final int BACKGROUND_IMAGES_SPEED = 5;
     public static final int Max_Width = 1280;
     public static final int Max_Height = 720;
     public static final int ATTACK_RATE = 150;
@@ -37,12 +38,18 @@ public class Constants {
     public static final int AVATAR_MISSLE_HEIGHT = 36;
     public static final int AVATAR_MISSLE_DURATION = 3200;
     public static final int AVATAR_MISSLE_EXPLOSION_TIME = 300;
+    public static final int AVATAR_MISLLE_SPEED = 20;
+    public static final int AVATAR_GET_BACK_AFTER_BOOM = 40;
+    public static final int AVATAR_MISSLE_DAMAGE_RATIO = 50;
     public static final int AVATAR_MISSLE_EXPLOSION_SIZE = 100;
     public static final int AVATAR_MISSLE_SPEED = 10;
     public static final int AVATAR_NORMAL_STATE_DURATION = 1000;
     public static final int AVATAR_NORMAL_BOMBING_STATE_DURATION = 1000;
+    public static final int AVATAR_BLINK_STATE_DURATION = 300;
+    public static final int AVATAR_MISSLE_STATE_DURATION = 2000;
+    public static final int AVATAR_MISSLE_STATE_ATTACK_RATE = 1000;
 
-    public static final int AVATAR_HEALTH = 100;
+    public static final int AVATAR_HEALTH = 20;
     public static final int BULLET_DURATION = 3200;
     public static final int BOSS_BIRD_STATE_SHOOTING = 1500;
     public static final int BOSS_BIRD_BULLET_Y = 189;
