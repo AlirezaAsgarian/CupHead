@@ -18,8 +18,8 @@ public class BedBossBird extends BossBird {
     ArrayList<Bullets> bullets;
 
 
-    public BedBossBird(double v, double v1, double v2, double v3, HashMap<BossBirdStates, ArrayList<ImagePattern>> bossBirdAnimations, ArrayList<Bullets> bullets) {
-        super(v, v1, v2, v3, bossBirdAnimations);
+    public BedBossBird(double v, double v1, double v2, double v3, HashMap<BossBirdStates, ArrayList<ImagePattern>> bossBirdAnimations, ArrayList<Bullets> bullets,int distance_collision_x,int distance_collision_y) {
+        super(v, v1, v2, v3, bossBirdAnimations, distance_collision_x, distance_collision_y);
         this.bossBirdState = BossBirdStates.FLYING;
         this.bullets = bullets;
         doctorBossBirds = new ArrayList<>(List.of((DoctorBossBird) BossBirdEnums.DOCTOR_BOSS_BIRD_LEFT.getBossBird(), (DoctorBossBird) BossBirdEnums.DOCTOR_BOSS_BIRD_RIGHT.getBossBird()));

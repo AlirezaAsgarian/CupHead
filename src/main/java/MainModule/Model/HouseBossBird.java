@@ -11,8 +11,8 @@ import java.util.HashMap;
 import java.util.List;
 
 public class HouseBossBird extends BossBird {
-    public HouseBossBird(double v, double v1, double v2, double v3, HashMap<BossBirdStates, ArrayList<ImagePattern>> bossBirdAnimations) {
-        super(v, v1, v2, v3, bossBirdAnimations);
+    public HouseBossBird(double v, double v1, double v2, double v3, HashMap<BossBirdStates, ArrayList<ImagePattern>> bossBirdAnimations,int distance_collision_x,int distance_collision_y) {
+        super(v, v1, v2, v3, bossBirdAnimations, distance_collision_x, distance_collision_y);
         this.bossBirdState = BossBirdStates.FLYING;
     }
 

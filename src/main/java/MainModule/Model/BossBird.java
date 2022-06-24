@@ -20,11 +20,14 @@ public abstract class BossBird extends Rectangle {
     static int health = Constants.BOSS_BIRDS_HEALTH;
     HealthBar healthBar;
     HashMap<BossBirdStates, ArrayList<ImagePattern>> bossBirdAnimations;
+    final int distance_collision_x;
+    final int distance_collision_y;
 
-    public BossBird(double v, double v1, double v2, double v3, HashMap<BossBirdStates, ArrayList<ImagePattern>> bossBirdAnimations) {
+    public BossBird(double v, double v1, double v2, double v3, HashMap<BossBirdStates, ArrayList<ImagePattern>> bossBirdAnimations, int distance_collision_x, int distance_collision_y) {
         super(v, v1, v2, v3);
         this.bossBirdAnimations = bossBirdAnimations;
-
+        this.distance_collision_x = distance_collision_x;
+        this.distance_collision_y = distance_collision_y;
     }
 
 
@@ -122,4 +125,11 @@ public abstract class BossBird extends Rectangle {
         return bossBirdState;
     }
 
+    public int getDistance_collision_x() {
+        return distance_collision_x;
+    }
+
+    public int getDistance_collision_y() {
+        return distance_collision_y;
+    }
 }

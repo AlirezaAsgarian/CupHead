@@ -4,8 +4,11 @@ import MainModule.Enums.AvatarShootingKeySettings;
 import MainModule.Enums.AvatarStates;
 import MainModule.Enums.Bullets;
 import MainModule.Util.Constants;
+import MainModule.Util.SetConstants;
 import MainModule.View.AvatarTransitions.MoveTheAvatar;
 import MainModule.View.GameSceneView;
+import javafx.geometry.Bounds;
+import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -83,6 +86,7 @@ public class Avatar extends Rectangle {
         if (this.getX() - Constants.AVATAR_SPEED <= 0) return;
         this.setX(this.getX() - Constants.AVATAR_SPEED);
     }
+
     public void moveUp(int speed) {
         if (this.getY() - speed <= 0) return;
         this.setY(this.getY() - speed);
@@ -103,17 +107,35 @@ public class Avatar extends Rectangle {
         this.setX(this.getX() - speed);
     }
 
+    public void checkForColllisonWithBossBird() {
+        if (this.avatarStates != AvatarStates.BLINK && this.haveCollision(BossBird.getInstance().getLayoutBounds())) {
+            this.decreaseHealth(SetConstants.MINI_BOSS_BULLET_DAMAGE_RATIO);
+            this.avatarStates = AvatarStates.BLINK;
+        }
+    }
+
+    private boolean haveCollision(Bounds layoutBounds) {
+        if (Math.sqrt(Math.pow(this.getxCenter() - layoutBounds.getCenterX(), 2) + Math.pow(this.getyCenter() - layoutBounds.getCenterY(), 2)) <
+                Math.sqrt(Math.pow(this.getWidth() / 2 + layoutBounds.getWidth() / 2 - BossBird.getInstance().getDistance_collision_x(), 2)  + Math.pow(this.getHeight() / 2 + layoutBounds.getHeight() / 2 - BossBird.getInstance().getDistance_collision_y(), 2))) {
+            return true;
+        }
+        return false;
+    }
+
 
     public void setIconOfShootingSetting(ImageView iconOfShootingSetting) {
         this.iconOfShootingSetting = iconOfShootingSetting;
     }
-    public void resetState(){
-        for (Map.Entry<KeyCode, Boolean> key:
-             this.avatarStates.getMoveKeySettings().getKeyEvents().entrySet()) {
-            this.avatarStates.getMoveKeySettings().getKeyEvents().put(key.getKey(),false);
-        };
+
+    public void resetState() {
+        for (Map.Entry<KeyCode, Boolean> key :
+                this.avatarStates.getMoveKeySettings().getKeyEvents().entrySet()) {
+            this.avatarStates.getMoveKeySettings().getKeyEvents().put(key.getKey(), false);
+        }
+        ;
     }
-    public boolean canGetDamage(){
+
+    public boolean canGetDamage() {
         return (avatarStates == AvatarStates.NORMAL || avatarStates == AvatarStates.NORMAL_BOMBING);
     }
 
@@ -187,6 +209,7 @@ public class Avatar extends Rectangle {
     }
 
     public void updateState() {
+        System.out.println("hello");
         if (this.avatarStates == AvatarStates.NORMAL) {
             new MoveTheAvatar(this).play();
         }

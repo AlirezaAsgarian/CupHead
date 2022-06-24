@@ -72,9 +72,16 @@ public class MoveTheAvatar extends Transition {
 
     @Override
     protected void interpolate(double v) {
+        System.out.println("startAvatarState = " + startAvatarState);
+        System.out.println("avatar state = " + avatar.getState());
+        //check for collision with boss bird
+        Avatar.getInstance().checkForColllisonWithBossBird();
         if (startAvatarState != avatar.getState()) {
             v = 1;
             this.stop();
+            if(avatar.getState() == AvatarStates.BLINK){
+                new MoveTheAvatar(Avatar.getInstance()).play();
+            }
             return;
         }
             Avatar.getInstance().getState().getUniqueActions().uniqueAction(v);
@@ -107,6 +114,7 @@ public class MoveTheAvatar extends Transition {
             System.exit(0);
         }
         setOnFinished(actionEvent -> {
+            System.out.println("helloooooooo");
             avatar.updateState();
         });
     }

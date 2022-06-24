@@ -11,8 +11,8 @@ import java.util.Random;
 public class DoctorBossBird extends BossBird {
     ArrayList<Bullets> bullets;
 
-    public DoctorBossBird(double v, double v1, double v2, double v3, HashMap<BossBirdStates, ArrayList<ImagePattern>> bossBirdAnimations, ArrayList<Bullets> bullets) {
-        super(v, v1, v2, v3, bossBirdAnimations);
+    public DoctorBossBird(double v, double v1, double v2, double v3, HashMap<BossBirdStates, ArrayList<ImagePattern>> bossBirdAnimations, ArrayList<Bullets> bullets,int distance_collision_x,int distance_collision_y) {
+        super(v, v1, v2, v3, bossBirdAnimations, distance_collision_x, distance_collision_y);
         this.bossBirdState = BossBirdStates.FLYING;
         this.bullets = bullets;
         this.setFill(this.getBossBirdAnimations().get(this.bossBirdState).get(0));

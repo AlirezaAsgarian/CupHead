@@ -17,8 +17,8 @@ public class MiniBossBird extends BossBird {
 
     ArrayList<MiniBossBirdBullet> miniBossBirdBullets;
 
-    public MiniBossBird(double v, double v1, double v2, double v3, HashMap<BossBirdStates, ArrayList<ImagePattern>> bossBirdAnimations) {
-        super(v, v1, v2, v3, bossBirdAnimations);
+    public MiniBossBird(double v, double v1, double v2, double v3, HashMap<BossBirdStates, ArrayList<ImagePattern>> bossBirdAnimations,int distance_collision_x,int distance_collision_y) {
+        super(v, v1, v2, v3, bossBirdAnimations, distance_collision_x, distance_collision_y);
         this.bossBirdState = BossBirdStates.TURN_TO_LEFT;
         this.setFill(this.getBossBirdAnimations().get(this.bossBirdState).get(0));
     }
