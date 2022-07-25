@@ -1,7 +1,6 @@
 package MainModule.View.AvatarTransitions;
 
 import MainModule.Enums.AvatarStates;
-import MainModule.Enums.MoveFuncs;
 import MainModule.Main;
 import MainModule.Model.Avatar;
 import MainModule.Model.BossBird;
@@ -60,21 +59,17 @@ public class MoveTheAvatar extends Transition {
         this.startAvatarState = avatar.getState();
         this.avatar = avatar;
         this.isUniqueActionExecuteOnce = false;
-        keyEventEventHandler = new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent keyEvent) {
-                if (avatar.getKeyEvents().containsKey(keyEvent.getCode())) {
-                    avatar.getKeyEvents().put(keyEvent.getCode(), true);
-                }
+        keyEventEventHandler = keyEvent -> {
+            if (avatar.getKeyEvents().containsKey(keyEvent.getCode())) {
+                avatar.getKeyEvents().put(keyEvent.getCode(), true);
             }
         };
     }
 
     @Override
     protected void interpolate(double v) {
-        System.out.println("startAvatarState = " + startAvatarState);
-        System.out.println("avatar state = " + avatar.getState());
         //check for collision with boss bird
+        Avatar.getInstance().AvatarRequestFocus();
         Avatar.getInstance().checkForColllisonWithBossBird();
         if (startAvatarState != avatar.getState()) {
             v = 1;
@@ -114,7 +109,6 @@ public class MoveTheAvatar extends Transition {
             System.exit(0);
         }
         setOnFinished(actionEvent -> {
-            System.out.println("helloooooooo");
             avatar.updateState();
         });
     }

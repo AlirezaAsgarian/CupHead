@@ -6,9 +6,8 @@ import MainModule.Enums.Bullets;
 import MainModule.Util.Constants;
 import MainModule.Util.SetConstants;
 import MainModule.View.AvatarTransitions.MoveTheAvatar;
-import MainModule.View.GameSceneView;
+import MainModule.View.Menus.MenuStack;
 import javafx.geometry.Bounds;
-import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -44,7 +43,7 @@ public class Avatar extends Rectangle {
 
     public Avatar(double v, double v1, double v2, double v3) {
         super(v, v1, v2, v3);
-        GameSceneView.anchorPane.getChildren().add(iconOfShootingSetting);
+        MenuStack.getInstance().getTopMenu().getRoot().getChildren().add(iconOfShootingSetting);
         iconOfShootingSetting.setY(10);
         iconOfShootingSetting.setX(10);
         health = Constants.AVATAR_HEALTH;
@@ -129,8 +128,8 @@ public class Avatar extends Rectangle {
 
     public void resetState() {
         for (Map.Entry<KeyCode, Boolean> key :
-                this.avatarStates.getMoveKeySettings().getKeyEvents().entrySet()) {
-            this.avatarStates.getMoveKeySettings().getKeyEvents().put(key.getKey(), false);
+                this.avatarStates.getMoveKeySettings().getMoveKeyEvents().entrySet()) {
+            this.avatarStates.getMoveKeySettings().getMoveKeyEvents().put(key.getKey(), false);
         }
         ;
     }
@@ -160,7 +159,7 @@ public class Avatar extends Rectangle {
 
 
     public HashMap<KeyCode, Boolean> getKeyEvents() {
-        return avatarStates.getMoveKeySettings().getKeyEvents();
+        return avatarStates.getMoveKeySettings().getMoveKeyEvents();
     }
 
     public HashMap<KeyCode, Long> getShootingTimeLine() {
@@ -209,7 +208,6 @@ public class Avatar extends Rectangle {
     }
 
     public void updateState() {
-        System.out.println("hello");
         if (this.avatarStates == AvatarStates.NORMAL) {
             new MoveTheAvatar(this).play();
         }
@@ -240,5 +238,41 @@ public class Avatar extends Rectangle {
 
     public MoveTheAvatar getCurrentTransition() {
         return currentTransition;
+    }
+    public void setKeyOnPressedAndReleasedAvatar(Avatar this) {
+        this.setOnKeyPressed(keyEvent -> {
+            System.out.println("key event press get code : " + keyEvent.getCode());
+            if (this.getKeyEvents().containsKey(keyEvent.getCode())) {
+                this.getKeyEvents().put(keyEvent.getCode(), true);
+            }
+            if (this.getShootingKeyEvents().containsKey(keyEvent.getCode())) {
+                this.getShootingKeyEvents().put(keyEvent.getCode(), true);
+            }
+            if (keyEvent.getCode() == KeyCode.TAB) {
+                if (this.getState() == AvatarStates.NORMAL) {
+                    this.setAvatarStates(AvatarStates.NORMAL_BOMBING);
+                } else if (this.getState() == AvatarStates.NORMAL_BOMBING) {
+                    this.setAvatarStates(AvatarStates.NORMAL);
+                }
+            }
+            if (keyEvent.getCode() == KeyCode.SPACE) {
+                if ((Constants.getCurrentTime() - AvatarShootingKeySettings.MISSLE.getShootingTimeLine().get(keyEvent.getCode())) >= Constants.AVATAR_MISSLE_STATE_ATTACK_RATE) {
+                    AvatarShootingKeySettings.MISSLE.getShootingTimeLine().put(keyEvent.getCode(), Constants.getCurrentTime());
+                    this.setAvatarStates(AvatarStates.MISSLE);
+                }
+            }
+        });
+        this.setOnKeyReleased(keyEvent -> {
+            System.out.println("key event released get code : " + keyEvent.getCode());
+            if (this.getKeyEvents().containsKey(keyEvent.getCode())) {
+                this.getKeyEvents().put(keyEvent.getCode(), false);
+            }
+            if (this.getShootingKeyEvents().containsKey(keyEvent.getCode())) {
+                this.getShootingKeyEvents().put(keyEvent.getCode(), false);
+            }
+        });
+    }
+    public void AvatarRequestFocus(){
+        MenuStack.getInstance().getTopMenu().getRoot().getChildren().get(MenuStack.getInstance().getTopMenu().getRoot().getChildren().indexOf(this)).requestFocus();
     }
 }

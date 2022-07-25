@@ -5,6 +5,7 @@ import MainModule.Enums.Bullets;
 import MainModule.Enums.MoveFuncs;
 import MainModule.View.AvatarTransitions.MoveTheAvatar;
 import MainModule.View.GameSceneView;
+import MainModule.View.Menus.MenuStack;
 import javafx.animation.Transition;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -41,7 +42,7 @@ public class Bullet extends Rectangle {
         this.damageRatio = bullet.getDamageRatio();
         this.duration = bullet.getCycleDuration();
         this.enemies = enemy;
-        GameSceneView.anchorPane.getChildren().add(this);
+        MenuStack.getInstance().getTopMenu().getRoot().getChildren().add(this);
         this.moveFuncs = bullet.getMoveFuncs();
         this.speed = bullet.getSpeed();
         this.animation = bullet.getImagePattern();
@@ -80,7 +81,7 @@ public class Bullet extends Rectangle {
                     } else if (enemies.get(0) instanceof BossBird bossBird) {
                         bossBird.decreaseHealth(damageRatio);
                     }
-                    GameSceneView.anchorPane.getChildren().remove(Bullet.this);
+                    MenuStack.getInstance().getTopMenu().getRoot().getChildren().remove(Bullet.this);
                 };
                 if(enemy instanceof Avatar avatar && !avatar.canGetDamage()) return;
                 this.getShoot().stop();
@@ -96,14 +97,14 @@ public class Bullet extends Rectangle {
      */
     public void checkForCollisionWithBullets() {
         for (Node node :
-                GameSceneView.anchorPane.getChildren()) {
+                MenuStack.getInstance().getTopMenu().getRoot().getChildren()) {
             if (node instanceof Bullet bullet && bullet != this && !bullet.getEnemies().equals(this.enemies)) {
                 if (bullet.getBoundsInParent().intersects(this.getBoundsInParent())) {
                     Bullet.this.decreaseHealth(bullet.damageRatio);
                     if (Bullet.this.hasHealth()) continue;
                     else Bullet.this.getShoot().stop();
                     EventHandler eventHandler = event -> {
-                        GameSceneView.anchorPane.getChildren().remove(Bullet.this);
+                        MenuStack.getInstance().getTopMenu().getRoot().getChildren().remove(Bullet.this);
                     };
                     this.getShoot().stop();
                     this.getExplosion(eventHandler).play();

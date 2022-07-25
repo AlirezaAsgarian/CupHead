@@ -3,6 +3,7 @@ package MainModule.View.BackGroundTransiton;
 import MainModule.Enums.BackGround;
 import MainModule.Util.Constants;
 import MainModule.View.GameSceneView;
+import MainModule.View.Menus.MenuStack;
 import javafx.animation.Transition;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -41,14 +42,14 @@ public class BackGroundTransition extends Transition {
     }
 
     public void moveBackGround(ImageView imageView){
-        GameSceneView.anchorPane.getChildren().remove(imageView);
+        MenuStack.getInstance().getTopMenu().getRoot().getChildren().remove(imageView);
         imageView.setX(imageView.getX() + Constants.BACKGROUND_IMAGES_SPEED);
-        GameSceneView.anchorPane.getChildren().add(0, imageView);
+        MenuStack.getInstance().getTopMenu().getRoot().getChildren().add(0, imageView);
     }
     public void resetBackGround(ImageView imageView){
-        GameSceneView.anchorPane.getChildren().remove(imageView);
+        MenuStack.getInstance().getTopMenu().getRoot().getChildren().remove(imageView);
         imageView.setX(-Constants.Max_Width);
-        GameSceneView.anchorPane.getChildren().add(0,imageView);
+        MenuStack.getInstance().getTopMenu().getRoot().getChildren().add(0,imageView);
     }
 
 }

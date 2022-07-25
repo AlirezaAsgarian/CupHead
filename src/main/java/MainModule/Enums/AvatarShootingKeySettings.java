@@ -4,6 +4,7 @@ import MainModule.Main;
 import MainModule.Model.Avatar;
 import MainModule.Util.Constants;
 import MainModule.View.GameSceneView;
+import MainModule.View.Menus.MenuStack;
 import javafx.animation.Transition;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -56,7 +57,7 @@ public enum AvatarShootingKeySettings {
     public static Transition boom() {
         resetBoomImageView();
         Avatar.getInstance().setOpacity(0);
-        GameSceneView.anchorPane.getChildren().add(boomImageView);
+        MenuStack.getInstance().getTopMenu().getRoot().getChildren().add(boomImageView);
         return new Transition() {
             {
                 setCycleCount(1);
@@ -70,7 +71,7 @@ public enum AvatarShootingKeySettings {
                 setOnFinished(actionEvent -> {
                     Avatar.getInstance().moveLeft(Constants.AVATAR_GET_BACK_AFTER_BOOM);
                     Avatar.getInstance().setOpacity(1);
-                    GameSceneView.anchorPane.getChildren().remove(boomImageView);
+                    MenuStack.getInstance().getTopMenu().getRoot().getChildren().remove(boomImageView);
                     Avatar.getInstance().setAvatarStates(AvatarStates.BLINK);
                 });
             }
@@ -83,9 +84,9 @@ public enum AvatarShootingKeySettings {
         boomImageView.setX(Avatar.getInstance().getX());
     }
     private static void updateImageView(Image image,int frame){
-        GameSceneView.anchorPane.getChildren().remove(boomImageView);
+        MenuStack.getInstance().getTopMenu().getRoot().getChildren().remove(boomImageView);
         boomImageView.setImage(AvatarShootingKeySettings.explosionOfMissleCupHead.get(frame - 1).getImage());
-        GameSceneView.anchorPane.getChildren().add(boomImageView);
+        MenuStack.getInstance().getTopMenu().getRoot().getChildren().add(boomImageView);
     }
 
     HashMap<KeyCode, Boolean> shootingKeyEvents;

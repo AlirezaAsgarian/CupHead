@@ -43,11 +43,11 @@ public enum AvatarMoveKeySettings {
     }})));
 
 
-    final HashMap<KeyCode, Boolean> keyEvents;
+    final HashMap<KeyCode, Boolean> moveKeyEvents;
     final HashMap<KeyCode, ArrayList<ImagePattern>> keyMoves;
 
     AvatarMoveKeySettings(HashMap<KeyCode, Boolean> keyEvents, HashMap<KeyCode, ArrayList<ImagePattern>> keyMoves) {
-        this.keyEvents = keyEvents;
+        this.moveKeyEvents = keyEvents;
         this.keyMoves = keyMoves;
     }
 
@@ -55,7 +55,7 @@ public enum AvatarMoveKeySettings {
         return keyMoves;
     }
 
-    public HashMap<KeyCode, Boolean> getKeyEvents() {
-        return keyEvents;
+    public HashMap<KeyCode, Boolean> getMoveKeyEvents() {
+        return moveKeyEvents;
     }
 }

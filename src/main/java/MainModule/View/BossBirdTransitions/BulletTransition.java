@@ -2,6 +2,7 @@ package MainModule.View.BossBirdTransitions;
 
 import MainModule.Model.Bullet;
 import MainModule.View.GameSceneView;
+import MainModule.View.Menus.MenuStack;
 import javafx.animation.Transition;
 import javafx.util.Duration;
 
@@ -30,7 +31,7 @@ public class BulletTransition extends Transition {
         bullet.getMoveFuncs().getMoving().move(bullet);
         setOnFinished(actionEvent -> {
             bullet.getExplosion(event -> {}).play();
-            GameSceneView.anchorPane.getChildren().remove(bullet);
+            MenuStack.getInstance().getTopMenu().getRoot().getChildren().remove(bullet);
         });
     }
 }

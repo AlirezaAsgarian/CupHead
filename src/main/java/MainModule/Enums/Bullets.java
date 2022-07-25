@@ -3,8 +3,12 @@ package MainModule.Enums;
 import MainModule.Main;
 import MainModule.Util.Constants;
 import MainModule.Util.SetConstants;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.transform.Shear;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,6 +76,7 @@ public enum Bullets {
         for (int i = 1; i <= 100 ; i++) {
             add(new ImagePattern(new Image(Main.class.getResource("cuphead_frames/frames/MiniBossFly/yellow/"+i+".png").toExternalForm())));
         }
+        Rectangle rectangle = new Rectangle();
     }}, 1,Constants.BOSS_BIRD_POULTRY_DURATION,7);
     public int getHeight() {
         return height;

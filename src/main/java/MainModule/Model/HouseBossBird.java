@@ -4,6 +4,7 @@ import MainModule.Enums.Bullets;
 import MainModule.Util.BossBirdStack;
 import MainModule.Util.Constants;
 import MainModule.View.GameSceneView;
+import MainModule.View.Menus.MenuStack;
 import javafx.scene.paint.ImagePattern;
 
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ public class HouseBossBird extends BossBird {
             BossBirdStack.bossBirdStack.pop();
             this.getBossBirdTransitions().stop();
             System.out.println("hello3");
-            GameSceneView.anchorPane.getChildren().remove(this);
+            MenuStack.getInstance().getTopMenu().getRoot().getChildren().remove(this);
             BossBird.getInstance().initializeNewBossBird();
             System.out.println("hello4");
             return;
@@ -61,7 +62,7 @@ public class HouseBossBird extends BossBird {
 
     @Override
     public void initializeNewBossBird() {
-          GameSceneView.anchorPane.getChildren().add(instance);
+          MenuStack.getInstance().getTopMenu().getRoot().getChildren().add(instance);
           instance.getBossBirdTransitions().play();
     }
 

@@ -6,6 +6,7 @@ import MainModule.Util.Constants;
 import MainModule.Util.SetConstants;
 import MainModule.View.BossBirdTransitions.BulletTransition;
 import MainModule.View.GameSceneView;
+import MainModule.View.Menus.MenuStack;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
@@ -51,7 +52,7 @@ public class MiniBossBird extends BossBird {
             BossBird.setInstance(null);
             BossBirdStack.bossBirdStack.pop();
             this.getBossBirdTransitions().stop();
-            GameSceneView.anchorPane.getChildren().remove(this);
+            MenuStack.getInstance().getTopMenu().getRoot().getChildren().remove(this);
             BossBird.getInstance().initializeNewBossBird();
             return;
         }
@@ -61,7 +62,7 @@ public class MiniBossBird extends BossBird {
             for (MiniBossBirdBullet miniBossBirdBullet :
                     this.getMiniBossBirdBullet()) {
                 miniBossBirdBullet.getShoot().stop();
-                miniBossBirdBullet.getExplosion(event -> GameSceneView.anchorPane.getChildren().remove(miniBossBirdBullet)).play();
+                miniBossBirdBullet.getExplosion(event -> MenuStack.getInstance().getTopMenu().getRoot().getChildren().remove(miniBossBirdBullet)).play();
             }
             return;
         }
@@ -130,7 +131,7 @@ public class MiniBossBird extends BossBird {
     public void initializeNewBossBird() {
         System.out.println(this.bossBirdState);
         this.getBossBirdTransitions().play();
-        GameSceneView.anchorPane.getChildren().add(this);
+        MenuStack.getInstance().getTopMenu().getRoot().getChildren().add(this);
         for (MiniBossBirdBullet miniBossBirdBullet :
                 this.getMiniBossBirdBullet()) {
             miniBossBirdBullet.getMiniBulletTransition().play();

@@ -4,6 +4,7 @@ import MainModule.Enums.Bullets;
 import MainModule.Util.Constants;
 import MainModule.View.BossBirdTransitions.BossBirdTransitions;
 import MainModule.View.GameSceneView;
+import MainModule.View.Menus.MenuStack;
 import javafx.scene.paint.ImagePattern;
 
 import java.util.ArrayList;
@@ -40,7 +41,7 @@ public class BedBossBird extends BossBird {
         if (hasHealth()) {
             this.bossBirdState = BossBirdStates.Death;
             this.doctorBossBirds.forEach(doctorBossBird -> {
-                GameSceneView.anchorPane.getChildren().remove(doctorBossBird);
+                MenuStack.getInstance().getTopMenu().getRoot().getChildren().remove(doctorBossBird);
                 doctorBossBird.getBossBirdTransitions().stop();
             });
             return;
@@ -69,11 +70,11 @@ public class BedBossBird extends BossBird {
 
     @Override
     public void initializeNewBossBird() {
-        GameSceneView.anchorPane.getChildren().add(this);
+        MenuStack.getInstance().getTopMenu().getRoot().getChildren().add(this);
         this.getBossBirdTransitions().play();
         for (DoctorBossBird doctorBossBird :
                 this.doctorBossBirds) {
-            GameSceneView.anchorPane.getChildren().add(doctorBossBird);
+            MenuStack.getInstance().getTopMenu().getRoot().getChildren().add(doctorBossBird);
             new BossBirdTransitions(doctorBossBird).play();
         }
     }
