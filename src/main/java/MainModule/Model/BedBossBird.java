@@ -3,14 +3,14 @@ package MainModule.Model;
 import MainModule.Enums.Bullets;
 import MainModule.Util.Constants;
 import MainModule.View.BossBirdTransitions.BossBirdTransitions;
+import MainModule.View.EndGameDialog;
 import MainModule.View.GameSceneView;
+import MainModule.View.Menus.Menu;
 import MainModule.View.Menus.MenuStack;
+import javafx.application.Platform;
 import javafx.scene.paint.ImagePattern;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class BedBossBird extends BossBird {
@@ -35,14 +35,22 @@ public class BedBossBird extends BossBird {
     public void changeState() {
          if (bossBirdState == BossBirdStates.Death) {
             //todo end game
-            System.exit(0);
-            return;
+             Platform.runLater(() -> {
+                 MenuStack.getInstance().killGame();
+                 Optional<String> result = new EndGameDialog("win").showAndWait();
+                 if(result.get().equals("Retry")){
+                     MenuStack.getInstance().popMenu();
+                     MenuStack.getInstance().addMenu(Menu.pushMenu("Game.fxml"));
+                 } else {
+                     MenuStack.getInstance().popMenu();
+                 }
+             });            return;
         }
         if (hasHealth()) {
             this.bossBirdState = BossBirdStates.Death;
             this.doctorBossBirds.forEach(doctorBossBird -> {
                 MenuStack.getInstance().getTopMenu().getRoot().getChildren().remove(doctorBossBird);
-                doctorBossBird.getBossBirdTransitions().stop();
+                BossBirdManger.getInstance().removeBossBirdTransitionByBossBird(this);
             });
             return;
         }
@@ -71,11 +79,15 @@ public class BedBossBird extends BossBird {
     @Override
     public void initializeNewBossBird() {
         MenuStack.getInstance().getTopMenu().getRoot().getChildren().add(this);
-        this.getBossBirdTransitions().play();
+        BossBirdTransitions bossBirdTransitions2 = new BossBirdTransitions(this);
+        BossBirdManger.getInstance().addBossBirdTransitions(bossBirdTransitions2);
+        bossBirdTransitions2.play();
         for (DoctorBossBird doctorBossBird :
                 this.doctorBossBirds) {
             MenuStack.getInstance().getTopMenu().getRoot().getChildren().add(doctorBossBird);
-            new BossBirdTransitions(doctorBossBird).play();
+            BossBirdTransitions bossBirdTransitions1 = new BossBirdTransitions(doctorBossBird);
+            bossBirdTransitions1.play();
+            BossBirdManger.getInstance().addBossBirdTransitions(bossBirdTransitions1);
         }
     }
 

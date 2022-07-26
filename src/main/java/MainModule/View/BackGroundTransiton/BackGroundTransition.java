@@ -34,6 +34,7 @@ public class BackGroundTransition extends Transition {
         updateBackGrounds(backGround2);
     }
     private void updateBackGrounds(ImageView backGround) {
+
         if(backGround.getX() + Constants.BACKGROUND_IMAGES_SPEED >= Constants.Max_Width ){
              resetBackGround(backGround);
         }else {

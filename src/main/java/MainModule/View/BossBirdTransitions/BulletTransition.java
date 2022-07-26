@@ -13,6 +13,7 @@ public class BulletTransition extends Transition {
     public BulletTransition(Bullet bullet, boolean isFlexibleSize) {
         setCycleDuration(Duration.millis(bullet.getDuration()));
         setCycleCount(bullet.getCycleCount());
+        MenuStack.getInstance().getCurrentGame().getBulletTransitions().add(this);
         this.bullet = bullet;
         this.isFlexibleSize = isFlexibleSize;
     }
@@ -32,6 +33,7 @@ public class BulletTransition extends Transition {
         setOnFinished(actionEvent -> {
             bullet.getExplosion(event -> {}).play();
             MenuStack.getInstance().getTopMenu().getRoot().getChildren().remove(bullet);
+            MenuStack.getInstance().getCurrentGame().getBulletTransitions().remove(this);
         });
     }
 }

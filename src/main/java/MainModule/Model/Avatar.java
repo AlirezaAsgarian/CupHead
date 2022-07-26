@@ -6,6 +6,7 @@ import MainModule.Enums.Bullets;
 import MainModule.Util.Constants;
 import MainModule.Util.SetConstants;
 import MainModule.View.AvatarTransitions.MoveTheAvatar;
+import MainModule.View.GameController;
 import MainModule.View.Menus.MenuStack;
 import javafx.geometry.Bounds;
 import javafx.scene.image.Image;
@@ -43,7 +44,6 @@ public class Avatar extends Rectangle {
 
     public Avatar(double v, double v1, double v2, double v3) {
         super(v, v1, v2, v3);
-        MenuStack.getInstance().getTopMenu().getRoot().getChildren().add(iconOfShootingSetting);
         iconOfShootingSetting.setY(10);
         iconOfShootingSetting.setX(10);
         health = Constants.AVATAR_HEALTH;
@@ -145,8 +145,9 @@ public class Avatar extends Rectangle {
         this.resetState();
         this.avatarStates = avatarStates;
         currentTransition = new MoveTheAvatar(this);
-        currentTransition.play();
         iconOfShootingSetting.setImage(avatarStates.getShootingKeySettings().getImageView().getImage());
+        ImageHandler.updateIconOfShooting(iconOfShootingSetting);
+        currentTransition.play();
     }
 
     public HashMap<KeyCode, ArrayList<ImagePattern>> getKeyMoves() {
@@ -208,6 +209,9 @@ public class Avatar extends Rectangle {
     }
 
     public void updateState() {
+        if(this.getHealth() < 0){
+            return;
+        }
         if (this.avatarStates == AvatarStates.NORMAL) {
             new MoveTheAvatar(this).play();
         }
@@ -273,6 +277,13 @@ public class Avatar extends Rectangle {
         });
     }
     public void AvatarRequestFocus(){
-        MenuStack.getInstance().getTopMenu().getRoot().getChildren().get(MenuStack.getInstance().getTopMenu().getRoot().getChildren().indexOf(this)).requestFocus();
+        int index = MenuStack.getInstance().getTopMenu().getRoot().getChildren().indexOf(this);
+        if(index != -1)
+        MenuStack.getInstance().getTopMenu().getRoot().getChildren().get(index).requestFocus();
+    }
+
+
+    public static void setInstance(Avatar instance) {
+        Avatar.instance = instance;
     }
 }

@@ -6,8 +6,14 @@ import MainModule.Model.Avatar;
 import MainModule.Model.BossBird;
 import MainModule.Model.Bullet;
 import MainModule.Util.Constants;
+import MainModule.View.BossBirdTransitions.BossBirdTransitions;
 import MainModule.View.BossBirdTransitions.BulletTransition;
+import MainModule.View.EndGameDialog;
+import MainModule.View.Menus.Menu;
+import MainModule.View.Menus.MenuStack;
 import javafx.animation.Transition;
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
@@ -19,6 +25,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class MoveTheAvatar extends Transition {
 
@@ -74,12 +81,13 @@ public class MoveTheAvatar extends Transition {
         if (startAvatarState != avatar.getState()) {
             v = 1;
             this.stop();
-            if(avatar.getState() == AvatarStates.BLINK){
+            System.out.println("avatar health blank" + Avatar.getInstance().getHealth());
+            if (avatar.getState() == AvatarStates.BLINK && Avatar.getInstance().getHealth() > 0) {
                 new MoveTheAvatar(Avatar.getInstance()).play();
             }
             return;
         }
-            Avatar.getInstance().getState().getUniqueActions().uniqueAction(v);
+        Avatar.getInstance().getState().getUniqueActions().uniqueAction(v);
         if (avatar.getState().isMove()) {
             boolean isPressedKey = false;
             for (Map.Entry<KeyCode, Boolean> entry :
@@ -105,8 +113,25 @@ public class MoveTheAvatar extends Transition {
                 }
             }
         }
-        if(Avatar.getInstance().getHealth() < 0){
-            System.exit(0);
+        System.out.println("Avatar.getInstance().getHealth() = " + Avatar.getInstance().getHealth());
+        if (Avatar.getInstance().getHealth() <= 0) {
+            Platform.runLater(() -> {
+                MenuStack.getInstance().killGame();
+                Optional<String> result = new EndGameDialog("lose").showAndWait();
+                if(result.get().equals("Retry")){
+                    MenuStack.getInstance().popMenu();
+                    MenuStack.getInstance().addMenu(Menu.pushMenu("Game.fxml"));
+                } else {
+                    MenuStack.getInstance().popMenu();
+                }
+            });
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            this.stop();
+            return;
         }
         setOnFinished(actionEvent -> {
             avatar.updateState();

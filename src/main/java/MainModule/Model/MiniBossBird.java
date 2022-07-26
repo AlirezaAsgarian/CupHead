@@ -4,6 +4,7 @@ import MainModule.Enums.Bullets;
 import MainModule.Util.BossBirdStack;
 import MainModule.Util.Constants;
 import MainModule.Util.SetConstants;
+import MainModule.View.BossBirdTransitions.BossBirdTransitions;
 import MainModule.View.BossBirdTransitions.BulletTransition;
 import MainModule.View.GameSceneView;
 import MainModule.View.Menus.MenuStack;
@@ -51,7 +52,7 @@ public class MiniBossBird extends BossBird {
         if (bossBirdState == BossBirdStates.Death) {
             BossBird.setInstance(null);
             BossBirdStack.bossBirdStack.pop();
-            this.getBossBirdTransitions().stop();
+            BossBirdManger.getInstance().removeBossBirdTransitionByBossBird(this);
             MenuStack.getInstance().getTopMenu().getRoot().getChildren().remove(this);
             BossBird.getInstance().initializeNewBossBird();
             return;
@@ -130,7 +131,9 @@ public class MiniBossBird extends BossBird {
     @Override
     public void initializeNewBossBird() {
         System.out.println(this.bossBirdState);
-        this.getBossBirdTransitions().play();
+        BossBirdTransitions bossBirdTransitions = new BossBirdTransitions(this);
+        BossBirdManger.getInstance().addBossBirdTransitions(bossBirdTransitions);
+        bossBirdTransitions.play();
         MenuStack.getInstance().getTopMenu().getRoot().getChildren().add(this);
         for (MiniBossBirdBullet miniBossBirdBullet :
                 this.getMiniBossBirdBullet()) {

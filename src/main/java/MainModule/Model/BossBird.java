@@ -16,7 +16,6 @@ public abstract class BossBird extends Rectangle {
      */
     static BossBird instance;
     BossBirdStates bossBirdState;
-    BossBirdTransitions bossBirdTransitions;
     static int health = Constants.BOSS_BIRDS_HEALTH;
     HealthBar healthBar;
     HashMap<BossBirdStates, ArrayList<ImagePattern>> bossBirdAnimations;
@@ -89,10 +88,7 @@ public abstract class BossBird extends Rectangle {
      * <p>this function create new instance here because initializing in constructor caused bug </p>
      * @return returns <code>bossBird</code> transition of this <code>bossBird</code> and if it is null it will make new instance of it
      */
-    public BossBirdTransitions getBossBirdTransitions() {
-        if (this.bossBirdTransitions == null) this.bossBirdTransitions = new BossBirdTransitions(this);
-        return bossBirdTransitions;
-    }
+
 
     /***
      * <p>check if health of <code>bossBird</code> ended or not, if yes it will pop it from the <code>bossBird</code> stack and set death state for <code>bossBird</code><p/>
@@ -107,7 +103,7 @@ public abstract class BossBird extends Rectangle {
     public void decreaseHealth(int value) {
         if(this.bossBirdState != BossBirdStates.Death) {
             health -= value;
-            GameSceneView.getProgressbar().setProgress((double) health / Constants.BOSS_BIRDS_HEALTH);
+            Game.getProgressbar().setProgress((double) health / Constants.BOSS_BIRDS_HEALTH);
         }
     }
 

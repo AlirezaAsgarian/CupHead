@@ -3,6 +3,7 @@ package MainModule.Model;
 import MainModule.Enums.Bullets;
 import MainModule.Util.BossBirdStack;
 import MainModule.Util.Constants;
+import MainModule.View.BossBirdTransitions.BossBirdTransitions;
 import MainModule.View.GameSceneView;
 import MainModule.View.Menus.MenuStack;
 import javafx.scene.paint.ImagePattern;
@@ -28,7 +29,7 @@ public class HouseBossBird extends BossBird {
             System.out.println("hello2");
             BossBird.setInstance(null);
             BossBirdStack.bossBirdStack.pop();
-            this.getBossBirdTransitions().stop();
+            BossBirdManger.getInstance().removeBossBirdTransitionByBossBird(this);
             System.out.println("hello3");
             MenuStack.getInstance().getTopMenu().getRoot().getChildren().remove(this);
             BossBird.getInstance().initializeNewBossBird();
@@ -62,8 +63,9 @@ public class HouseBossBird extends BossBird {
 
     @Override
     public void initializeNewBossBird() {
-          MenuStack.getInstance().getTopMenu().getRoot().getChildren().add(instance);
-          instance.getBossBirdTransitions().play();
+        BossBirdTransitions bossBirdTransitions = new BossBirdTransitions(this);
+        BossBirdManger.getInstance().getBossBirdTransitions().add(bossBirdTransitions);
+        bossBirdTransitions.play();
     }
 
     @Override

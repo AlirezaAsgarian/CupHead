@@ -44,12 +44,10 @@ public class BossBirdTransitions extends javafx.animation.Transition {
             }
         });
     }
-
     private void sendChickenBossBird() {
         int y = (getRandomNumber(7) - 1) * 100;
         SetConstants.setBossBirdPoultryY(y);
         for (int i = 1; i <= 3; i++) {
-
             if (getRandomNumber(2) == 1) {
                 Bullet bullet = new Bullet(Constants.BOSS_BIRD_POULTRY_X + i * Constants.BOSS_BIRD_POULTRY_DISTANCE, SetConstants.BOSS_BIRD_POULTRY_Y, Bullets.BOSS_BIRD_POULTRY_PURPLE, new ArrayList<>(List.of(Avatar.getInstance())));
                 bullet.setShoot(new BulletTransition(bullet, true));
@@ -91,5 +89,9 @@ public class BossBirdTransitions extends javafx.animation.Transition {
     public static int getRandomNumber(int bound) {
         if (random == null) random = new Random();
         return random.nextInt(bound) + 1;
+    }
+
+    public BossBird getBossBird() {
+        return bossBird;
     }
 }
