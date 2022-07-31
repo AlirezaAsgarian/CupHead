@@ -2,9 +2,9 @@ package MainModule.Model;
 
 import MainModule.Enums.Bullets;
 import MainModule.Main;
+import MainModule.Model.BossBirds.*;
 import MainModule.Util.Constants;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.paint.ImagePattern;
 
 import java.util.ArrayList;

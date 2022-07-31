@@ -10,4 +10,5 @@ open module MainModule {
     exports MainModule.Model;
     exports MainModule.View.AvatarTransitions;
     exports MainModule.LoginMenu;
+    exports MainModule.Model.BossBirds;
 }

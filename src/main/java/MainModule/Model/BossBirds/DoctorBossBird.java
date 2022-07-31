@@ -1,6 +1,10 @@
-package MainModule.Model;
+package MainModule.Model.BossBirds;
 
 import MainModule.Enums.Bullets;
+import MainModule.Controllers.BossBirdStateControllers.DoctorBossBirdStateController;
+import MainModule.Model.Avatar;
+import MainModule.Model.BossBirdStates;
+import MainModule.Model.Bullet;
 import MainModule.Util.Constants;
 import javafx.scene.paint.ImagePattern;
 
@@ -11,7 +15,7 @@ import java.util.Random;
 public class DoctorBossBird extends BossBird {
     ArrayList<Bullets> bullets;
 
-    public DoctorBossBird(double v, double v1, double v2, double v3, HashMap<BossBirdStates, ArrayList<ImagePattern>> bossBirdAnimations, ArrayList<Bullets> bullets,int distance_collision_x,int distance_collision_y) {
+    public DoctorBossBird(double v, double v1, double v2, double v3, HashMap<BossBirdStates, ArrayList<ImagePattern>> bossBirdAnimations, ArrayList<Bullets> bullets, int distance_collision_x, int distance_collision_y) {
         super(v, v1, v2, v3, bossBirdAnimations, distance_collision_x, distance_collision_y);
         this.bossBirdState = BossBirdStates.FLYING;
         this.bullets = bullets;
@@ -20,13 +24,7 @@ public class DoctorBossBird extends BossBird {
 
     @Override
     public void changeState() {
-        if (this.bossBirdState == BossBirdStates.FLYING) {
-            this.bossBirdState = BossBirdStates.SHOOTING;
-            return;
-        }
-        if (this.bossBirdState == BossBirdStates.SHOOTING) {
-            this.bossBirdState = BossBirdStates.FLYING;
-        }
+       bossBirdState =  new DoctorBossBirdStateController().updateBossBirdState(bossBirdState);
     }
 
     @Override
@@ -40,9 +38,11 @@ public class DoctorBossBird extends BossBird {
     }
 
     @Override
-    public void initializeNewBossBird() {
+    public void initializeNewBossBirdAndItsTransitions() {
 
     }
+
+
 
     @Override
     public Bullet getBullet() {
@@ -52,9 +52,14 @@ public class DoctorBossBird extends BossBird {
             add(Avatar.getInstance());
          }});
     }
+    @Override
+    public Bullets getBulletType() {
+        return this.bullets.get(0);
+    }
 
     @Override
     protected boolean hasHealth() {
         return health < 0;
     }
+
 }

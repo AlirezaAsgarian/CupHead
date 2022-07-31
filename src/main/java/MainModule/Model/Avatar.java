@@ -3,10 +3,10 @@ package MainModule.Model;
 import MainModule.Enums.AvatarShootingKeySettings;
 import MainModule.Enums.AvatarStates;
 import MainModule.Enums.Bullets;
+import MainModule.Model.BossBirds.BossBird;
 import MainModule.Util.Constants;
 import MainModule.Util.SetConstants;
-import MainModule.View.AvatarTransitions.MoveTheAvatar;
-import MainModule.View.GameController;
+import MainModule.View.AvatarTransitions.AvatarTransition;
 import MainModule.View.Menus.MenuStack;
 import javafx.geometry.Bounds;
 import javafx.scene.image.Image;
@@ -32,7 +32,6 @@ public class Avatar extends Rectangle {
     AvatarShootingKeySettings keyShootings;
     AvatarStates avatarStates = AvatarStates.NORMAL;
     ImageView iconOfShootingSetting = new ImageView();
-    MoveTheAvatar currentTransition;
 
     public Bullets getBullet() {
         return bullet;
@@ -86,15 +85,6 @@ public class Avatar extends Rectangle {
         this.setX(this.getX() - Constants.AVATAR_SPEED);
     }
 
-    public void moveUp(int speed) {
-        if (this.getY() - speed <= 0) return;
-        this.setY(this.getY() - speed);
-    }
-
-    public void moveDown(int speed) {
-        if (this.getY() + this.getHeight() + speed >= Constants.Max_Height) return;
-        this.setY(this.getY() + speed);
-    }
 
     public void moveRight(int speed) {
         if (this.getX() + this.getWidth() + speed >= Constants.Max_Width) return;
@@ -107,7 +97,7 @@ public class Avatar extends Rectangle {
     }
 
     public void checkForColllisonWithBossBird() {
-        if (this.avatarStates != AvatarStates.BLINK && this.haveCollision(BossBird.getInstance().getLayoutBounds())) {
+        if (this.avatarStates != AvatarStates.BLINK && intersects(BossBird.getInstance().getLayoutBounds())) {
             this.decreaseHealth(SetConstants.MINI_BOSS_BULLET_DAMAGE_RATIO);
             this.avatarStates = AvatarStates.BLINK;
         }
@@ -144,10 +134,10 @@ public class Avatar extends Rectangle {
     public void setAvatarStates(AvatarStates avatarStates) {
         this.resetState();
         this.avatarStates = avatarStates;
-        currentTransition = new MoveTheAvatar(this);
+        new AvatarTransition(this).play();
         iconOfShootingSetting.setImage(avatarStates.getShootingKeySettings().getImageView().getImage());
         ImageHandler.updateIconOfShooting(iconOfShootingSetting);
-        currentTransition.play();
+
     }
 
     public HashMap<KeyCode, ArrayList<ImagePattern>> getKeyMoves() {
@@ -212,23 +202,17 @@ public class Avatar extends Rectangle {
         if(this.getHealth() < 0){
             return;
         }
-        if (this.avatarStates == AvatarStates.NORMAL) {
-            new MoveTheAvatar(this).play();
-        }
-        if (this.avatarStates == AvatarStates.NORMAL_BOMBING) {
-            new MoveTheAvatar(this).play();
-        }
-        if (this.avatarStates == AvatarStates.BLINK) {
-            this.avatarStates = AvatarStates.NORMAL;
-            new MoveTheAvatar(this).play();
-            return;
-        }
-        if (this.avatarStates == AvatarStates.MISSLE) {
-            this.avatarStates = AvatarStates.NORMAL;
-            new MoveTheAvatar(this).play();
-            return;
-        }
+        this.avatarStates = updateAvatarStateAndReturnsIt(this.avatarStates);
+        new AvatarTransition(this).play();
+    }
 
+    private AvatarStates updateAvatarStateAndReturnsIt(AvatarStates avatarStates) {
+        if (avatarStates == AvatarStates.BLINK) {
+            return AvatarStates.NORMAL;
+        } else if (this.avatarStates == AvatarStates.MISSLE) {
+            return AvatarStates.NORMAL;
+        }
+        return avatarStates;
     }
 
 
@@ -240,9 +224,6 @@ public class Avatar extends Rectangle {
         return health;
     }
 
-    public MoveTheAvatar getCurrentTransition() {
-        return currentTransition;
-    }
     public void setKeyOnPressedAndReleasedAvatar(Avatar this) {
         this.setOnKeyPressed(keyEvent -> {
             System.out.println("key event press get code : " + keyEvent.getCode());

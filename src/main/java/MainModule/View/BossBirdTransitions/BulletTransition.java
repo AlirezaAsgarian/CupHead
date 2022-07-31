@@ -1,10 +1,14 @@
 package MainModule.View.BossBirdTransitions;
 
+import MainModule.Enums.TransitionType;
 import MainModule.Model.Bullet;
+import MainModule.Model.TransitionManger;
 import MainModule.View.GameSceneView;
 import MainModule.View.Menus.MenuStack;
 import javafx.animation.Transition;
 import javafx.util.Duration;
+
+import java.util.ArrayList;
 
 public class BulletTransition extends Transition {
     Bullet bullet;
@@ -16,6 +20,12 @@ public class BulletTransition extends Transition {
         MenuStack.getInstance().getCurrentGame().getBulletTransitions().add(this);
         this.bullet = bullet;
         this.isFlexibleSize = isFlexibleSize;
+        TransitionManger.addTransition(TransitionType.BULLET_TRANSITION,this);
+        this.setOnFinished(actionEvent -> {TransitionManger.removeTransition(TransitionType.BULLET_TRANSITION,this);});
+    }
+
+    public Bullet getBullet() {
+        return bullet;
     }
 
     @Override
@@ -37,3 +47,6 @@ public class BulletTransition extends Transition {
         });
     }
 }
+
+
+

@@ -1,6 +1,8 @@
 package MainModule.View.BackGroundTransiton;
 
 import MainModule.Enums.BackGround;
+import MainModule.Enums.TransitionType;
+import MainModule.Model.TransitionManger;
 import MainModule.Util.Constants;
 import MainModule.View.GameSceneView;
 import MainModule.View.Menus.MenuStack;
@@ -26,6 +28,8 @@ public class BackGroundTransition extends Transition {
         this.backGround2 = new ImageView(backGround.getBackgrounds().get(1));
         this.backGround2.setX(-Constants.Max_Width);
         this.backGround2.setY(0);
+        TransitionManger.addTransition(TransitionType.BACKGROUND_TRANSITION,this);
+        setOnFinished((actionEvent) -> TransitionManger.removeTransition(TransitionType.BACKGROUND_TRANSITION,this));
     }
 
     @Override

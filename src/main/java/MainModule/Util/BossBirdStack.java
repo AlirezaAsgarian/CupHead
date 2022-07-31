@@ -1,6 +1,6 @@
 package MainModule.Util;
 
-import MainModule.Model.BossBird;
+import MainModule.Model.BossBirds.BossBird;
 import MainModule.Model.BossBirdEnums;
 
 import java.util.Stack;

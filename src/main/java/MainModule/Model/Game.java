@@ -3,21 +3,18 @@ package MainModule.Model;
 import MainModule.Enums.AvatarStates;
 import MainModule.Enums.BackGround;
 import MainModule.Main;
+import MainModule.Model.BossBirds.BossBird;
 import MainModule.Util.BossBirdStack;
-import MainModule.View.AvatarTransitions.MoveTheAvatar;
+import MainModule.View.AvatarTransitions.AvatarTransition;
 import MainModule.View.BackGroundTransiton.BackGroundTransition;
 import MainModule.View.BossBirdTransitions.BulletTransition;
-import MainModule.View.GameSceneView;
 import MainModule.View.Menus.MenuStack;
-import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.ImagePattern;
 
 import java.util.ArrayList;
-import java.util.Stack;
 
 public class Game {
 
@@ -38,8 +35,8 @@ public class Game {
         initializeBackground();
         System.out.println(MenuStack.getInstance().getTopMenu().getController().getClass());
         initializeAvatar("red", (AnchorPane) MenuStack.getInstance().getTopMenu().getRoot(), Avatar.getInstance());
-        BossBird.getInstance().initializeNewBossBird();
-        MoveTheAvatar.getInstance(Avatar.getInstance()).play();
+        BossBird.getInstance().initializeNewBossBirdAndItsTransitions();
+        AvatarTransition.getInstance(Avatar.getInstance()).play();
     }
     public void initializeAvatar(String color, AnchorPane anchorPane, Avatar avatar) {
         Image image = new Image((Main.class.getResource("cuphead_frames/frames/images/" + color + ".png")).toExternalForm());
@@ -75,5 +72,9 @@ public class Game {
 
     public ArrayList<BulletTransition> getBulletTransitions() {
         return bulletTransitions;
+    }
+
+    public void killGame() {
+        TransitionManger.stopTransitions();
     }
 }

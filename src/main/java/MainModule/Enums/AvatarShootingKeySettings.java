@@ -2,6 +2,7 @@ package MainModule.Enums;
 
 import MainModule.Main;
 import MainModule.Model.Avatar;
+import MainModule.Model.TransitionManger;
 import MainModule.Util.Constants;
 import MainModule.View.GameSceneView;
 import MainModule.View.Menus.MenuStack;
@@ -62,6 +63,7 @@ public enum AvatarShootingKeySettings {
             {
                 setCycleCount(1);
                 setCycleDuration(Duration.millis(2000));
+                TransitionManger.addTransition(TransitionType.BULLET_TRANSITION,this);
             }
             @Override
             protected void interpolate(double v) {
@@ -73,6 +75,7 @@ public enum AvatarShootingKeySettings {
                     Avatar.getInstance().setOpacity(1);
                     MenuStack.getInstance().getTopMenu().getRoot().getChildren().remove(boomImageView);
                     Avatar.getInstance().setAvatarStates(AvatarStates.BLINK);
+                    TransitionManger.removeTransition(TransitionType.BULLET_TRANSITION,this);
                 });
             }
         };

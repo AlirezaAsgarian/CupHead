@@ -1,7 +1,8 @@
 package MainModule.Enums;
 
 import MainModule.Model.Avatar;
-import MainModule.Model.BossBird;
+import MainModule.Model.BossBirds.BossBird;
+import MainModule.Model.TransitionManger;
 import MainModule.Util.Constants;
 
 public enum AvatarStates {
@@ -18,14 +19,14 @@ public enum AvatarStates {
     }),
     //    LITTLE,
     MISSLE(false, AvatarShootingKeySettings.MISSLE, true, AvatarMoveKeySettings.MISSLE, Constants.AVATAR_MISSLE_STATE_DURATION, 1, v -> {
-        if (v * 26 > 8 && !Avatar.getInstance().getCurrentTransition().isUniqueActionExecuteOnce()) {
+        if (v * 26 > 8 && !TransitionManger.getAvatarTransition().isUniqueActionExecuteOnce()) {
             Thread thread = Thread.currentThread();
             synchronized (thread) {
                 try {
-                    Avatar.getInstance().getCurrentTransition().setUniqueActionExecuteOnce(true);
-                    Avatar.getInstance().getCurrentTransition().pause();
+                    TransitionManger.getAvatarTransition().setUniqueActionExecuteOnce(true);
+                    TransitionManger.getAvatarTransition().pause();
                     thread.wait(2000);
-                    Avatar.getInstance().getCurrentTransition().play();
+                    TransitionManger.getAvatarTransition().play();
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
@@ -33,7 +34,7 @@ public enum AvatarStates {
         }else if(v * 26 > 8){
             Avatar.getInstance().moveRight(Constants.AVATAR_MISLLE_SPEED);
             if(Avatar.getInstance().getBoundsInParent().intersects(BossBird.getInstance().getBoundsInParent())){
-                Avatar.getInstance().getCurrentTransition().stop();
+                TransitionManger.getAvatarTransition().stop();
                 BossBird.getInstance().decreaseHealth(Constants.AVATAR_MISSLE_DAMAGE_RATIO);
                 AvatarShootingKeySettings.boom().play();
             }

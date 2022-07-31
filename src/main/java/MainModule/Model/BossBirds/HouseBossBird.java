@@ -1,11 +1,10 @@
-package MainModule.Model;
+package MainModule.Model.BossBirds;
 
+import MainModule.Controllers.BossBirdStateControllers.HouseBossBirdStateController;
 import MainModule.Enums.Bullets;
-import MainModule.Util.BossBirdStack;
+import MainModule.Model.*;
 import MainModule.Util.Constants;
 import MainModule.View.BossBirdTransitions.BossBirdTransitions;
-import MainModule.View.GameSceneView;
-import MainModule.View.Menus.MenuStack;
 import javafx.scene.paint.ImagePattern;
 
 import java.util.ArrayList;
@@ -13,7 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class HouseBossBird extends BossBird {
-    public HouseBossBird(double v, double v1, double v2, double v3, HashMap<BossBirdStates, ArrayList<ImagePattern>> bossBirdAnimations,int distance_collision_x,int distance_collision_y) {
+    public HouseBossBird(double v, double v1, double v2, double v3, HashMap<BossBirdStates, ArrayList<ImagePattern>> bossBirdAnimations, int distance_collision_x, int distance_collision_y) {
         super(v, v1, v2, v3, bossBirdAnimations, distance_collision_x, distance_collision_y);
         this.bossBirdState = BossBirdStates.FLYING;
     }
@@ -25,26 +24,7 @@ public class HouseBossBird extends BossBird {
      */
     @Override
     public void changeState() {
-        if (bossBirdState == BossBirdStates.Death) {
-            System.out.println("hello2");
-            BossBird.setInstance(null);
-            BossBirdStack.bossBirdStack.pop();
-            BossBirdManger.getInstance().removeBossBirdTransitionByBossBird(this);
-            System.out.println("hello3");
-            MenuStack.getInstance().getTopMenu().getRoot().getChildren().remove(this);
-            BossBird.getInstance().initializeNewBossBird();
-            System.out.println("hello4");
-            return;
-        }
-        if (hasHealth()) {
-            this.bossBirdState = BossBirdStates.Death;
-            return;
-        }
-        if (bossBirdState == BossBirdStates.FLYING) {
-            bossBirdState = BossBirdStates.SHOOTING;
-        } else if (bossBirdState == BossBirdStates.SHOOTING) {
-            bossBirdState = BossBirdStates.FLYING;
-        }
+      bossBirdState =  new HouseBossBirdStateController(this).updateBossBirdState(bossBirdState);
     }
 
     static int direction = 1;
@@ -62,7 +42,7 @@ public class HouseBossBird extends BossBird {
     }
 
     @Override
-    public void initializeNewBossBird() {
+    public void initializeNewBossBirdAndItsTransitions() {
         BossBirdTransitions bossBirdTransitions = new BossBirdTransitions(this);
         BossBirdManger.getInstance().getBossBirdTransitions().add(bossBirdTransitions);
         bossBirdTransitions.play();
@@ -74,7 +54,13 @@ public class HouseBossBird extends BossBird {
     }
 
     @Override
-    protected boolean hasHealth() {
-        return health < (Constants.BOSS_BIRD2_HEALTH + Constants.BOSS_BIRD3_HEALTH);
+    public Bullets getBulletType() {
+        return Bullets.EGG_BULLETS;
     }
+
+    @Override
+    public boolean hasHealth() {
+        return health >= (Constants.BOSS_BIRD2_HEALTH + Constants.BOSS_BIRD3_HEALTH);
+    }
+
 }

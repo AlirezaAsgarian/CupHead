@@ -3,8 +3,7 @@ package MainModule.Model;
 import MainModule.Enums.AvatarStates;
 import MainModule.Enums.Bullets;
 import MainModule.Enums.MoveFuncs;
-import MainModule.View.AvatarTransitions.MoveTheAvatar;
-import MainModule.View.GameSceneView;
+import MainModule.Model.BossBirds.BossBird;
 import MainModule.View.Menus.MenuStack;
 import javafx.animation.Transition;
 import javafx.event.EventHandler;
@@ -12,7 +11,6 @@ import javafx.scene.Node;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
-import javafx.util.Pair;
 
 import java.util.ArrayList;
 
@@ -29,7 +27,7 @@ public class Bullet extends Rectangle {
     MoveFuncs moveFuncs;
     Transition explosion;
     ArrayList<ImagePattern> animation;
-    Transition shoot;
+    Transition bulletTransition;
 
     /***
      * @param v : left up x coordination
@@ -84,7 +82,7 @@ public class Bullet extends Rectangle {
                     MenuStack.getInstance().getTopMenu().getRoot().getChildren().remove(Bullet.this);
                 };
                 if(enemy instanceof Avatar avatar && !avatar.canGetDamage()) return;
-                this.getShoot().stop();
+                this.getBulletTransition().stop();
                 this.getExplosion(eventHandler).play();
                 return;
             }
@@ -102,11 +100,11 @@ public class Bullet extends Rectangle {
                 if (bullet.getBoundsInParent().intersects(this.getBoundsInParent())) {
                     Bullet.this.decreaseHealth(bullet.damageRatio);
                     if (Bullet.this.hasHealth()) continue;
-                    else Bullet.this.getShoot().stop();
+                    else Bullet.this.getBulletTransition().stop();
                     EventHandler eventHandler = event -> {
                         MenuStack.getInstance().getTopMenu().getRoot().getChildren().remove(Bullet.this);
                     };
-                    this.getShoot().stop();
+                    this.getBulletTransition().stop();
                     this.getExplosion(eventHandler).play();
                     return;
                 }
@@ -169,11 +167,11 @@ public class Bullet extends Rectangle {
         return cycleCount;
     }
 
-    public void setShoot(Transition shoot) {
-        this.shoot = shoot;
+    public void setBulletTransition(Transition bulletTransition) {
+        this.bulletTransition = bulletTransition;
     }
 
-    public Transition getShoot() {
-        return shoot;
+    public Transition getBulletTransition() {
+        return bulletTransition;
     }
 }

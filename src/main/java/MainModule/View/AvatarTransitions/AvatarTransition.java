@@ -1,19 +1,13 @@
 package MainModule.View.AvatarTransitions;
 
 import MainModule.Enums.AvatarStates;
+import MainModule.Enums.BulletTransitionFactory;
 import MainModule.Main;
 import MainModule.Model.Avatar;
-import MainModule.Model.BossBird;
-import MainModule.Model.Bullet;
+import MainModule.Model.TransitionManger;
 import MainModule.Util.Constants;
-import MainModule.View.BossBirdTransitions.BossBirdTransitions;
-import MainModule.View.BossBirdTransitions.BulletTransition;
-import MainModule.View.EndGameDialog;
-import MainModule.View.Menus.Menu;
 import MainModule.View.Menus.MenuStack;
 import javafx.animation.Transition;
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
@@ -23,21 +17,19 @@ import javafx.util.Duration;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
-public class MoveTheAvatar extends Transition {
+public class AvatarTransition extends Transition implements BulletTransitionFactory {
 
     Avatar avatar;
     AvatarStates startAvatarState;
     EventHandler<KeyEvent> keyEventEventHandler;
-    static MoveTheAvatar instance;
+    static AvatarTransition instance;
     boolean isUniqueActionExecuteOnce;
 
-    public static MoveTheAvatar getInstance(Avatar avatar) {
+    public static AvatarTransition getInstance(Avatar avatar) {
         if (instance == null) {
-            instance = new MoveTheAvatar(avatar);
+            instance = new AvatarTransition(avatar);
         }
         return instance;
     }
@@ -60,7 +52,7 @@ public class MoveTheAvatar extends Transition {
         return isUniqueActionExecuteOnce;
     }
 
-    public MoveTheAvatar(Avatar avatar) {
+    public AvatarTransition(Avatar avatar) {
         setCycleDuration(Duration.millis(avatar.getState().getDuration()));
         setCycleCount(avatar.getState().getCycleCount());
         this.startAvatarState = avatar.getState();
@@ -71,11 +63,13 @@ public class MoveTheAvatar extends Transition {
                 avatar.getKeyEvents().put(keyEvent.getCode(), true);
             }
         };
+        TransitionManger.setAvatarTransition(this);
     }
 
     @Override
     protected void interpolate(double v) {
         //check for collision with boss bird
+        System.out.println("Avatar State " + avatar.getState());
         Avatar.getInstance().AvatarRequestFocus();
         Avatar.getInstance().checkForColllisonWithBossBird();
         if (startAvatarState != avatar.getState()) {
@@ -83,7 +77,7 @@ public class MoveTheAvatar extends Transition {
             this.stop();
             System.out.println("avatar health blank" + Avatar.getInstance().getHealth());
             if (avatar.getState() == AvatarStates.BLINK && Avatar.getInstance().getHealth() > 0) {
-                new MoveTheAvatar(Avatar.getInstance()).play();
+                new AvatarTransition(Avatar.getInstance()).play();
             }
             return;
         }
@@ -107,30 +101,14 @@ public class MoveTheAvatar extends Transition {
                     avatar.getShootingKeyEvents().entrySet()) {
                 if (entry.getValue() && (Constants.getCurrentTime() - avatar.getShootingTimeLine().get(entry.getKey())) >= Constants.ATTACK_RATE) {
                     avatar.getShootingTimeLine().put(entry.getKey(), Constants.getCurrentTime());
-                    Bullet bullet = new Bullet(avatar.getxCenter() + avatar.getStartCoordinateBullet().get(entry.getKey()).getKey(), avatar.getyCenter() + avatar.getStartCoordinateBullet().get(entry.getKey()).getValue(), avatar.getBullets().get(entry.getKey()), new ArrayList<>(List.of(BossBird.getInstance())));
-                    bullet.setShoot(new BulletTransition(bullet, false));
-                    bullet.getShoot().play();
+                    bulletTransitionFactory(avatar.getBullets().get(entry.getKey()), (int) (avatar.getxCenter() + avatar.getStartCoordinateBullet().get(entry.getKey()).getKey()), (int) (avatar.getyCenter() + avatar.getStartCoordinateBullet().get(entry.getKey()).getValue()))
+                            .play();
                 }
             }
         }
         System.out.println("Avatar.getInstance().getHealth() = " + Avatar.getInstance().getHealth());
         if (Avatar.getInstance().getHealth() <= 0) {
-            Platform.runLater(() -> {
-                MenuStack.getInstance().killGame();
-                Optional<String> result = new EndGameDialog("lose").showAndWait();
-                if(result.get().equals("Retry")){
-                    MenuStack.getInstance().popMenu();
-                    MenuStack.getInstance().addMenu(Menu.pushMenu("Game.fxml"));
-                } else {
-                    MenuStack.getInstance().popMenu();
-                }
-            });
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            this.stop();
+            MenuStack.getInstance().getCurrentGame().killGame();
             return;
         }
         setOnFinished(actionEvent -> {

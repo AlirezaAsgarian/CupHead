@@ -1,5 +1,6 @@
 package MainModule.Model;
 
+import MainModule.Model.BossBirds.BossBird;
 import MainModule.View.BossBirdTransitions.BossBirdTransitions;
 
 import java.util.ArrayList;

@@ -2,17 +2,14 @@ package MainModule.Enums;
 
 import MainModule.Main;
 import MainModule.Model.Avatar;
-import MainModule.Model.BossBird;
+import MainModule.Model.BossBirds.BossBird;
 import MainModule.Util.Constants;
 import MainModule.Util.SetConstants;
-import javafx.scene.chart.PieChart;
-import javafx.scene.chart.XYChart;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.ImagePattern;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public enum MoveFuncs {
     EGG_BULLET(bullet -> {

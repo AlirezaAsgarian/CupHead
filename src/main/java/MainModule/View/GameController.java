@@ -1,7 +1,7 @@
 package MainModule.View;
 
 import MainModule.Model.Avatar;
-import MainModule.Model.BossBird;
+import MainModule.Model.BossBirds.BossBird;
 import MainModule.Model.Game;
 import MainModule.Util.Constants;
 import MainModule.View.Menus.MenuStack;

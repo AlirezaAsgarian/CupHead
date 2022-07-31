@@ -1,9 +1,13 @@
-package MainModule.Model;
+package MainModule.Model.BossBirds;
 
+import MainModule.Enums.Bullets;
+import MainModule.Model.BossBirdStates;
+import MainModule.Model.Bullet;
+import MainModule.Model.Game;
+import MainModule.Model.HealthBar;
 import MainModule.Util.BossBirdStack;
 import MainModule.Util.Constants;
-import MainModule.View.BossBirdTransitions.BossBirdTransitions;
-import MainModule.View.GameSceneView;
+import MainModule.View.Menus.MenuStack;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
@@ -69,6 +73,9 @@ public abstract class BossBird extends Rectangle {
      * <p>moves boss bird each frame</p>
      */
     public abstract void moveBossBird();
+    protected void addBossBirdToScreen(BossBird b) {
+        MenuStack.getInstance().getTopMenu().getRoot().getChildren().add(b);
+    }
 
     /***
      * <p>shows that <code>bossBird</code> state is in shooting mode or not</p>
@@ -77,18 +84,13 @@ public abstract class BossBird extends Rectangle {
      */
     public abstract boolean isReadyForShooting(int frame);
 
-    public abstract void initializeNewBossBird();
+    public abstract void initializeNewBossBirdAndItsTransitions();
 
     /***
      * @return returns the appropriate bullet according to situation
      */
     public abstract Bullet getBullet();
-
-    /***
-     * <p>this function create new instance here because initializing in constructor caused bug </p>
-     * @return returns <code>bossBird</code> transition of this <code>bossBird</code> and if it is null it will make new instance of it
-     */
-
+    public abstract Bullets getBulletType();
 
     /***
      * <p>check if health of <code>bossBird</code> ended or not, if yes it will pop it from the <code>bossBird</code> stack and set death state for <code>bossBird</code><p/>

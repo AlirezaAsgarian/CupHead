@@ -20,8 +20,8 @@ public class Constants {
     public static final int EGG_BULLET_HEIGHT = 109;
     public static final int EGG_BULLET_EXPLOSION_SIZE = 250;
     public static final int EGG_BULLET_EXPLOSION_TIME = 200;
-    public static final int BOSS_BIRD1_HEALTH = 100;
-    public static final int BOSS_BIRD2_HEALTH = 400;
+    public static final int BOSS_BIRD1_HEALTH = 50;
+    public static final int BOSS_BIRD2_HEALTH = 100;
     public static final int AVATAR_BULLET_HEIGHT = 15;
     public static final int AVATAR_BULLET_WIDTH = 72;
     public static final int AVATAR_BULLET_DURATION = 3200;
@@ -49,7 +49,7 @@ public class Constants {
     public static final int AVATAR_MISSLE_STATE_DURATION = 2000;
     public static final int AVATAR_MISSLE_STATE_ATTACK_RATE = 1000;
 
-    public static final int AVATAR_HEALTH = 20;
+    public static final int AVATAR_HEALTH = 400;
     public static final int BULLET_DURATION = 3200;
     public static final int BOSS_BIRD_STATE_SHOOTING = 1500;
     public static final int BOSS_BIRD_BULLET_Y = 189;

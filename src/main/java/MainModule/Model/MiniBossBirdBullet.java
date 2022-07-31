@@ -1,6 +1,9 @@
 package MainModule.Model;
 
 import MainModule.Enums.Bullets;
+import MainModule.Enums.TransitionType;
+import MainModule.Model.BossBirds.BossBird;
+import MainModule.Model.BossBirds.MiniBossBird;
 import MainModule.Util.Constants;
 import javafx.animation.Transition;
 import javafx.scene.shape.Rectangle;
@@ -28,20 +31,27 @@ public class MiniBossBirdBullet extends Bullet {
         return bulletRotate;
     }
 
-    public Transition getMiniBulletTransition() {
+    public Transition getMiniBulletRotateTransition() {
         if(miniBulletTransition != null) return miniBulletTransition;
-        miniBulletTransition = new Transition() {
+        miniBulletTransition = initializeBulletRotateTransition();
+        return miniBulletTransition;
+    }
+
+    private Transition initializeBulletRotateTransition() {
+        return new Transition() {
             {
                 setCycleDuration(Duration.millis(2000));
                 setCycleCount(-1);
+                TransitionManger.addTransition(TransitionType.BULLET_TRANSITION, this);
+                setOnFinished((e) -> TransitionManger.removeTransition(TransitionType.BULLET_TRANSITION, this));
             }
+
             @Override
             protected void interpolate(double v) {
                 MiniBossBirdBullet.this.getBulletRotate().setPivotY(BossBird.getInstance().getyCenter());
                 MiniBossBirdBullet.this.getBulletRotate().setPivotX(BossBird.getInstance().getxCenter());
-                MiniBossBirdBullet.this.getBulletRotate().setAngle(MiniBossBirdBullet.this.getBulletRotate().getAngle() + 1 );
+                MiniBossBirdBullet.this.getBulletRotate().setAngle(MiniBossBirdBullet.this.getBulletRotate().getAngle() + 1);
             }
         };
-        return miniBulletTransition;
     }
 }
