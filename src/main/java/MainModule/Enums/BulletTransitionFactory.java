@@ -33,10 +33,10 @@ public interface BulletTransitionFactory {
                  return bossBirdBulletTransition;
              }
              case  DOCTOR_BOSS_BULLET1,DOCTOR_BOSS_BULLET2 -> {
-                 Bullet bossBirdBullet = BossBirdManger.getInstance().getBossBirdStack().lastElement().getBullet();
-                 BulletTransition bossBirdBulletTransition = new BulletTransition(bossBirdBullet, true);
-                 bossBirdBullet.setBulletTransition(bossBirdBulletTransition);
-                 return bossBirdBulletTransition;
+                 Bullet doctorBossBirdBullet = bullets[0];
+                 BulletTransition doctorBossBirdBulletTransition = new BulletTransition(doctorBossBirdBullet, true);
+                 doctorBossBirdBullet.setBulletTransition(doctorBossBirdBulletTransition);
+                 return doctorBossBirdBulletTransition;
              }
              case MINI_BOSS_BULLET_EGG -> {
                 return new BulletTransition(bullets[0], true);

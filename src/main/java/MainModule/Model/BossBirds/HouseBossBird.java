@@ -15,6 +15,7 @@ public class HouseBossBird extends BossBird {
     public HouseBossBird(double v, double v1, double v2, double v3, HashMap<BossBirdStates, ArrayList<ImagePattern>> bossBirdAnimations, int distance_collision_x, int distance_collision_y) {
         super(v, v1, v2, v3, bossBirdAnimations, distance_collision_x, distance_collision_y);
         this.bossBirdState = BossBirdStates.FLYING;
+        this.controller = new HouseBossBirdStateController(this);
     }
 
     /***
@@ -22,10 +23,6 @@ public class HouseBossBird extends BossBird {
      *                and in death state first we set the instance of boss bird null then we pop the above element of boss bird stack and then
      *                remove boss bird from anchor pane and then we initialize new boss bird</p>
      */
-    @Override
-    public void changeState() {
-      bossBirdState =  new HouseBossBirdStateController(this).updateBossBirdState(bossBirdState);
-    }
 
     static int direction = 1;
 

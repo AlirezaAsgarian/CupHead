@@ -24,6 +24,7 @@ public class MiniBossBird extends BossBird implements BulletTransitionFactory {
         super(v, v1, v2, v3, bossBirdAnimations, distance_collision_x, distance_collision_y);
         this.bossBirdState = BossBirdStates.TURN_TO_LEFT;
         this.setFill(this.getBossBirdAnimations().get(this.bossBirdState).get(0));
+        this.controller = new MiniBossBirdStateController(this);
     }
 
 
@@ -51,10 +52,7 @@ public class MiniBossBird extends BossBird implements BulletTransitionFactory {
      *                and in death state first we set the instance of boss bird null then we pop the above element of boss bird stack and then
      *                remove boss bird from anchor pane and then we initialize new boss bird</p>
      */
-    @Override
-    public void changeState() {
-       bossBirdState = new MiniBossBirdStateController(this).updateBossBirdState(bossBirdState);
-    }
+
 
     public boolean isAvatarRightSideOfMiniBoss() {
         return this.getX() < Avatar.getInstance().getX();

@@ -1,10 +1,8 @@
 package MainModule.Model.BossBirds;
 
+import MainModule.Controllers.BossBirdStateControllers.ChangeableState;
 import MainModule.Enums.Bullets;
-import MainModule.Model.BossBirdStates;
-import MainModule.Model.Bullet;
-import MainModule.Model.Game;
-import MainModule.Model.HealthBar;
+import MainModule.Model.*;
 import MainModule.Util.BossBirdStack;
 import MainModule.Util.Constants;
 import MainModule.View.Menus.MenuStack;
@@ -19,6 +17,7 @@ public abstract class BossBird extends Rectangle {
      * boss bird has one state and one instance and hashmap key : states value : ArrayList of picture for moving and a function for changing state
      */
     static BossBird instance;
+    ChangeableState controller;
     BossBirdStates bossBirdState;
     static int health = Constants.BOSS_BIRDS_HEALTH;
     HealthBar healthBar;
@@ -39,8 +38,9 @@ public abstract class BossBird extends Rectangle {
      * @return return instance : the current boss bird and if instance become null it updates the above stack element that is current boss bird stack and add it to the children
      */
     public static BossBird getInstance() {
+        System.out.println("BossBirdManger.getInstance().getBossBirdStack().size() = " + BossBirdManger.getInstance().getBossBirdStack().size());
         if (instance == null) {
-            instance = BossBirdStack.bossBirdStack.lastElement();
+            instance = BossBirdManger.getInstance().getBossBirdStack().lastElement();
         }
         return instance;
     }
@@ -67,8 +67,9 @@ public abstract class BossBird extends Rectangle {
     /***
      * <p>it used to update the boss bird state for next action of <code>bossBird</code></p>
      */
-    public abstract void changeState();
-
+    public void changeState() {
+        bossBirdState = controller.updateBossBirdState(bossBirdState);
+    }
     /***
      * <p>moves boss bird each frame</p>
      */
@@ -96,7 +97,7 @@ public abstract class BossBird extends Rectangle {
      * <p>check if health of <code>bossBird</code> ended or not, if yes it will pop it from the <code>bossBird</code> stack and set death state for <code>bossBird</code><p/>
      * @return if health of <code>bossBird</code> ended true else false
      */
-    protected abstract boolean hasHealth();
+    public abstract boolean hasHealth();
 
     /***
      * <p>decrease health of <code>bossBird</code> and the updates the progress bar if the boss bird hasn't been killed yet</p>

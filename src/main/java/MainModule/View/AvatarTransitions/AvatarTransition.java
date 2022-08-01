@@ -76,7 +76,7 @@ public class AvatarTransition extends Transition implements BulletTransitionFact
         Avatar.getInstance().AvatarRequestFocus();
         AvatarTransitionController.interpolateAvatar(v);
         if (!Avatar.getInstance().hasHealth()) {
-            MenuStack.getInstance().getCurrentGame().killGame();
+            MenuStack.getInstance().killGame();
         }
     }
 

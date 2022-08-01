@@ -21,7 +21,7 @@ public class Constants {
     public static final int EGG_BULLET_EXPLOSION_SIZE = 250;
     public static final int EGG_BULLET_EXPLOSION_TIME = 200;
     public static final int BOSS_BIRD1_HEALTH = 50;
-    public static final int BOSS_BIRD2_HEALTH = 100;
+    public static final int BOSS_BIRD2_HEALTH = 50;
     public static final int AVATAR_BULLET_HEIGHT = 15;
     public static final int AVATAR_BULLET_WIDTH = 72;
     public static final int AVATAR_BULLET_DURATION = 3200;
@@ -96,7 +96,7 @@ public class Constants {
     public static final int MINI_BOSS_BIRD_HEALTH = 100;
     public static final int BOSS_BIRD3_WIDTH = 900;
     public static final int BOSS_BIRD3_HEIGHT = 355;
-    public static final int BOSS_BIRD3_HEALTH = 300;
+    public static final int BOSS_BIRD3_HEALTH = 50;
     public static final int BOSS_BIRD3_SPEDD = 3;
     public static final int BOSS_BIRD_DOCTOR_WIDTH = 131;
     public static final int BOSS_BIRD_DOCTOR_HEIGHT = 201;
@@ -117,7 +117,6 @@ public class Constants {
     public static final int BED_BOSS_BIRD_BULLET3_WIDTH = 47;
     public static final int BED_BOSS_BIRD_BULLET4_HEIGHT = 90;
     public static final int BED_BOSS_BIRD_BULLET4_WIDTH = 82;
-    public static final int BED_BOSS_BIRD_HEALTH = 100;
     public static final int BED_BOSS_BIRD_BULLET_X = 683;
     public static final int BED_BOSS_BIRD_BULLET_Y = 10;
     public static final int DOCTOR_BIRD_BULLET_X = 72;

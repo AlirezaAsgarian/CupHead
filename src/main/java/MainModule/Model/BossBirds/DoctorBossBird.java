@@ -20,12 +20,10 @@ public class DoctorBossBird extends BossBird {
         this.bossBirdState = BossBirdStates.FLYING;
         this.bullets = bullets;
         this.setFill(this.getBossBirdAnimations().get(this.bossBirdState).get(0));
+        this.controller = new DoctorBossBirdStateController();
     }
 
-    @Override
-    public void changeState() {
-       bossBirdState =  new DoctorBossBirdStateController().updateBossBirdState(bossBirdState);
-    }
+
 
     @Override
     public void moveBossBird() {
@@ -58,7 +56,7 @@ public class DoctorBossBird extends BossBird {
     }
 
     @Override
-    protected boolean hasHealth() {
+    public boolean hasHealth() {
         return health < 0;
     }
 

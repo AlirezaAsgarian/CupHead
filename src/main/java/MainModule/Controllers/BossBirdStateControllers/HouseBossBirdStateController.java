@@ -48,7 +48,7 @@ public class HouseBossBirdStateController implements ChangeableState {
     }
 
     private void updateBossBirdStack() {
-        BossBirdStack.bossBirdStack.pop();
+        BossBirdManger.getInstance().getBossBirdStack().pop();
     }
 
     private void stopBossBirdTransition() {

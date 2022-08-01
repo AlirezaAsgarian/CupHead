@@ -5,9 +5,13 @@ import MainModule.Model.BossBirdStates;
 import MainModule.Model.BossBirds.BedBossBird;
 import MainModule.Model.BossBirds.BossBird;
 import MainModule.Model.BossBirds.DoctorBossBird;
+import MainModule.View.EndGameDialog;
 import MainModule.View.Menus.MenuStack;
+import javafx.application.Platform;
 
-public class BedBossBirdStateController implements ChangeableState{
+import java.util.Optional;
+
+public class BedBossBirdStateController implements ChangeableState {
     private final BedBossBird bedBossBird;
 
     public BedBossBirdStateController(BedBossBird bedBossBird) {
@@ -18,14 +22,27 @@ public class BedBossBirdStateController implements ChangeableState{
     public BossBirdStates updateBossBirdState(BossBirdStates bossBirdState) {
         if (bossBirdState == BossBirdStates.Death) {
             //todo end game
-            System.exit(0);
+            endGame();
         }
         if (!bedBossBird.hasHealth()) {
-          //  removeBedBossBirdAndDoctorBossBirdsFromScreen();
+            //  removeBedBossBirdAndDoctorBossBirdsFromScreen();
             stopBossBirdTransitions();
             return BossBirdStates.Death;
         }
         return getBossBirdStatesAfterNormalAction(bossBirdState);
+    }
+
+    private void endGame() {
+        killBossBird();
+        MenuStack.getInstance().killGame();
+        Platform.runLater(() -> {
+            Optional<String> result = new EndGameDialog("lose").showAndWait();
+            MenuStack.getInstance().processResultOfEndGamePopUp(result.get());
+        });
+    }
+
+    private void killBossBird() {
+        BossBird.setInstance(null);
     }
 
     private BossBirdStates getBossBirdStatesAfterNormalAction(BossBirdStates bossBirdState) {

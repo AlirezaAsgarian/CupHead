@@ -8,6 +8,7 @@ import MainModule.Util.BossBirdStack;
 import MainModule.View.AvatarTransitions.AvatarTransition;
 import MainModule.View.BackGroundTransiton.BackGroundTransition;
 import MainModule.View.BossBirdTransitions.BulletTransition;
+import MainModule.View.Menus.Menu;
 import MainModule.View.Menus.MenuStack;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
@@ -27,7 +28,7 @@ public class Game {
         bossBirdProgressBar = progressBar;
         this.avatar = new Avatar(20.0, 20.0, 109.0, 95.0);
         Avatar.setInstance(this.avatar);
-        this.bossBirdManger = new BossBirdManger(BossBirdStack.bossBirdStack,new ArrayList<>());
+        this.bossBirdManger = new BossBirdManger(BossBirdStack.getFullBossBirdStack(),new ArrayList<>());
         BossBirdManger.setInstance(bossBirdManger);
     }
     public void startNewGame() {
@@ -66,7 +67,7 @@ public class Game {
         return bossBirdProgressBar;
     }
 
-    public BackGroundTransition getBackGroundTransiton() {
+    public BackGroundTransition getBackGroundTransition() {
         return backGroundTransiton;
     }
 
@@ -74,7 +75,5 @@ public class Game {
         return bulletTransitions;
     }
 
-    public void killGame() {
-        TransitionManger.stopTransitions();
-    }
+
 }

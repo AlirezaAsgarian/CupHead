@@ -5,6 +5,7 @@ import MainModule.Enums.Bullets;
 import MainModule.Enums.TransitionType;
 import MainModule.Model.*;
 import MainModule.Model.BossBirds.BossBird;
+import MainModule.Model.BossBirds.DoctorBossBird;
 import MainModule.Util.Constants;
 import MainModule.Util.SetConstants;
 import javafx.scene.paint.ImagePattern;
@@ -85,7 +86,11 @@ public class BossBirdTransitions extends javafx.animation.Transition implements 
 
     private void startBossBirdNewBulletTransition() {
         //bullets types and x and y is not important here
-        this.bossBirdBulletTransition = createBulletTransition(this.bossBird.getBulletType(),-1,-1);
+        if(this.bossBird instanceof DoctorBossBird doctorBossBird){
+            this.bossBirdBulletTransition = createBulletTransition(doctorBossBird.getBulletType(), -1, -1,doctorBossBird.getBullet());
+        } else {
+            this.bossBirdBulletTransition = createBulletTransition(this.bossBird.getBulletType(), -1, -1);
+        }
         bossBirdBulletTransition.play();
     }
 
