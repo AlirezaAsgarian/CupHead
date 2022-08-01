@@ -8,7 +8,6 @@ import MainModule.Util.Constants;
 import MainModule.Util.SetConstants;
 import MainModule.View.BossBirdTransitions.BossBirdTransitions;
 import MainModule.View.BossBirdTransitions.BulletTransition;
-import MainModule.View.Menus.MenuStack;
 import javafx.animation.Transition;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
@@ -129,7 +128,7 @@ public class MiniBossBird extends BossBird implements BulletTransitionFactory {
     private void startTransitionsOfMiniBossBirdBullets(MiniBossBirdBullet miniBossBirdBullet) {
         Transition bulletRotateTran = miniBossBirdBullet.getMiniBulletRotateTransition();
         bulletRotateTran.play();
-        BulletTransition buTran = bulletTransitionFactory(Bullets.MINI_BOSS_BULLET_EGG, -1, -1, miniBossBirdBullet);
+        BulletTransition buTran = createBulletTransition(Bullets.MINI_BOSS_BULLET_EGG, -1, -1, miniBossBirdBullet);
         miniBossBirdBullet.setBulletTransition(buTran);
         buTran.play();
     }

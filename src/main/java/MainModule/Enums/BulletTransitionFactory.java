@@ -12,7 +12,7 @@ import java.util.List;
 public interface BulletTransitionFactory {
 
 
-    default public BulletTransition bulletTransitionFactory(Bullets bulletType,int x,int y, Bullet... bullets){
+    default public BulletTransition createBulletTransition(Bullets bulletType, int x, int y, Bullet... bullets){
          switch (bulletType){
              case BOSS_BIRD_POULTRY_YELLOW , BOSS_BIRD_POULTRY_PURPLE ->{
                  Bullet bullet = new Bullet(x, y, bulletType, new ArrayList<>(List.of(Avatar.getInstance())));

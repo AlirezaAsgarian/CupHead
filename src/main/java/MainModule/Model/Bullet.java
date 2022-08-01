@@ -1,6 +1,7 @@
 package MainModule.Model;
 
 import MainModule.Enums.AvatarStates;
+import MainModule.Enums.BulletCollisionType;
 import MainModule.Enums.Bullets;
 import MainModule.Enums.MoveFuncs;
 import MainModule.Model.BossBirds.BossBird;
@@ -71,23 +72,42 @@ public class Bullet extends Rectangle {
     public void checkForCollisionWithEnemy() {
         for (Rectangle enemy : enemies) {
             if (this.getBoundsInParent().intersects(enemy.getBoundsInParent())) {
-                EventHandler eventHandler = event -> {
-                    if (enemies.get(0) instanceof Avatar avatar) {
-
-                        avatar.setAvatarStates(AvatarStates.BLINK);
-                        avatar.decreaseHealth(damageRatio);
-                    } else if (enemies.get(0) instanceof BossBird bossBird) {
-                        bossBird.decreaseHealth(damageRatio);
-                    }
-                    MenuStack.getInstance().getTopMenu().getRoot().getChildren().remove(Bullet.this);
-                };
-                if(enemy instanceof Avatar avatar && !avatar.canGetDamage()) return;
-                this.getBulletTransition().stop();
-                this.getExplosion(eventHandler).play();
+                if (enemy instanceof Avatar avatar && !avatar.canGetDamage()) return;
+                startExplosionTransitionAndStopNormalTransition(BulletCollisionType.HIT_ENEMY);
                 return;
             }
         }
-        return;
+    }
+
+    private EventHandler createAfterExplosionAction(BulletCollisionType type) {
+        switch (type) {
+            case HIT_ENEMY -> {
+                return event -> {
+                    affectBulletDamageToEnemy();
+                    removeBulletFromScreen();
+                };
+            }
+            case HIT_BULLET -> {
+                return event -> removeBulletFromScreen();
+            }
+            case NONE -> {
+                return event -> {};
+            }
+        }
+        return null;
+    }
+
+    private void affectBulletDamageToEnemy() {
+        if (enemies.get(0) instanceof Avatar avatar) {
+            avatar.changeAvatarStates(AvatarStates.BLINK);
+            avatar.decreaseHealth(damageRatio);
+        } else if (enemies.get(0) instanceof BossBird bossBird) {
+            bossBird.decreaseHealth(damageRatio);
+        }
+    }
+
+    private void removeBulletFromScreen() {
+        MenuStack.getInstance().getTopMenu().getRoot().getChildren().remove(Bullet.this);
     }
 
     /***
@@ -97,19 +117,23 @@ public class Bullet extends Rectangle {
         for (Node node :
                 MenuStack.getInstance().getTopMenu().getRoot().getChildren()) {
             if (node instanceof Bullet bullet && bullet != this && !bullet.getEnemies().equals(this.enemies)) {
-                if (bullet.getBoundsInParent().intersects(this.getBoundsInParent())) {
+                if (haveCollisionWithForeignBullet(bullet)) {
                     Bullet.this.decreaseHealth(bullet.damageRatio);
                     if (Bullet.this.hasHealth()) continue;
-                    else Bullet.this.getBulletTransition().stop();
-                    EventHandler eventHandler = event -> {
-                        MenuStack.getInstance().getTopMenu().getRoot().getChildren().remove(Bullet.this);
-                    };
-                    this.getBulletTransition().stop();
-                    this.getExplosion(eventHandler).play();
+                    startExplosionTransitionAndStopNormalTransition(BulletCollisionType.HIT_BULLET);
                     return;
                 }
             }
         }
+    }
+
+    private boolean haveCollisionWithForeignBullet(Bullet bullet) {
+        return bullet.getBoundsInParent().intersects(this.getBoundsInParent());
+    }
+
+    private void startExplosionTransitionAndStopNormalTransition(BulletCollisionType type) {
+        this.getBulletTransition().stop();
+        this.getExplosion(type).play();
     }
 
     //getter and setters
@@ -119,10 +143,10 @@ public class Bullet extends Rectangle {
 
 
     /***
-     * @param eventHandler : setOnFinished action of bullet
+     * @Param : type of collision hit with enemy or bullet ?
      * @return : explosion transition of bullet
      */
-    public Transition getExplosion(EventHandler eventHandler) {
+    public Transition getExplosion(BulletCollisionType type) {
         explosion = new Transition() {
             {
                 setCycleDuration(Duration.millis(Bullet.this.getMoveFuncs().getExplosionTime()));
@@ -130,7 +154,7 @@ public class Bullet extends Rectangle {
                 setFill(Bullet.this.moveFuncs.getExplosion().get(0));
                 setWidth(Bullet.this.moveFuncs.getExplosionSize());
                 setHeight(Bullet.this.moveFuncs.getExplosionSize());
-                setOnFinished(eventHandler);
+                setOnFinished(createAfterExplosionAction(type));
             }
 
             @Override

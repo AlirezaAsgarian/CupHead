@@ -4,13 +4,11 @@ import MainModule.Main;
 import MainModule.Model.Avatar;
 import MainModule.Model.TransitionManger;
 import MainModule.Util.Constants;
-import MainModule.View.GameSceneView;
 import MainModule.View.Menus.MenuStack;
 import javafx.animation.Transition;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.paint.ImagePattern;
 import javafx.util.Duration;
 import javafx.util.Pair;
 
@@ -74,7 +72,7 @@ public enum AvatarShootingKeySettings {
                     Avatar.getInstance().moveLeft(Constants.AVATAR_GET_BACK_AFTER_BOOM);
                     Avatar.getInstance().setOpacity(1);
                     MenuStack.getInstance().getTopMenu().getRoot().getChildren().remove(boomImageView);
-                    Avatar.getInstance().setAvatarStates(AvatarStates.BLINK);
+                    Avatar.getInstance().changeAvatarStates(AvatarStates.BLINK);
                     TransitionManger.removeTransition(TransitionType.BULLET_TRANSITION,this);
                 });
             }

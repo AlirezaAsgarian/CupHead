@@ -1,5 +1,6 @@
 package MainModule.View.BossBirdTransitions;
 
+import MainModule.Enums.BulletCollisionType;
 import MainModule.Enums.TransitionType;
 import MainModule.Model.Bullet;
 import MainModule.Model.TransitionManger;
@@ -21,7 +22,7 @@ public class BulletTransition extends Transition {
         this.bullet = bullet;
         this.isFlexibleSize = isFlexibleSize;
         TransitionManger.addTransition(TransitionType.BULLET_TRANSITION,this);
-        this.setOnFinished(actionEvent -> {TransitionManger.removeTransition(TransitionType.BULLET_TRANSITION,this);});
+        initializeSetOnFinishAction();
     }
 
     public Bullet getBullet() {
@@ -31,20 +32,34 @@ public class BulletTransition extends Transition {
     @Override
     protected void interpolate(double v) {
         bullet.checkForCollision();
+        updateBulletFrame(v);
+        bullet.getMoveFuncs().getMoving().move(bullet);
+    }
+
+    private void updateBulletFrame(double v) {
         int length = bullet.getAnimation().size();
-        int frame = (int) Math.ceil(v * length);
-        if (frame == 0) frame = 1;
+        int frame = calculateFrame(v,length);
         if (isFlexibleSize) {
-            bullet.setWidth(bullet.getAnimation().get(frame - 1).getImage().getWidth());
-            bullet.setHeight(bullet.getAnimation().get(frame - 1).getImage().getHeight());
+            setNewPrefSizeForBullet(frame);
         }
         bullet.setFill(bullet.getAnimation().get(frame - 1));
-        bullet.getMoveFuncs().getMoving().move(bullet);
+    }
+
+    private void setNewPrefSizeForBullet(int frame) {
+        bullet.setWidth(bullet.getAnimation().get(frame - 1).getImage().getWidth());
+        bullet.setHeight(bullet.getAnimation().get(frame - 1).getImage().getHeight());
+    }
+
+    private void initializeSetOnFinishAction() {
         setOnFinished(actionEvent -> {
-            bullet.getExplosion(event -> {}).play();
-            MenuStack.getInstance().getTopMenu().getRoot().getChildren().remove(bullet);
+            bullet.getExplosion(BulletCollisionType.HIT_BULLET).play();
             MenuStack.getInstance().getCurrentGame().getBulletTransitions().remove(this);
         });
+    }
+    private int calculateFrame(double v,int length){
+        int result = (int) Math.ceil(v * length);
+        if (result == 0) result = 1;
+        return result;
     }
 }
 

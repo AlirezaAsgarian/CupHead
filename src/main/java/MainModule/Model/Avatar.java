@@ -1,5 +1,6 @@
 package MainModule.Model;
 
+import MainModule.Controllers.AvatarControllers.KeyHandlingAvatar;
 import MainModule.Enums.AvatarShootingKeySettings;
 import MainModule.Enums.AvatarStates;
 import MainModule.Enums.Bullets;
@@ -105,7 +106,7 @@ public class Avatar extends Rectangle {
 
     private boolean haveCollision(Bounds layoutBounds) {
         if (Math.sqrt(Math.pow(this.getxCenter() - layoutBounds.getCenterX(), 2) + Math.pow(this.getyCenter() - layoutBounds.getCenterY(), 2)) <
-                Math.sqrt(Math.pow(this.getWidth() / 2 + layoutBounds.getWidth() / 2 - BossBird.getInstance().getDistance_collision_x(), 2)  + Math.pow(this.getHeight() / 2 + layoutBounds.getHeight() / 2 - BossBird.getInstance().getDistance_collision_y(), 2))) {
+                Math.sqrt(Math.pow(this.getWidth() / 2 + layoutBounds.getWidth() / 2 - BossBird.getInstance().getDistance_collision_x(), 2) + Math.pow(this.getHeight() / 2 + layoutBounds.getHeight() / 2 - BossBird.getInstance().getDistance_collision_y(), 2))) {
             return true;
         }
         return false;
@@ -131,13 +132,15 @@ public class Avatar extends Rectangle {
     //getter and setters
 
 
-    public void setAvatarStates(AvatarStates avatarStates) {
-        this.resetState();
+    public void changeAvatarStates(AvatarStates avatarStates) {
         this.avatarStates = avatarStates;
-        new AvatarTransition(this).play();
-        iconOfShootingSetting.setImage(avatarStates.getShootingKeySettings().getImageView().getImage());
-        ImageHandler.updateIconOfShooting(iconOfShootingSetting);
+        startUpdatedAvatarTransition();
+    }
 
+    private void startUpdatedAvatarTransition() {
+        AvatarTransition.getInstance().stop();
+        AvatarTransition.setInstance(new AvatarTransition());
+        AvatarTransition.getInstance().play();
     }
 
     public HashMap<KeyCode, ArrayList<ImagePattern>> getKeyMoves() {
@@ -149,7 +152,7 @@ public class Avatar extends Rectangle {
     }
 
 
-    public HashMap<KeyCode, Boolean> getKeyEvents() {
+    public HashMap<KeyCode, Boolean> getMoveKeyCodes() {
         return avatarStates.getMoveKeySettings().getMoveKeyEvents();
     }
 
@@ -190,7 +193,7 @@ public class Avatar extends Rectangle {
         return avatarStates.getShootingKeySettings().getImageView();
     }
 
-    public HashMap<KeyCode, Boolean> getShootingKeyEvents() {
+    public HashMap<KeyCode, Boolean> getShootingKeyCodes() {
         return avatarStates.getShootingKeySettings().getShootingKeyEvents();
     }
 
@@ -199,17 +202,17 @@ public class Avatar extends Rectangle {
     }
 
     public void updateState() {
-        if(this.getHealth() < 0){
+        if (this.getHealth() < 0) {
             return;
         }
         this.avatarStates = updateAvatarStateAndReturnsIt(this.avatarStates);
-        new AvatarTransition(this).play();
+        startUpdatedAvatarTransition();
     }
 
     private AvatarStates updateAvatarStateAndReturnsIt(AvatarStates avatarStates) {
         if (avatarStates == AvatarStates.BLINK) {
             return AvatarStates.NORMAL;
-        } else if (this.avatarStates == AvatarStates.MISSLE) {
+        } else if (this.avatarStates == AvatarStates.MISSILE) {
             return AvatarStates.NORMAL;
         }
         return avatarStates;
@@ -225,46 +228,23 @@ public class Avatar extends Rectangle {
     }
 
     public void setKeyOnPressedAndReleasedAvatar(Avatar this) {
-        this.setOnKeyPressed(keyEvent -> {
-            System.out.println("key event press get code : " + keyEvent.getCode());
-            if (this.getKeyEvents().containsKey(keyEvent.getCode())) {
-                this.getKeyEvents().put(keyEvent.getCode(), true);
-            }
-            if (this.getShootingKeyEvents().containsKey(keyEvent.getCode())) {
-                this.getShootingKeyEvents().put(keyEvent.getCode(), true);
-            }
-            if (keyEvent.getCode() == KeyCode.TAB) {
-                if (this.getState() == AvatarStates.NORMAL) {
-                    this.setAvatarStates(AvatarStates.NORMAL_BOMBING);
-                } else if (this.getState() == AvatarStates.NORMAL_BOMBING) {
-                    this.setAvatarStates(AvatarStates.NORMAL);
-                }
-            }
-            if (keyEvent.getCode() == KeyCode.SPACE) {
-                if ((Constants.getCurrentTime() - AvatarShootingKeySettings.MISSLE.getShootingTimeLine().get(keyEvent.getCode())) >= Constants.AVATAR_MISSLE_STATE_ATTACK_RATE) {
-                    AvatarShootingKeySettings.MISSLE.getShootingTimeLine().put(keyEvent.getCode(), Constants.getCurrentTime());
-                    this.setAvatarStates(AvatarStates.MISSLE);
-                }
-            }
-        });
-        this.setOnKeyReleased(keyEvent -> {
-            System.out.println("key event released get code : " + keyEvent.getCode());
-            if (this.getKeyEvents().containsKey(keyEvent.getCode())) {
-                this.getKeyEvents().put(keyEvent.getCode(), false);
-            }
-            if (this.getShootingKeyEvents().containsKey(keyEvent.getCode())) {
-                this.getShootingKeyEvents().put(keyEvent.getCode(), false);
-            }
-        });
+        KeyHandlingAvatar keyHandlingAvatar = new KeyHandlingAvatar();
+        keyHandlingAvatar.setKeyPressedSettings();
+        keyHandlingAvatar.setKeyReleasedSettings();
     }
-    public void AvatarRequestFocus(){
+
+    public void AvatarRequestFocus() {
         int index = MenuStack.getInstance().getTopMenu().getRoot().getChildren().indexOf(this);
-        if(index != -1)
-        MenuStack.getInstance().getTopMenu().getRoot().getChildren().get(index).requestFocus();
+        if (index != -1)
+            MenuStack.getInstance().getTopMenu().getRoot().getChildren().get(index).requestFocus();
     }
 
 
     public static void setInstance(Avatar instance) {
         Avatar.instance = instance;
+    }
+
+    public boolean hasHealth() {
+        return health >= 0;
     }
 }

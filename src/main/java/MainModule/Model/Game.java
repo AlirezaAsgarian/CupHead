@@ -36,11 +36,11 @@ public class Game {
         System.out.println(MenuStack.getInstance().getTopMenu().getController().getClass());
         initializeAvatar("red", (AnchorPane) MenuStack.getInstance().getTopMenu().getRoot(), Avatar.getInstance());
         BossBird.getInstance().initializeNewBossBirdAndItsTransitions();
-        AvatarTransition.getInstance(Avatar.getInstance()).play();
+        AvatarTransition.getInstance().play();
     }
     public void initializeAvatar(String color, AnchorPane anchorPane, Avatar avatar) {
         Image image = new Image((Main.class.getResource("cuphead_frames/frames/images/" + color + ".png")).toExternalForm());
-        avatar.setAvatarStates(AvatarStates.NORMAL);
+        avatar.changeAvatarStates(AvatarStates.NORMAL);
         ImagePattern imagePattern = new ImagePattern(image);
         avatar.setFill(imagePattern);
         avatar.setKeyOnPressedAndReleasedAvatar();

@@ -1,11 +1,11 @@
 package MainModule.View.AvatarTransitions;
 
+import MainModule.Controllers.AvatarTransitionController;
 import MainModule.Enums.AvatarStates;
 import MainModule.Enums.BulletTransitionFactory;
 import MainModule.Main;
 import MainModule.Model.Avatar;
 import MainModule.Model.TransitionManger;
-import MainModule.Util.Constants;
 import MainModule.View.Menus.MenuStack;
 import javafx.animation.Transition;
 import javafx.event.EventHandler;
@@ -17,21 +17,23 @@ import javafx.util.Duration;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Map;
 
 public class AvatarTransition extends Transition implements BulletTransitionFactory {
 
-    Avatar avatar;
     AvatarStates startAvatarState;
     EventHandler<KeyEvent> keyEventEventHandler;
     static AvatarTransition instance;
     boolean isUniqueActionExecuteOnce;
 
-    public static AvatarTransition getInstance(Avatar avatar) {
+    public static AvatarTransition getInstance() {
         if (instance == null) {
-            instance = new AvatarTransition(avatar);
+            instance = new AvatarTransition();
         }
         return instance;
+    }
+
+    public static void setInstance(AvatarTransition instance) {
+        AvatarTransition.instance = instance;
     }
 
     ArrayList<ImagePattern> moveUpImages = new ArrayList<>() {
@@ -52,75 +54,40 @@ public class AvatarTransition extends Transition implements BulletTransitionFact
         return isUniqueActionExecuteOnce;
     }
 
-    public AvatarTransition(Avatar avatar) {
-        setCycleDuration(Duration.millis(avatar.getState().getDuration()));
-        setCycleCount(avatar.getState().getCycleCount());
-        this.startAvatarState = avatar.getState();
-        this.avatar = avatar;
+    public AvatarTransition() {
+        setCycleDuration(Duration.millis(Avatar.getInstance().getState().getDuration()));
+        setCycleCount(Avatar.getInstance().getState().getCycleCount());
+        this.startAvatarState = Avatar.getInstance().getState();
         this.isUniqueActionExecuteOnce = false;
         keyEventEventHandler = keyEvent -> {
-            if (avatar.getKeyEvents().containsKey(keyEvent.getCode())) {
-                avatar.getKeyEvents().put(keyEvent.getCode(), true);
+            if (Avatar.getInstance().getMoveKeyCodes().containsKey(keyEvent.getCode())) {
+                Avatar.getInstance().getMoveKeyCodes().put(keyEvent.getCode(), true);
             }
         };
+        this.setOnFinished(actionEvent -> {
+            Avatar.getInstance().updateState();
+        });
         TransitionManger.setAvatarTransition(this);
+        AvatarTransitionController.setAvatarTransition(this);
     }
 
     @Override
     protected void interpolate(double v) {
-        //check for collision with boss bird
-        System.out.println("Avatar State " + avatar.getState());
         Avatar.getInstance().AvatarRequestFocus();
-        Avatar.getInstance().checkForColllisonWithBossBird();
-        if (startAvatarState != avatar.getState()) {
-            v = 1;
-            this.stop();
-            System.out.println("avatar health blank" + Avatar.getInstance().getHealth());
-            if (avatar.getState() == AvatarStates.BLINK && Avatar.getInstance().getHealth() > 0) {
-                new AvatarTransition(Avatar.getInstance()).play();
-            }
-            return;
-        }
-        Avatar.getInstance().getState().getUniqueActions().uniqueAction(v);
-        if (avatar.getState().isMove()) {
-            boolean isPressedKey = false;
-            for (Map.Entry<KeyCode, Boolean> entry :
-                    avatar.getKeyEvents().entrySet()) {
-                if (entry.getValue()) {
-                    updateFrame(entry.getKey(), v);
-                    avatar.move(entry.getKey());
-                    isPressedKey = true;
-                }
-            }
-            if (!isPressedKey) {
-                updateFrame(KeyCode.RIGHT, v);
-            }
-        }
-        if (avatar.getState().isShoot()) {
-            for (Map.Entry<KeyCode, Boolean> entry :
-                    avatar.getShootingKeyEvents().entrySet()) {
-                if (entry.getValue() && (Constants.getCurrentTime() - avatar.getShootingTimeLine().get(entry.getKey())) >= Constants.ATTACK_RATE) {
-                    avatar.getShootingTimeLine().put(entry.getKey(), Constants.getCurrentTime());
-                    bulletTransitionFactory(avatar.getBullets().get(entry.getKey()), (int) (avatar.getxCenter() + avatar.getStartCoordinateBullet().get(entry.getKey()).getKey()), (int) (avatar.getyCenter() + avatar.getStartCoordinateBullet().get(entry.getKey()).getValue()))
-                            .play();
-                }
-            }
-        }
-        System.out.println("Avatar.getInstance().getHealth() = " + Avatar.getInstance().getHealth());
-        if (Avatar.getInstance().getHealth() <= 0) {
+        AvatarTransitionController.interpolateAvatar(v);
+        if (!Avatar.getInstance().hasHealth()) {
             MenuStack.getInstance().getCurrentGame().killGame();
-            return;
         }
-        setOnFinished(actionEvent -> {
-            avatar.updateState();
-        });
     }
 
+    public AvatarStates getStartAvatarState() {
+        return startAvatarState;
+    }
 
     public void updateFrame(KeyCode keyCode, double v) {
-        int frame = (int) Math.ceil(v * avatar.getKeyMoves().get(keyCode).size());
+        int frame = (int) Math.ceil(v * Avatar.getInstance().getKeyMoves().get(keyCode).size());
         if (frame == 0) frame = 1;
-        avatar.setFill(avatar.getKeyMoves().get(keyCode).get(frame - 1));
+        Avatar.getInstance().setFill(Avatar.getInstance().getKeyMoves().get(keyCode).get(frame - 1));
     }
 
 }

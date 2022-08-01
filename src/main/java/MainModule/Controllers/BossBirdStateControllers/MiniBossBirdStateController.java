@@ -1,5 +1,6 @@
 package MainModule.Controllers.BossBirdStateControllers;
 
+import MainModule.Enums.BulletCollisionType;
 import MainModule.Model.*;
 import MainModule.Model.BossBirds.BossBird;
 import MainModule.Model.BossBirds.MiniBossBird;
@@ -91,7 +92,7 @@ public class MiniBossBirdStateController implements ChangeableState {
         for (MiniBossBirdBullet miniBossBirdBullet :
                 miniBossBird.getMiniBossBirdBullets()) {
             miniBossBirdBullet.getBulletTransition().stop();
-            miniBossBirdBullet.getExplosion(event -> MenuStack.getInstance().getTopMenu().getRoot().getChildren().remove(miniBossBirdBullet)).play();
+            miniBossBirdBullet.getExplosion(BulletCollisionType.HIT_BULLET).play();
         }
     }
 }
