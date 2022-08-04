@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.SplitMenuButton?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.media.MediaView?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainmodule.LoginMenu.testController">
+   <children>
+      <Button layoutX="435.0" layoutY="24.0" mnemonicParsing="false" onAction="#clickAction" text="Button" />
+      <MediaView fx:id="mediaView" fitHeight="200.0" fitWidth="200.0" layoutX="66.0" layoutY="164.0" AnchorPane.bottomAnchor="36.0" AnchorPane.topAnchor="164.0" />
+      <MenuBar layoutX="110.0" layoutY="48.0">
+        <menus>
+          <Menu fx:id="menu" mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <MenuButton layoutX="377.0" layoutY="91.0" mnemonicParsing="false" text="MenuButton">
+        <items>
+          <MenuItem mnemonicParsing="false" text="Action 1" />
+          <MenuItem mnemonicParsing="false" text="Action 2" />
+        </items>
+      </MenuButton>
+      <PasswordField layoutX="94.0" layoutY="152.0" />
+      <RadioButton layoutX="369.0" layoutY="200.0" mnemonicParsing="false" text="RadioButton" />
+      <Separator prefWidth="200.0" />
+      <Separator layoutX="100.0" layoutY="249.0" prefWidth="200.0" />
+      <SplitMenuButton layoutX="200.0" layoutY="85.0" mnemonicParsing="false" text="SplitMenuButton">
+        <items>
+          <MenuItem mnemonicParsing="false" text="Action 1" />
+          <MenuItem mnemonicParsing="false" text="Action 2" />
+        </items>
+      </SplitMenuButton>
+      <TableView layoutX="194.0" layoutY="100.0" prefHeight="200.0" prefWidth="200.0" fx:id="table">
+        <columns>
+          <TableColumn prefWidth="75.0" text="C1" fx:id="firstCol"/>
+          <TableColumn prefWidth="75.0" text="C2" fx:id="secondCol"/>
+            <TableColumn prefWidth="75.0" text="Column X" fx:id="thirdCol"/>
+        </columns>
+      </TableView>
+      <ToggleButton layoutX="47.0" layoutY="103.0" mnemonicParsing="false" text="ToggleButton" />
+   </children>
+</AnchorPane>

@@ -5,10 +5,10 @@ open module MainModule {
     requires com.google.gson;
     requires javafx.mediaEmpty;
     requires javafx.media;
-    exports MainModule;
-    exports MainModule.View;
-    exports MainModule.Model;
-    exports MainModule.View.AvatarTransitions;
-    exports MainModule.LoginMenu;
-    exports MainModule.Model.BossBirds;
+    exports mainmodule;
+    exports mainmodule.View;
+    exports mainmodule.model;
+    exports mainmodule.View.AvatarTransitions;
+    exports mainmodule.LoginMenu;
+    exports mainmodule.model.BossBirds;
 }
