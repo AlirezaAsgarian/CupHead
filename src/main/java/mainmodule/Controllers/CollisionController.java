@@ -5,6 +5,7 @@ import javafx.geometry.Bounds;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
 import javafx.scene.paint.ImagePattern;
+import mainmodule.Controllers.Location;
 
 public class CollisionController {
     public static boolean haveCollision(Image i1, Image i2,Bounds b1,Bounds b2) {
@@ -41,9 +42,9 @@ public class CollisionController {
     }
 
 
-    private static boolean PixelOpacityIsZero(PixelReader imagePixelReader, int x, int y) {
+    private static boolean PixelOpacityIsZero(PixelReader imagePixelReader, double x, double y) {
         try {
-            boolean b = imagePixelReader.getColor(x, y).getOpacity() == 0;
+            boolean b = imagePixelReader.getColor((int) x, (int) y).getOpacity() == 0;
             return b;
         } catch (IndexOutOfBoundsException e) {
             return false;
@@ -52,20 +53,3 @@ public class CollisionController {
 
 }
 
-class Location {
-    int x;
-    int y;
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public Location(int x, int y) {
-        this.x = x;
-        this.y = y;
-    }
-}

@@ -3,8 +3,9 @@ package mainmodule.model.BossBirds;
 import javafx.geometry.Bounds;
 import javafx.scene.image.Image;
 import mainmodule.Controllers.BossBirdStateControllers.ChangeableState;
-import mainmodule.Enums.Bullets;
+import mainmodule.Controllers.Location;
 import mainmodule.model.*;
+import mainmodule.model.BulletFactories.BulletFactoryCreator;
 import mainmodule.util.Constants;
 import mainmodule.View.Menus.MenuStack;
 import javafx.scene.paint.ImagePattern;
@@ -20,17 +21,19 @@ public abstract class BossBird extends Rectangle implements Imageable {
     static BossBird instance;
     ChangeableState controller;
     BossBirdStates bossBirdState;
+    BulletFactoryCreator bulletFactoryCreator;
     static int health;
     HashMap<BossBirdStates, ArrayList<ImagePattern>> bossBirdAnimations;
     final int distance_collision_x;
     final int distance_collision_y;
     Image currentImage;
 
-    public BossBird(double v, double v1, double v2, double v3, HashMap<BossBirdStates, ArrayList<ImagePattern>> bossBirdAnimations, int distance_collision_x, int distance_collision_y) {
+    public BossBird(double v, double v1, double v2, double v3, HashMap<BossBirdStates, ArrayList<ImagePattern>> bossBirdAnimations, int distance_collision_x, int distance_collision_y,BulletFactoryCreator bulletFactoryCreator) {
         super(v, v1, v2, v3);
         this.bossBirdAnimations = bossBirdAnimations;
         this.distance_collision_x = distance_collision_x;
         this.distance_collision_y = distance_collision_y;
+        this.bulletFactoryCreator = bulletFactoryCreator;
     }
 
 
@@ -90,8 +93,8 @@ public abstract class BossBird extends Rectangle implements Imageable {
     /***
      * @return returns the appropriate bullet according to situation
      */
-    public abstract Bullet getBullet();
-    public abstract Bullets getBulletType();
+    public abstract Location getBulletLocation();
+    public abstract BulletFactory getBulletFactory();
 
     /***
      * <p>check if health of <code>bossBird</code> ended or not, if yes it will pop it from the <code>bossBird</code> stack and set death state for <code>bossBird</code><p/>

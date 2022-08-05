@@ -1,8 +1,11 @@
 package mainmodule.model.BossBirds;
 
 import mainmodule.Controllers.BossBirdStateControllers.BedBossBirdStateController;
+import mainmodule.Controllers.Location;
 import mainmodule.Enums.Bullets;
 import mainmodule.model.*;
+import mainmodule.model.BulletFactories.BedBossBirdBulletFactories.BedBossBirdBulletFactoryCreator;
+import mainmodule.model.BulletFactories.BedBossBirdBulletFactories.BedBossBirdBulletFactoryType1;
 import mainmodule.util.Constants;
 import mainmodule.View.BossBirdTransitions.BossBirdTransitions;
 import javafx.scene.paint.ImagePattern;
@@ -13,11 +16,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class BedBossBird extends BossBird {
 
     ArrayList<DoctorBossBird> doctorBossBirds;
-    ArrayList<Bullets> bullets;
+    ArrayList<BulletFactory> bullets;
 
 
-    public BedBossBird(double v, double v1, double v2, double v3, HashMap<BossBirdStates, ArrayList<ImagePattern>> bossBirdAnimations, ArrayList<Bullets> bullets, int distance_collision_x, int distance_collision_y) {
-        super(v, v1, v2, v3, bossBirdAnimations, distance_collision_x, distance_collision_y);
+    public BedBossBird(double v, double v1, double v2, double v3, HashMap<BossBirdStates, ArrayList<ImagePattern>> bossBirdAnimations, ArrayList<BulletFactory> bullets, int distance_collision_x, int distance_collision_y) {
+        super(v, v1, v2, v3, bossBirdAnimations, distance_collision_x, distance_collision_y,new BedBossBirdBulletFactoryCreator());
         this.bossBirdState = BossBirdStates.FLYING;
         this.bullets = bullets;
         doctorBossBirds = new ArrayList<>(List.of((DoctorBossBird) BossBirdEnums.DOCTOR_BOSS_BIRD_LEFT.createNewBossBird(), (DoctorBossBird) BossBirdEnums.DOCTOR_BOSS_BIRD_RIGHT.createNewBossBird()));
@@ -82,14 +85,14 @@ public class BedBossBird extends BossBird {
     }
 
     @Override
-    public Bullet getBullet() {
+    public Location getBulletLocation() {
         Random random = new Random();
         int randomNumber = random.nextInt(4);
-        return new Bullet(BossBird.getInstance().getX() + Constants.BED_BOSS_BIRD_BULLET_X, BossBird.getInstance().getY() + Constants.BED_BOSS_BIRD_BULLET_Y, this.bullets.get(randomNumber), new ArrayList<>(List.of(Avatar.getInstance())));
+        return new Location(BossBird.getInstance().getX() + Constants.BED_BOSS_BIRD_BULLET_X, BossBird.getInstance().getY() + Constants.BED_BOSS_BIRD_BULLET_Y);
     }
 
     @Override
-    public Bullets getBulletType() {
+    public BulletFactory getBulletFactory() {
         return this.bullets.get(0);
     }
 

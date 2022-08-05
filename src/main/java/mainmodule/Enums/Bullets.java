@@ -95,7 +95,7 @@ public enum Bullets {
         return moveFuncs;
     }
 
-    public ArrayList<ImagePattern> getImagePattern() {
+    public List<ImagePattern> getImagePattern() {
         return imagePattern;
     }
 

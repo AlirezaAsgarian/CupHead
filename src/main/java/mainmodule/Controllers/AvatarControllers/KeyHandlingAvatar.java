@@ -63,11 +63,11 @@ public class KeyHandlingAvatar {
     }
 
     private void updateLastMissileShotTime(KeyEvent keyEvent) {
-        AvatarShootingKeySettings.MISSLE.getShootingTimeLine().put(keyEvent.getCode(), Constants.getCurrentTime());
+        AvatarShootingKeySettings.MISSILE.getShootingTimeLine().put(keyEvent.getCode(), Constants.getCurrentTime());
     }
 
     private boolean isTimeBetweenTwoConsecutiveMissilePassed(KeyEvent keyEvent) {
-        return (Constants.getCurrentTime() - AvatarShootingKeySettings.MISSLE.getShootingTimeLine().get(keyEvent.getCode())) >= Constants.AVATAR_MISSLE_STATE_ATTACK_RATE;
+        return (Constants.getCurrentTime() - AvatarShootingKeySettings.MISSILE.getShootingTimeLine().get(keyEvent.getCode())) >= Constants.AVATAR_MISSLE_STATE_ATTACK_RATE;
     }
 
     private boolean isAvatarShootingKeysPressed(KeyCode keyCode) {

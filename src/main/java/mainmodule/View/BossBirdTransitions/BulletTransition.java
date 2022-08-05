@@ -34,17 +34,17 @@ public class BulletTransition extends Transition {
     }
 
     private void updateBulletFrame(double v) {
-        int length = bullet.getAnimation().size();
+        int length = bullet.getAnimationImagePatterns().size();
         int frame = calculateFrame(v,length);
         if (isFlexibleSize) {
             setNewPrefSizeForBullet(frame);
         }
-        bullet.setImage(bullet.getAnimation().get(frame - 1));
+        bullet.setImage(bullet.getAnimationImagePatterns().get(frame - 1));
     }
 
     private void setNewPrefSizeForBullet(int frame) {
-        bullet.setWidth(bullet.getAnimation().get(frame - 1).getImage().getWidth());
-        bullet.setHeight(bullet.getAnimation().get(frame - 1).getImage().getHeight());
+        bullet.setWidth(bullet.getAnimationImagePatterns().get(frame - 1).getImage().getWidth());
+        bullet.setHeight(bullet.getAnimationImagePatterns().get(frame - 1).getImage().getHeight());
     }
 
     private void initializeSetOnFinishAction() {

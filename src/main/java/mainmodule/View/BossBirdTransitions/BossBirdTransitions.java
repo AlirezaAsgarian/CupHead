@@ -1,11 +1,13 @@
 package mainmodule.View.BossBirdTransitions;
 
+import mainmodule.Controllers.Location;
 import mainmodule.Enums.BulletTransitionFactory;
 import mainmodule.Enums.Bullets;
 import mainmodule.Enums.TransitionType;
 import mainmodule.model.*;
 import mainmodule.model.BossBirds.BossBird;
-import mainmodule.model.BossBirds.DoctorBossBird;
+import mainmodule.model.BulletFactories.BulletFactoryCreator;
+import mainmodule.model.BulletFactories.PoultryBirdBulletsFactories.PoultryBulletFactoryCreator;
 import mainmodule.util.Constants;
 import mainmodule.util.SetConstants;
 import javafx.scene.paint.ImagePattern;
@@ -18,6 +20,7 @@ public class BossBirdTransitions extends javafx.animation.Transition implements 
     BossBird bossBird;
 
     BulletTransition bossBirdBulletTransition;
+    BulletFactoryCreator poultryFactoryCreator;
     static Random random;
 
 
@@ -26,6 +29,7 @@ public class BossBirdTransitions extends javafx.animation.Transition implements 
         setCycleDuration(Duration.millis(1500));
         setCycleCount(this.bossBird.getBossBirdState().getCycleCount().returnCycleNumber(this.bossBird.getBossBirdState().getBound()));
         TransitionManger.addTransition(TransitionType.BOSS_BIRD_TRANSITION,this);
+        poultryFactoryCreator = new PoultryBulletFactoryCreator();
         initializeSetOnFinishAction();
     }
 
@@ -60,11 +64,7 @@ public class BossBirdTransitions extends javafx.animation.Transition implements 
         int y = (getRandomNumber(7) - 1) * 100;
         SetConstants.setBossBirdPoultryY(y);
         for (int i = 1; i <= 3; i++) {
-            if (getRandomNumber(2) == 1) {
-                createBulletTransition(Bullets.BOSS_BIRD_POULTRY_PURPLE,Constants.BOSS_BIRD_POULTRY_X + i * Constants.BOSS_BIRD_POULTRY_DISTANCE,SetConstants.BOSS_BIRD_POULTRY_Y).play();
-            } else {
-                createBulletTransition(Bullets.BOSS_BIRD_POULTRY_YELLOW,Constants.BOSS_BIRD_POULTRY_X + i * Constants.BOSS_BIRD_POULTRY_DISTANCE,SetConstants.BOSS_BIRD_POULTRY_Y).play();
-            }
+                createBulletTransition(poultryFactoryCreator.getNewBossBirdBulletFactory(new Random().nextInt(Constants.NUMBERS_OF_TYPES_OF_POULTRY)),new Location(Constants.BOSS_BIRD_POULTRY_X + i * Constants.BOSS_BIRD_POULTRY_DISTANCE,SetConstants.BOSS_BIRD_POULTRY_Y)).play();
         }
     }
 
@@ -86,11 +86,7 @@ public class BossBirdTransitions extends javafx.animation.Transition implements 
 
     private void startBossBirdNewBulletTransition() {
         //bullets types and x and y is not important here
-        if(this.bossBird instanceof DoctorBossBird doctorBossBird){
-            this.bossBirdBulletTransition = createBulletTransition(doctorBossBird.getBulletType(), -1, -1,doctorBossBird.getBullet());
-        } else {
-            this.bossBirdBulletTransition = createBulletTransition(this.bossBird.getBulletType(), -1, -1);
-        }
+        this.bossBirdBulletTransition = createBulletTransition(bossBird.getBulletFactory(),bossBird.getBulletLocation());
         bossBirdBulletTransition.play();
     }
 

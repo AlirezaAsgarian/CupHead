@@ -4,6 +4,7 @@ import javafx.geometry.Bounds;
 import javafx.scene.image.Image;
 import mainmodule.Controllers.AvatarControllers.KeyHandlingAvatar;
 import mainmodule.Controllers.CollisionController;
+import mainmodule.Controllers.Location;
 import mainmodule.Enums.AvatarShootingKeySettings;
 import mainmodule.Enums.AvatarStates;
 import mainmodule.Enums.Bullets;
@@ -40,8 +41,11 @@ public class Avatar extends Rectangle implements Imageable{
         return bullet;
     }
 
-    public Map<KeyCode, Bullets> getBullets() {
+    public Map<KeyCode, BulletFactory> getBulletFactory() {
         return avatarStates.getShootingKeySettings().getBullets();
+    }
+    public Location getAvatarBulletLocation(Map.Entry bulletEntry){
+       return new Location( (int) (Avatar.getInstance().getxCenter() + Avatar.getInstance().getStartCoordinateBullet().get(bulletEntry.getKey()).getKey()), (int) (Avatar.getInstance().getyCenter() + Avatar.getInstance().getStartCoordinateBullet().get(bulletEntry.getKey()).getValue()));
     }
 
     public Avatar(double v, double v1, double v2, double v3) {

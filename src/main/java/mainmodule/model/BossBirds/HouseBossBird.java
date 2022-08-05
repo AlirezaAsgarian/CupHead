@@ -1,19 +1,20 @@
 package mainmodule.model.BossBirds;
 
 import mainmodule.Controllers.BossBirdStateControllers.HouseBossBirdStateController;
-import mainmodule.Enums.Bullets;
+import mainmodule.Controllers.Location;
 import mainmodule.model.*;
+import mainmodule.model.BulletFactories.HouseBossBirdBulletFactoryCreator;
+import mainmodule.model.BulletFactories.HouseBossBirdEggBulletFactory;
 import mainmodule.util.Constants;
 import mainmodule.View.BossBirdTransitions.BossBirdTransitions;
 import javafx.scene.paint.ImagePattern;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class HouseBossBird extends BossBird {
     public HouseBossBird(double v, double v1, double v2, double v3, HashMap<BossBirdStates, ArrayList<ImagePattern>> bossBirdAnimations, int distance_collision_x, int distance_collision_y) {
-        super(v, v1, v2, v3, bossBirdAnimations, distance_collision_x, distance_collision_y);
+        super(v, v1, v2, v3, bossBirdAnimations, distance_collision_x, distance_collision_y,new HouseBossBirdBulletFactoryCreator());
         this.bossBirdState = BossBirdStates.FLYING;
         this.controller = new HouseBossBirdStateController(this);
     }
@@ -51,13 +52,16 @@ public class HouseBossBird extends BossBird {
     }
 
     @Override
-    public Bullet getBullet() {
-        return new Bullet(BossBird.getInstance().getX() + Constants.BOSS_BIRD_BULLET_X, BossBird.getInstance().getY() + Constants.BOSS_BIRD_BULLET_Y, Bullets.EGG_BULLETS, new ArrayList<>(List.of(Avatar.getInstance())));
+    public Location getBulletLocation() {
+
+        Location location = new Location(BossBird.getInstance().getX() + Constants.BOSS_BIRD_BULLET_X, BossBird.getInstance().getY() + Constants.BOSS_BIRD_BULLET_Y);
+        System.out.println("location.getX()  location.getY() = " + location.getX() + " " + location.getY());
+        return location;
     }
 
     @Override
-    public Bullets getBulletType() {
-        return Bullets.EGG_BULLETS;
+    public BulletFactory getBulletFactory() {
+        return bulletFactoryCreator.getNewBossBirdBulletFactory(0);
     }
 
     @Override

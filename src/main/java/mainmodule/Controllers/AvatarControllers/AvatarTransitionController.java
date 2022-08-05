@@ -30,8 +30,7 @@ public class AvatarTransitionController {
                 Avatar.getInstance().getShootingKeyCodes().entrySet()) {
             if (bulletEntry.getValue() && isTimeBetweenTwoConsecutiveAttackPassed(bulletEntry)) {
                 updateLastTimeShooting(bulletEntry);
-                avatarTransition.createBulletTransition(Avatar.getInstance().getBullets().get(bulletEntry.getKey()), (int) (Avatar.getInstance().getxCenter() + Avatar.getInstance().getStartCoordinateBullet().get(bulletEntry.getKey()).getKey()), (int) (Avatar.getInstance().getyCenter() + Avatar.getInstance().getStartCoordinateBullet().get(bulletEntry.getKey()).getValue()))
-                        .play();
+                avatarTransition.createBulletTransition(Avatar.getInstance().getBulletFactory().get(bulletEntry.getKey()),Avatar.getInstance().getAvatarBulletLocation(bulletEntry)).play();
             }
         }
     }

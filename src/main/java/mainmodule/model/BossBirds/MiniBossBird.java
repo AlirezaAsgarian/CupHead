@@ -1,16 +1,20 @@
 package mainmodule.model.BossBirds;
 
+import mainmodule.Controllers.Location;
 import mainmodule.Enums.BulletTransitionFactory;
 import mainmodule.Enums.Bullets;
 import mainmodule.Controllers.BossBirdStateControllers.MiniBossBirdStateController;
 import mainmodule.model.*;
+import mainmodule.model.BulletFactories.MiniBossBirdBulletFactories.MiniBossBirdFactoryCreator;
+import mainmodule.model.BulletFactories.MiniBossBirdBulletFactories.MiniBossBulletEggFactory;
+import mainmodule.model.BulletFactories.MiniBossBirdBulletFactories.MiniBossBulletToLeft;
+import mainmodule.model.BulletFactories.MiniBossBirdBulletFactories.MiniBossBulletToRight;
 import mainmodule.util.Constants;
 import mainmodule.util.SetConstants;
 import mainmodule.View.BossBirdTransitions.BossBirdTransitions;
 import mainmodule.View.BossBirdTransitions.BulletTransition;
 import javafx.animation.Transition;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,7 +25,7 @@ public class MiniBossBird extends BossBird implements BulletTransitionFactory {
     ArrayList<MiniBossBirdBullet> miniBossBirdBullets;
 
     public MiniBossBird(double v, double v1, double v2, double v3, HashMap<BossBirdStates, ArrayList<ImagePattern>> bossBirdAnimations, int distance_collision_x, int distance_collision_y) {
-        super(v, v1, v2, v3, bossBirdAnimations, distance_collision_x, distance_collision_y);
+        super(v, v1, v2, v3, bossBirdAnimations, distance_collision_x, distance_collision_y,new MiniBossBirdFactoryCreator());
         this.bossBirdState = BossBirdStates.TURN_TO_LEFT;
         this.setFill(this.getBossBirdAnimations().get(this.bossBirdState).get(0));
         this.controller = new MiniBossBirdStateController(this);
@@ -107,7 +111,8 @@ public class MiniBossBird extends BossBird implements BulletTransitionFactory {
     private void initializeBossBirdEggBullets() {
         for (MiniBossBirdBullet miniBossBirdBullet :
                 this.getMiniBossBirdBullets()) {
-            startTransitionsOfMiniBossBirdBullets(miniBossBirdBullet);
+            //todo check get X and get Y
+            startTransitionsOfMiniBossBirdBullets(miniBossBirdBullet,new Location(miniBossBirdBullet.getX(),miniBossBirdBullet.getY()));
         }
     }
 
@@ -123,26 +128,30 @@ public class MiniBossBird extends BossBird implements BulletTransitionFactory {
         BossBirdManger.getInstance().addBossBirdTransitions(bossBirdTransitions);
     }
 
-    private void startTransitionsOfMiniBossBirdBullets(MiniBossBirdBullet miniBossBirdBullet) {
+    private void startTransitionsOfMiniBossBirdBullets(MiniBossBirdBullet miniBossBirdBullet,Location miniBossBirdLocation) {
         Transition bulletRotateTran = miniBossBirdBullet.getMiniBulletRotateTransition();
         bulletRotateTran.play();
-        BulletTransition buTran = createBulletTransition(Bullets.MINI_BOSS_BULLET_EGG, -1, -1, miniBossBirdBullet);
+        BulletTransition buTran = createBulletTransition(new MiniBossBulletEggFactory() {}, miniBossBirdLocation);
         miniBossBirdBullet.setBulletTransition(buTran);
         buTran.play();
     }
 
     @Override
-    public Bullet getBullet() {
+    public Location getBulletLocation() {
         if (this.bossBirdState == BossBirdStates.SHOOTING_TO_LEFT) {
-            return new Bullet(BossBird.getInstance().getX() + Constants.MINI_BOSS_BULLET_X, BossBird.getInstance().getY() + Constants.MINI_BOSS_BULLET_Y, Bullets.MINI_BOSS_BULLET_TO_LEFT, new ArrayList<Imageable>(List.of(Avatar.getInstance())));
+            return new Location(BossBird.getInstance().getX() + Constants.MINI_BOSS_BULLET_X, BossBird.getInstance().getY() + Constants.MINI_BOSS_BULLET_Y);
         } else {
-            return new Bullet(BossBird.getInstance().getX() + Constants.MINI_BOSS_BULLET_X, BossBird.getInstance().getY() + Constants.MINI_BOSS_BULLET_Y, Bullets.MINI_BOSS_BULLET_TO_RIGHT, new ArrayList<Imageable>(List.of(Avatar.getInstance())));
+            return new Location(BossBird.getInstance().getX() + Constants.MINI_BOSS_BULLET_X, BossBird.getInstance().getY() + Constants.MINI_BOSS_BULLET_Y);
         }
     }
 
     @Override
-    public Bullets getBulletType() {
-        return Bullets.MINI_BOSS_BULLET_TO_LEFT;
+    public BulletFactory getBulletFactory() {
+      if(this.bossBirdState == BossBirdStates.SHOOTING_TO_LEFT){
+          return bulletFactoryCreator.getNewBossBirdBulletFactory(Constants.MINI_BOSS_BIRD_BIRD_BULLET_TO_LEFT_INDEX);
+      } else {
+          return bulletFactoryCreator.getNewBossBirdBulletFactory(Constants.MINI_BOSS_BIRD_BIRD_BULLET_TO_RIGHT_INDEX);
+      }
     }
 
     @Override

@@ -81,6 +81,11 @@ public class Constants {
     public static final int MINI_BOSS_BULLET_X = -33;
     public static final int MINI_BOSS_BULLET_Y = 75;
     public static final int MINI_BOSS_BULLET_SPEED = 5;
+    public static final int LEFT_ATTACK_SIDE = 0;
+    public static final int NUMBERS_OF_TYPES_OF_POULTRY = 2;
+    public static final int MINI_BOSS_BIRD_BIRD_BULLET_TO_RIGHT_INDEX = 1;
+    public static final int MINI_BOSS_BIRD_BIRD_BULLET_TO_LEFT_INDEX = 1;
+
     public static int MINI_BOSS_BULLET_DURATION  = 3200;
     public static final int MINI_BOSS_EXPLOSION_SIZE = 100;
     public static final int MINI_BOSS_EXPLOSION_TIME = 100;

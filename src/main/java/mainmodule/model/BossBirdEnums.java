@@ -3,6 +3,12 @@ package mainmodule.model;
 import mainmodule.Enums.Bullets;
 import mainmodule.Main;
 import mainmodule.model.BossBirds.*;
+import mainmodule.model.BulletFactories.BedBossBirdBulletFactories.BedBossBirdBulletFactoryType1;
+import mainmodule.model.BulletFactories.BedBossBirdBulletFactories.BedBossBirdBulletFactoryType2;
+import mainmodule.model.BulletFactories.BedBossBirdBulletFactories.BedBossBirdBulletFactoryType3;
+import mainmodule.model.BulletFactories.BedBossBirdBulletFactories.BedBossBirdBulletFactoryType4;
+import mainmodule.model.BulletFactories.DoctorBossBirdBulletFactories.DoctorBossBirdBulletFactoryType1;
+import mainmodule.model.BulletFactories.DoctorBossBirdBulletFactories.DoctorBossBirdBulletFactoryType2;
 import mainmodule.util.Constants;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
@@ -60,7 +66,7 @@ public enum BossBirdEnums {
         for (int i = 1; i <= 22; i++) {
             add(new ImagePattern(new Image(Main.class.getResource("PC_Computer_Cuphead_Dont_Deal_With_the_Devil_Wally_Warbles/Phase 3/Birds/Bird A/Attack/00" + i + ".png").toExternalForm())));
         }
-    }})),new ArrayList<>(List.of(Bullets.DOCTOR_BOSS_BULLET1,Bullets.DOCTOR_BOSS_BULLET2)),Constants.X_DISTANCE_D,Constants.Y_DISTANCE_D),0),
+    }})),new ArrayList<>(List.of(new DoctorBossBirdBulletFactoryType1(){},new DoctorBossBirdBulletFactoryType2(){})),Constants.X_DISTANCE_D,Constants.Y_DISTANCE_D),0),
      DOCTOR_BOSS_BIRD_RIGHT(() -> new DoctorBossBird(Constants.Max_Width - 10 - Constants.BOSS_BIRD3_WIDTH + Constants.DOCTOR_BOSS_BIRD_RIGHT_WIDTH,Constants.BOSS_BIRD3_HEIGHT + 50 + Constants.DOCTOR_BOSS_BIRD_RIGHT_HEIGHT,Constants.BOSS_BIRD_DOCTOR_WIDTH,Constants.BOSS_BIRD_DOCTOR_HEIGHT, new HashMap<>(Map.of(BossBirdStates.FLYING, new ArrayList<ImagePattern>() {{
         for (int i = 1; i <= 16; i++) {
             add(new ImagePattern(new Image(Main.class.getResource("PC_Computer_Cuphead_Dont_Deal_With_the_Devil_Wally_Warbles/Phase 3/Birds/Bird B/Idle/00" + i + ".png").toExternalForm())));
@@ -69,7 +75,7 @@ public enum BossBirdEnums {
         for (int i = 1; i <= 22; i++) {
             add(new ImagePattern(new Image(Main.class.getResource("PC_Computer_Cuphead_Dont_Deal_With_the_Devil_Wally_Warbles/Phase 3/Birds/Bird B/Attack/00" + i + ".png").toExternalForm())));
         }
-    }})),new ArrayList<>(List.of(Bullets.DOCTOR_BOSS_BULLET1,Bullets.DOCTOR_BOSS_BULLET2)),Constants.X_DISTANCE_D,Constants.Y_DISTANCE_D),0),
+    }})),new ArrayList<>(List.of(new DoctorBossBirdBulletFactoryType1(){},new DoctorBossBirdBulletFactoryType2(){})),Constants.X_DISTANCE_D,Constants.Y_DISTANCE_D),0),
     THIRD_BOSS_BIRD(() -> new BedBossBird(Constants.Max_Width - Constants.BOSS_BIRD3_WIDTH,Constants.BOSS_BIRD3_HEIGHT + 50,Constants.BOSS_BIRD3_WIDTH,Constants.BOSS_BIRD3_HEIGHT, new HashMap<>(Map.of(BossBirdStates.FLYING, new ArrayList<ImagePattern>() {{
         for (int i = 1; i <= 16; i++) {
             add(new ImagePattern(new Image(Main.class.getResource("PC_Computer_Cuphead_Dont_Deal_With_the_Devil_Wally_Warbles/Phase 3/Idle/00" + i + ".png").toExternalForm())));
@@ -82,7 +88,7 @@ public enum BossBirdEnums {
         for (int i = 1; i <= 16; i++) {
             add(new ImagePattern(new Image(Main.class.getResource("PC_Computer_Cuphead_Dont_Deal_With_the_Devil_Wally_Warbles/Phase 3/Death/00" + i + ".png").toExternalForm())));
         }
-    }})),new ArrayList<Bullets>(List.of(Bullets.BED_BOSS_BULLET1,Bullets.BED_BOSS_BULLET2,Bullets.BED_BOSS_BULLET3,Bullets.BED_BOSS_BULLET4)),Constants.X_DISTANCE_3,Constants.Y_DISTANCE_3),Constants.BOSS_BIRD3_HEALTH);
+    }})),new ArrayList<BulletFactory>(List.of(new BedBossBirdBulletFactoryType1(){}, new BedBossBirdBulletFactoryType2(){}, new BedBossBirdBulletFactoryType3(){}, new BedBossBirdBulletFactoryType4(){})),Constants.X_DISTANCE_3,Constants.Y_DISTANCE_3),Constants.BOSS_BIRD3_HEALTH);
 
     BossBirdFactory bossBirdCreator;
     final int health;

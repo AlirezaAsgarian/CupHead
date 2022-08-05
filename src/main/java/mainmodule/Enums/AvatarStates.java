@@ -18,7 +18,7 @@ public enum AvatarStates {
     NORMAL_BOMBING(true, AvatarShootingKeySettings.AVATAR_BOMB, true, AvatarMoveKeySettings.NORMAL, Constants.AVATAR_NORMAL_BOMBING_STATE_DURATION, 1, v -> {
     }),
     //    LITTLE,
-    MISSILE(false, AvatarShootingKeySettings.MISSLE, true, AvatarMoveKeySettings.MISSLE, Constants.AVATAR_MISSLE_STATE_DURATION, 1, v -> {
+    MISSILE(false, AvatarShootingKeySettings.MISSILE, true, AvatarMoveKeySettings.MISSLE, Constants.AVATAR_MISSLE_STATE_DURATION, 1, v -> {
         if (v * 26 > 8 && !TransitionManger.getAvatarTransition().isUniqueActionExecuteOnce()) {
             Thread thread = Thread.currentThread();
             synchronized (thread) {

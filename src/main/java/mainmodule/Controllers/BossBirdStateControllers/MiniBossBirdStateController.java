@@ -7,6 +7,10 @@ import mainmodule.model.BossBirds.MiniBossBird;
 import mainmodule.util.SetConstants;
 import mainmodule.View.Menus.MenuStack;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 public class MiniBossBirdStateController implements ChangeableState {
     private final MiniBossBird miniBossBird;
 
@@ -40,6 +44,10 @@ public class MiniBossBirdStateController implements ChangeableState {
         removeBossBirdFromScreen();
     }
 
+    public static void main(String[] args) {
+        List list = new ArrayList();
+
+    }
     private void updateBossBirdStack() {
         BossBirdManger.getInstance().getBossBirdStack().pop();
     }

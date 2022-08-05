@@ -17,6 +17,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Bullet extends Rectangle implements Imageable{
     /***
@@ -27,30 +28,30 @@ public class Bullet extends Rectangle implements Imageable{
     final int damageRatio;
     int health;
     final int duration;
-    final ArrayList<Imageable> enemies;
+    final List<Imageable> enemies;
     MoveFuncs moveFuncs;
+    boolean isFlexible;
     Transition explosion;
-    ArrayList<ImagePattern> animation;
+    List<ImagePattern> animationImagePatterns;
     Transition bulletTransition;
     Image currentImage;
 
     /***
      * @param v : left up x coordination
      * @param v1 : left up y coordination
-     * @param bullet : an enum that contains speed and animation of bullet and function that gets cycleCount and have a movefuncs enum
-     * @param enemy : an arraylist which contains the enemies of this bullet
      */
-    public Bullet(double v, double v1, Bullets bullet, ArrayList<Imageable> enemy) {
-        super(v, v1, bullet.getWidth(), bullet.getHeight());
-        this.damageRatio = bullet.getDamageRatio();
-        this.duration = bullet.getCycleDuration();
-        this.enemies = enemy;
-        MenuStack.getInstance().getTopMenu().getRoot().getChildren().add(this);
-        this.moveFuncs = bullet.getMoveFuncs();
-        this.speed = bullet.getSpeed();
-        this.animation = bullet.getImagePattern();
-        this.cycleCount = bullet.getCycleCount();
-        this.setFill(bullet.getImagePattern().get(0));
+    public Bullet(double v,double v1,BulletFactory bulletFactory) {
+        super(v, v1, bulletFactory.getBulletWidth(), bulletFactory.getBulletHeight());
+        this.damageRatio = bulletFactory.getDamageRatio();
+        this.duration = bulletFactory.getAnimationDuration();
+        this.enemies = bulletFactory.getBulletEnemies();
+        MenuStack.getInstance().addNodeToCurrentMenuChildrens(this);
+        this.moveFuncs = bulletFactory.getBulletMoveFunction();
+        this.speed = bulletFactory.getBulletSpeed();
+        this.animationImagePatterns = bulletFactory.getBulletAnimationImagePatterns();
+        this.cycleCount = bulletFactory.getTransitionCycleCount();
+        this.isFlexible = bulletFactory.isFlexible();
+        this.setFill(this.animationImagePatterns.get(0));
     }
 
 
@@ -171,12 +172,12 @@ public class Bullet extends Rectangle implements Imageable{
         return explosion;
     }
 
-    public ArrayList<Imageable> getEnemies() {
+    public List<Imageable> getEnemies() {
         return enemies;
     }
 
-    public ArrayList<ImagePattern> getAnimation() {
-        return animation;
+    public List<ImagePattern> getAnimationImagePatterns() {
+        return animationImagePatterns;
     }
 
     public int getSpeed() {

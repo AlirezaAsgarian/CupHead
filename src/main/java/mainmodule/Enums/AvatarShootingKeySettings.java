@@ -2,6 +2,8 @@ package mainmodule.Enums;
 
 import mainmodule.Main;
 import mainmodule.model.Avatar;
+import mainmodule.model.BulletFactories.AvatarBulletFactories.*;
+import mainmodule.model.BulletFactory;
 import mainmodule.model.TransitionManger;
 import mainmodule.util.Constants;
 import mainmodule.View.Menus.MenuStack;
@@ -18,21 +20,25 @@ import java.util.Map;
 
 public enum AvatarShootingKeySettings {
     NORMAL_BULLETS(new HashMap<>(Map.of(KeyCode.D, false, KeyCode.S, false, KeyCode.W, false, KeyCode.A, false)),
-            new HashMap<>(Map.of(KeyCode.D, Bullets.AVATAR_BULLET, KeyCode.S, Bullets.AVATAR_BOMB, KeyCode.W, Bullets.AVATAR_TIR_HAVAII, KeyCode.A, Bullets.AVATAR_BACK)),
+            new HashMap<>(Map.of(KeyCode.D, new AvatarBulletFactory() {
+            }, KeyCode.S, new AvatarBombFactory() {
+            }, KeyCode.W, new AvatarTirHavaiiFactory() {
+            }, KeyCode.A, new AvatarBackBulletFactory() {
+            })),
             new HashMap<>(Map.of(KeyCode.D, Constants.getCurrentTime(), KeyCode.W, Constants.getCurrentTime(), KeyCode.S, Constants.getCurrentTime(), KeyCode.A, Constants.getCurrentTime())),
             new HashMap<>(Map.of(KeyCode.D, new Pair<>(Constants.AVATAR_BULLET_DISTANCE_FROM_CENTER, 0), KeyCode.W, new Pair<>(0, -Constants.AVATAR_BULLET_DISTANCE_FROM_CENTER),
                     KeyCode.S, new Pair<>(0, Constants.AVATAR_BULLET_DISTANCE_FROM_CENTER), KeyCode.A, new Pair<>(-Constants.AVATAR_BACK_DISTANCE_FROM_CENTER, 0))), "normal", new ImageView(new Image(Main.class.getResource("images/icons/bulletIcon.png").toExternalForm()))),
     AVATAR_BOMB(new HashMap<>(Map.of(KeyCode.S, false)),
-            new HashMap<>(Map.of(KeyCode.S, Bullets.AVATAR_MISSLE)),
+            new HashMap<>(Map.of(KeyCode.S, new AvatarMissileBulletFactory() {})),
             new HashMap<>(Map.of(KeyCode.S, Constants.getCurrentTime())),
             new HashMap<>(Map.of(KeyCode.S, new Pair<>(0, Constants.AVATAR_BULLET_DISTANCE_FROM_CENTER))), "missle", new ImageView(new Image(Main.class.getResource("images/icons/missleIcon.png").toExternalForm()))),
-    MISSLE(new HashMap<>(Map.of(KeyCode.SPACE, false)),
-            new HashMap<>(Map.of(KeyCode.SPACE, Bullets.AVATAR_MISSLE)),
+    MISSILE(new HashMap<>(Map.of(KeyCode.SPACE, false)),
+            new HashMap<>(Map.of(KeyCode.SPACE, new AvatarMissileBulletFactory() {})),
             new HashMap<>(Map.of(KeyCode.SPACE, Constants.getCurrentTime())),
             new HashMap<>(Map.of(KeyCode.SPACE, new Pair<>(0, Constants.AVATAR_BULLET_DISTANCE_FROM_CENTER))), "missle", new ImageView(new Image(Main.class.getResource("images/icons/missleIcon.png").toExternalForm())));
 
 
-    AvatarShootingKeySettings(HashMap<KeyCode, Boolean> shootingKeyEvents, HashMap<KeyCode, Bullets> bullets, HashMap<KeyCode, Long> shootingTimeLine, HashMap<KeyCode, Pair<Integer, Integer>> startCoordinateBullet, String name, ImageView imageView) {
+    AvatarShootingKeySettings(HashMap<KeyCode, Boolean> shootingKeyEvents, HashMap<KeyCode, BulletFactory> bullets, HashMap<KeyCode, Long> shootingTimeLine, HashMap<KeyCode, Pair<Integer, Integer>> startCoordinateBullet, String name, ImageView imageView) {
         this.shootingKeyEvents = shootingKeyEvents;
         this.bullets = bullets;
         this.shootingTimeLine = shootingTimeLine;
@@ -61,19 +67,20 @@ public enum AvatarShootingKeySettings {
             {
                 setCycleCount(1);
                 setCycleDuration(Duration.millis(2000));
-                TransitionManger.addTransition(TransitionType.BULLET_TRANSITION,this);
+                TransitionManger.addTransition(TransitionType.BULLET_TRANSITION, this);
             }
+
             @Override
             protected void interpolate(double v) {
                 int frame = (int) Math.ceil(v * AvatarShootingKeySettings.getExplosionOfMissleCupHead().size());
                 if (frame == 0) frame = 1;
-                updateImageView(AvatarShootingKeySettings.explosionOfMissleCupHead.get(frame - 1).getImage(),frame);
+                updateImageView(AvatarShootingKeySettings.explosionOfMissleCupHead.get(frame - 1).getImage(), frame);
                 setOnFinished(actionEvent -> {
                     Avatar.getInstance().moveLeft(Constants.AVATAR_GET_BACK_AFTER_BOOM);
                     Avatar.getInstance().setOpacity(1);
                     MenuStack.getInstance().getTopMenu().getRoot().getChildren().remove(boomImageView);
                     Avatar.getInstance().changeAvatarStates(AvatarStates.BLINK);
-                    TransitionManger.removeTransition(TransitionType.BULLET_TRANSITION,this);
+                    TransitionManger.removeTransition(TransitionType.BULLET_TRANSITION, this);
                 });
             }
         };
@@ -84,14 +91,15 @@ public enum AvatarShootingKeySettings {
         boomImageView.setY(Avatar.getInstance().getY());
         boomImageView.setX(Avatar.getInstance().getX());
     }
-    private static void updateImageView(Image image,int frame){
+
+    private static void updateImageView(Image image, int frame) {
         MenuStack.getInstance().getTopMenu().getRoot().getChildren().remove(boomImageView);
         boomImageView.setImage(AvatarShootingKeySettings.explosionOfMissleCupHead.get(frame - 1).getImage());
         MenuStack.getInstance().getTopMenu().getRoot().getChildren().add(boomImageView);
     }
 
     HashMap<KeyCode, Boolean> shootingKeyEvents;
-    HashMap<KeyCode, Bullets> bullets;
+    HashMap<KeyCode, BulletFactory> bullets;
     HashMap<KeyCode, Long> shootingTimeLine;
     HashMap<KeyCode, Pair<Integer, Integer>> startCoordinateBullet;
     final String name;
@@ -102,7 +110,7 @@ public enum AvatarShootingKeySettings {
         return shootingKeyEvents;
     }
 
-    public HashMap<KeyCode, Bullets> getBullets() {
+    public HashMap<KeyCode, BulletFactory> getBullets() {
         return bullets;
     }
 

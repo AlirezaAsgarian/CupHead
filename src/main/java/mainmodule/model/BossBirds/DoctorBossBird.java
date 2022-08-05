@@ -1,10 +1,11 @@
 package mainmodule.model.BossBirds;
 
+import mainmodule.Controllers.Location;
 import mainmodule.Enums.Bullets;
 import mainmodule.Controllers.BossBirdStateControllers.DoctorBossBirdStateController;
-import mainmodule.model.Avatar;
 import mainmodule.model.BossBirdStates;
-import mainmodule.model.Bullet;
+import mainmodule.model.BulletFactories.DoctorBossBirdBulletFactories.DoctorBossBirdBulletFactoryCreator;
+import mainmodule.model.BulletFactory;
 import mainmodule.util.Constants;
 import javafx.scene.paint.ImagePattern;
 
@@ -13,10 +14,10 @@ import java.util.HashMap;
 import java.util.Random;
 
 public class DoctorBossBird extends BossBird {
-    ArrayList<Bullets> bullets;
+    ArrayList<BulletFactory> bullets;
 
-    public DoctorBossBird(double v, double v1, double v2, double v3, HashMap<BossBirdStates, ArrayList<ImagePattern>> bossBirdAnimations, ArrayList<Bullets> bullets, int distance_collision_x, int distance_collision_y) {
-        super(v, v1, v2, v3, bossBirdAnimations, distance_collision_x, distance_collision_y);
+    public DoctorBossBird(double v, double v1, double v2, double v3, HashMap<BossBirdStates, ArrayList<ImagePattern>> bossBirdAnimations, ArrayList<BulletFactory> bullets, int distance_collision_x, int distance_collision_y) {
+        super(v, v1, v2, v3, bossBirdAnimations, distance_collision_x, distance_collision_y,new DoctorBossBirdBulletFactoryCreator());
         this.bossBirdState = BossBirdStates.FLYING;
         this.bullets = bullets;
         this.setFill(this.getBossBirdAnimations().get(this.bossBirdState).get(0));
@@ -43,15 +44,11 @@ public class DoctorBossBird extends BossBird {
 
 
     @Override
-    public Bullet getBullet() {
-        Random random = new Random();
-        int randomNumber = random.nextInt(2);
-        return new Bullet(this.getX() + Constants.DOCTOR_BIRD_BULLET_X, this.getY() + Constants.DOCTOR_BIRD_BULLET_Y , this.bullets.get(randomNumber), new ArrayList<>() {{
-            add(Avatar.getInstance());
-         }});
+    public Location getBulletLocation() {
+        return new Location(this.getX() + Constants.DOCTOR_BIRD_BULLET_X, this.getY() + Constants.DOCTOR_BIRD_BULLET_Y);
     }
     @Override
-    public Bullets getBulletType() {
+    public BulletFactory getBulletFactory() {
         return this.bullets.get(0);
     }
 

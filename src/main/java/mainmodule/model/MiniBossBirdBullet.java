@@ -4,9 +4,9 @@ import mainmodule.Enums.Bullets;
 import mainmodule.Enums.TransitionType;
 import mainmodule.model.BossBirds.BossBird;
 import mainmodule.model.BossBirds.MiniBossBird;
+import mainmodule.model.BulletFactories.MiniBossBirdBulletFactories.MiniBossBulletEggFactory;
 import mainmodule.util.Constants;
 import javafx.animation.Transition;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class MiniBossBirdBullet extends Bullet {
     public MiniBossBirdBullet(double v, double v1, ArrayList<Imageable> enemy, Bullets bullet, MiniBossBird ownBossBird) {
-        super(v, v1, bullet, enemy);
+        super(v, v1, new MiniBossBulletEggFactory() {});
         bulletRotate = new Rotate();
         bulletRotate.setPivotX(ownBossBird.getxCenter());
         bulletRotate.setPivotY(ownBossBird.getyCenter());
@@ -36,6 +36,7 @@ public class MiniBossBirdBullet extends Bullet {
         miniBulletTransition = initializeBulletRotateTransition();
         return miniBulletTransition;
     }
+
 
     private Transition initializeBulletRotateTransition() {
         return new Transition() {
