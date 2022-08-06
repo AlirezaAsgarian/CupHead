@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class Game {
 
-    Avatar avatar;
+    AvatarBase avatar;
     BossBirdManger bossBirdManger;
     private BackGroundTransition backGroundTransiton;
     private ArrayList<BulletTransition> bulletTransitions = new ArrayList<>();
@@ -26,7 +26,7 @@ public class Game {
 
     public Game(ProgressBar progressBar) {
         bossBirdProgressBar = progressBar;
-        this.avatar = new Avatar(20.0, 20.0, 109.0, 95.0);
+        this.avatar = new AvatarBase(20.0, 20.0, 109.0, 95.0);
         Avatar.setInstance(this.avatar);
         initializeBossBirdManager();
         isEnd = false;

@@ -1,6 +1,7 @@
 package mainmodule.model.pluginA.Enums;
 
 import mainmodule.model.Avatar;
+import mainmodule.model.AvatarBase;
 import mainmodule.model.pluginA.BossBirds.BossBird;
 import mainmodule.model.TransitionManger;
 import mainmodule.model.pluginA.util.Constants;
@@ -32,11 +33,13 @@ public enum AvatarStates {
                 }
             }
         }else if(v * 26 > 8){
-            Avatar.getInstance().moveRight(Constants.AVATAR_MISLLE_SPEED);
-            if(Avatar.getInstance().getBoundsInParent().intersects(BossBird.getInstance().getBoundsInParent())){
-                TransitionManger.getAvatarTransition().stop();
-                BossBird.getInstance().decreaseHealth(Constants.AVATAR_MISSLE_DAMAGE_RATIO);
-                AvatarShootingKeySettings.boom().play();
+            if(Avatar.getInstance() instanceof AvatarBase avatar) {
+                avatar.moveRight(Constants.AVATAR_MISLLE_SPEED);
+                if (avatar.getBoundsInParent().intersects(BossBird.getInstance().getBoundsInParent())) {
+                    TransitionManger.getAvatarTransition().stop();
+                    BossBird.getInstance().decreaseHealth(Constants.AVATAR_MISSLE_DAMAGE_RATIO);
+                    AvatarShootingKeySettings.boom().play();
+                }
             }
         }
         return;

@@ -6,7 +6,7 @@ import mainmodule.model.pluginA.BossBirds.bossBirdStateEnums.BossBirdStates;
 import mainmodule.util.ChangeableState;
 import mainmodule.util.Location;
 import mainmodule.model.*;
-import mainmodule.model.pluginA.BulletFactories.BulletFactoryCreator;
+import mainmodule.model.BulletFactoryCreator;
 import mainmodule.model.pluginA.util.Constants;
 import mainmodule.View.Menus.MenuStack;
 import javafx.scene.paint.ImagePattern;

@@ -6,7 +6,7 @@ import mainmodule.model.pluginA.Enums.BulletTransitionFactory;
 import mainmodule.model.pluginA.Enums.TransitionType;
 import mainmodule.model.*;
 import mainmodule.model.pluginA.BossBirds.BossBird;
-import mainmodule.model.pluginA.BulletFactories.BulletFactoryCreator;
+import mainmodule.model.BulletFactoryCreator;
 import mainmodule.model.pluginA.BulletFactories.PoultryBirdBulletsFactories.PoultryBulletFactoryCreator;
 import mainmodule.model.pluginA.util.Constants;
 import mainmodule.model.pluginA.util.SetConstants;

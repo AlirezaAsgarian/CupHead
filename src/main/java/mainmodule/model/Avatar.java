@@ -2,40 +2,56 @@ package mainmodule.model;
 
 import javafx.geometry.Bounds;
 import javafx.scene.image.Image;
-import mainmodule.model.pluginA.Controllers.AvatarControllers.KeyHandlingAvatar;
-import mainmodule.util.CollisionController;
-import mainmodule.util.Location;
-import mainmodule.model.pluginA.Enums.AvatarShootingKeySettings;
-import mainmodule.model.pluginA.Enums.AvatarStates;
-import mainmodule.model.pluginA.Enums.Bullets;
-import mainmodule.model.pluginA.BossBirds.BossBird;
-import mainmodule.model.pluginA.util.Constants;
-import mainmodule.model.pluginA.util.SetConstants;
-import mainmodule.View.AvatarTransitions.AvatarTransition;
-import mainmodule.View.Menus.MenuStack;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Pair;
+import mainmodule.View.Menus.MenuStack;
+import mainmodule.model.pluginA.BossBirds.BossBird;
+import mainmodule.model.pluginA.Controllers.AvatarControllers.KeyHandlingAvatar;
+import mainmodule.model.pluginA.Enums.AvatarShootingKeySettings;
+import mainmodule.model.pluginA.Enums.AvatarStates;
+import mainmodule.model.pluginA.Enums.Bullets;
+import mainmodule.model.pluginA.util.Constants;
+import mainmodule.model.pluginA.util.SetConstants;
+import mainmodule.util.CollisionController;
+import mainmodule.util.Location;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Map;
 
-public class Avatar extends Rectangle implements Imageable{
+public abstract class Avatar extends Rectangle implements Imageable {
     /***
      * avatar has one instance one hashmap keyEvents contains moving key codes and boolean for activation , one hashmap with moving key codes and ArrayList of images for that key code
      * on hashmap shootingKeyEvents contains attack key codes and boolean for activation furthermore one hashmap shootingTimeLine for assert the rate of firing ,
      * one transition in purpose of when hits the bullet one function for moving and this implements with singleton design
      */
-    private static Avatar instance;
+    static Avatar instance;
     int health;
     Image avatarImage;
     Bullets bullet;
     HealthBar healthBar;
-
     AvatarShootingKeySettings keyShootings;
     AvatarStates avatarStates = AvatarStates.NORMAL;
     ImageView iconOfShootingSetting = new ImageView();
+
+    public Avatar(double v, double v1, double v2, double v3) {
+        super(v, v1, v2, v3);
+        health = Constants.AVATAR_HEALTH;
+        this.healthBar = new HealthBar(this);
+    }
+
+    public static Avatar getInstance() {
+        if (instance == null) {
+            instance = new AvatarBase(20.0, 20.0, 109.0, 95.0);
+        }
+        return instance;
+    }
+
+    public static void setInstance(AvatarBase instance) {
+        Avatar.instance = instance;
+    }
 
     public Bullets getBullet() {
         return bullet;
@@ -44,32 +60,17 @@ public class Avatar extends Rectangle implements Imageable{
     public Map<KeyCode, BulletFactory> getBulletFactory() {
         return avatarStates.getShootingKeySettings().getBullets();
     }
+
     public Location getAvatarBulletLocation(Map.Entry bulletEntry){
-       return new Location( (int) (Avatar.getInstance().getxCenter() + Avatar.getInstance().getStartCoordinateBullet().get(bulletEntry.getKey()).getKey()), (int) (Avatar.getInstance().getyCenter() + Avatar.getInstance().getStartCoordinateBullet().get(bulletEntry.getKey()).getValue()));
+       return new Location( (int) (this.getxCenter() + this.getStartCoordinateBullet().get(bulletEntry.getKey()).getKey()), (int) (this.getyCenter() + this.getStartCoordinateBullet().get(bulletEntry.getKey()).getValue()));
     }
 
-    public Avatar(double v, double v1, double v2, double v3) {
-        super(v, v1, v2, v3);
-        iconOfShootingSetting.setY(10);
-        iconOfShootingSetting.setX(10);
-        health = Constants.AVATAR_HEALTH;
-        this.healthBar = new HealthBar(this);
+    public abstract void move(KeyCode keyCode);
 
-    }
-
-    public static Avatar getInstance() {
-        if (instance == null) {
-            instance = new Avatar(20.0, 20.0, 109.0, 95.0);
-        }
-        return instance;
-    }
-
-    public void move(KeyCode keyCode) {
-        switch (keyCode) {
-            case RIGHT -> moveRight();
-            case LEFT -> moveLeft();
-            case UP -> moveUp();
-            case DOWN -> moveDown();
+    public void checkForColllisonWithBossBird() {
+        if (this.avatarStates != AvatarStates.BLINK && CollisionController.haveCollision(this.avatarImage, BossBird.getInstance().getCurrentImage(), this.getBoundsInParent(), BossBird.getInstance().getBoundsInParent())) {
+            this.decreaseHealth(SetConstants.MINI_BOSS_BULLET_DAMAGE_RATIO);
+            changeAvatarStates(AvatarStates.BLINK);
         }
     }
 
@@ -93,7 +94,6 @@ public class Avatar extends Rectangle implements Imageable{
         this.setX(this.getX() - Constants.AVATAR_SPEED);
     }
 
-
     public void moveRight(int speed) {
         if (this.getX() + this.getWidth() + speed >= Constants.Max_Width) return;
         this.setX(this.getX() + speed);
@@ -103,15 +103,6 @@ public class Avatar extends Rectangle implements Imageable{
         if (this.getX() - speed <= 0) return;
         this.setX(this.getX() - speed);
     }
-
-    public void checkForColllisonWithBossBird() {
-        if (this.avatarStates != AvatarStates.BLINK && CollisionController.haveCollision(this.avatarImage,BossBird.getInstance().getCurrentImage(),this.getBoundsInParent(),BossBird.getInstance().getBoundsInParent())) {
-            this.decreaseHealth(SetConstants.MINI_BOSS_BULLET_DAMAGE_RATIO);
-            changeAvatarStates(AvatarStates.BLINK);
-        }
-    }
-
-
 
     public void setIconOfShootingSetting(ImageView iconOfShootingSetting) {
         this.iconOfShootingSetting = iconOfShootingSetting;
@@ -128,36 +119,15 @@ public class Avatar extends Rectangle implements Imageable{
         return (avatarStates == AvatarStates.NORMAL || avatarStates == AvatarStates.NORMAL_BOMBING);
     }
 
-    //getter and setters
+    public abstract void changeAvatarStates(AvatarStates avatarStates);
 
-
-    public void changeAvatarStates(AvatarStates avatarStates) {
-        this.avatarStates = avatarStates;
-        startUpdatedAvatarTransition();
-    }
-
-    private void startUpdatedAvatarTransition() {
-        AvatarTransition.getInstance().stop();
-        AvatarTransition.setInstance(new AvatarTransition());
-        AvatarTransition.getInstance().play();
-    }
+    protected abstract void startUpdatedAvatarTransition();
 
     public Map<KeyCode, ArrayList<ImagePattern>> getKeyMoves() {
         return avatarStates.getMoveKeySettings().getKeyMoves();
     }
 
-    public void decreaseHealth(int value) {
-        this.health -= value;
-    }
-
-
-    public Map<KeyCode, Boolean> getMoveKeyCodes() {
-        return avatarStates.getMoveKeySettings().getMoveKeyEvents();
-    }
-
-    public Map<KeyCode, Long> getShootingTimeLine() {
-        return avatarStates.getShootingKeySettings().getShootingTimeLine();
-    }
+    public abstract void decreaseHealth(int value);
 
     /***
      * @return returns center x of this rectangle
@@ -173,52 +143,23 @@ public class Avatar extends Rectangle implements Imageable{
         return (this.getY() + this.getHeight() / 2);
     }
 
-    public Map<KeyCode, Pair<Integer, Integer>> getStartCoordinateBullet() {
-        return avatarStates.getShootingKeySettings().getStartCoordinateBullet();
-    }
-
-
-
-
-    public String getKeySettingName() {
-        return avatarStates.getShootingKeySettings().getName();
-    }
-
     public ImageView getIconOfShootingSetting() {
         return avatarStates.getShootingKeySettings().getImageView();
-    }
-
-    public Map<KeyCode, Boolean> getShootingKeyCodes() {
-        return avatarStates.getShootingKeySettings().getShootingKeyEvents();
     }
 
     public AvatarStates getState() {
         return avatarStates;
     }
 
-    public void updateState() {
-        if (this.getHealth() < 0) {
-            return;
-        }
-        this.avatarStates = updateAvatarStateAndReturnsIt(this.avatarStates);
-        startUpdatedAvatarTransition();
-    }
+    public abstract void updateState();
 
-    private AvatarStates updateAvatarStateAndReturnsIt(AvatarStates avatarStates) {
-        if (avatarStates == AvatarStates.BLINK || this.avatarStates == AvatarStates.MISSILE) {
-            return AvatarStates.NORMAL;
-        }
-        return avatarStates;
-    }
-
-
-
+    protected abstract AvatarStates updateAvatarStateAndReturnsIt(AvatarStates avatarStates);
 
     public int getHealth() {
         return health;
     }
 
-    public void setKeyOnPressedAndReleasedAvatar(Avatar this) {
+    public void setKeyOnPressedAndReleasedAvatar() {
         KeyHandlingAvatar keyHandlingAvatar = new KeyHandlingAvatar();
         keyHandlingAvatar.setKeyPressedSettings();
         keyHandlingAvatar.setKeyReleasedSettings();
@@ -230,10 +171,27 @@ public class Avatar extends Rectangle implements Imageable{
             MenuStack.getInstance().getTopMenu().getRoot().getChildren().get(index).requestFocus();
     }
 
-
-    public static void setInstance(Avatar instance) {
-        Avatar.instance = instance;
+    public Map<KeyCode, Boolean> getMoveKeyCodes() {
+        return avatarStates.getMoveKeySettings().getMoveKeyEvents();
     }
+
+    public Map<KeyCode, Long> getShootingTimeLine() {
+        return avatarStates.getShootingKeySettings().getShootingTimeLine();
+    }
+
+    public Map<KeyCode, Pair<Integer, Integer>> getStartCoordinateBullet() {
+        return avatarStates.getShootingKeySettings().getStartCoordinateBullet();
+    }
+
+    public String getKeySettingName() {
+        return avatarStates.getShootingKeySettings().getName();
+    }
+
+    public Map<KeyCode, Boolean> getShootingKeyCodes() {
+        return avatarStates.getShootingKeySettings().getShootingKeyEvents();
+    }
+
+
 
     public boolean hasHealth() {
         return health >= 0;

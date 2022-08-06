@@ -1,4 +1,4 @@
-package mainmodule.model.pluginA.BulletFactories;
+package mainmodule.model;
 
 import mainmodule.model.BulletFactory;
 

@@ -1,6 +1,6 @@
 package mainmodule.model.pluginA.BulletFactories.DoctorBossBirdBulletFactories;
 
-import mainmodule.model.pluginA.BulletFactories.BulletFactoryCreator;
+import mainmodule.model.BulletFactoryCreator;
 import mainmodule.model.BulletFactory;
 
 import java.util.ArrayList;
