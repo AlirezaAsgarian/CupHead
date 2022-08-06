@@ -1,10 +1,10 @@
 package mainmodule.model;
 
-import mainmodule.Enums.AvatarStates;
-import mainmodule.Enums.BackGround;
+import mainmodule.model.pluginA.Enums.AvatarStates;
+import mainmodule.model.pluginA.Enums.BackGround;
 import mainmodule.Main;
-import mainmodule.model.BossBirds.BossBird;
-import mainmodule.util.BossBirdStack;
+import mainmodule.model.pluginA.BossBirds.BossBird;
+import mainmodule.model.pluginA.util.BossBirdStack;
 import mainmodule.View.AvatarTransitions.AvatarTransition;
 import mainmodule.View.BackGroundTransiton.BackGroundTransition;
 import mainmodule.View.BossBirdTransitions.BulletTransition;

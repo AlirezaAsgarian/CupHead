@@ -2,15 +2,15 @@ package mainmodule.model;
 
 import javafx.geometry.Bounds;
 import javafx.scene.image.Image;
-import mainmodule.Controllers.AvatarControllers.KeyHandlingAvatar;
-import mainmodule.Controllers.CollisionController;
-import mainmodule.Controllers.Location;
-import mainmodule.Enums.AvatarShootingKeySettings;
-import mainmodule.Enums.AvatarStates;
-import mainmodule.Enums.Bullets;
-import mainmodule.model.BossBirds.BossBird;
-import mainmodule.util.Constants;
-import mainmodule.util.SetConstants;
+import mainmodule.model.pluginA.Controllers.AvatarControllers.KeyHandlingAvatar;
+import mainmodule.util.CollisionController;
+import mainmodule.util.Location;
+import mainmodule.model.pluginA.Enums.AvatarShootingKeySettings;
+import mainmodule.model.pluginA.Enums.AvatarStates;
+import mainmodule.model.pluginA.Enums.Bullets;
+import mainmodule.model.pluginA.BossBirds.BossBird;
+import mainmodule.model.pluginA.util.Constants;
+import mainmodule.model.pluginA.util.SetConstants;
 import mainmodule.View.AvatarTransitions.AvatarTransition;
 import mainmodule.View.Menus.MenuStack;
 import javafx.scene.image.ImageView;
@@ -105,7 +105,7 @@ public class Avatar extends Rectangle implements Imageable{
     }
 
     public void checkForColllisonWithBossBird() {
-        if (this.avatarStates != AvatarStates.BLINK && CollisionController.haveCollision(BossBird.getInstance().getCurrentImage(),this.avatarImage,BossBird.getInstance().getBoundsInParent(),this.getBoundsInParent())) {
+        if (this.avatarStates != AvatarStates.BLINK && CollisionController.haveCollision(this.avatarImage,BossBird.getInstance().getCurrentImage(),this.getBoundsInParent(),BossBird.getInstance().getBoundsInParent())) {
             this.decreaseHealth(SetConstants.MINI_BOSS_BULLET_DAMAGE_RATIO);
             changeAvatarStates(AvatarStates.BLINK);
         }

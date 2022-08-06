@@ -1,9 +1,9 @@
 package mainmodule.View.AvatarTransitions;
 
-import mainmodule.Controllers.AvatarControllers.AvatarTransitionController;
-import mainmodule.Controllers.gameControllers.GameController;
-import mainmodule.Enums.AvatarStates;
-import mainmodule.Enums.BulletTransitionFactory;
+import mainmodule.model.pluginA.Controllers.AvatarControllers.AvatarTransitionController;
+import mainmodule.model.pluginA.Controllers.gameControllers.GameController;
+import mainmodule.model.pluginA.Enums.AvatarStates;
+import mainmodule.model.pluginA.Enums.BulletTransitionFactory;
 import mainmodule.model.Avatar;
 import mainmodule.model.TransitionManger;
 import javafx.animation.Transition;

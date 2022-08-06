@@ -2,12 +2,11 @@ package mainmodule.model;
 
 import javafx.geometry.Bounds;
 import javafx.scene.image.Image;
-import mainmodule.Controllers.CollisionController;
-import mainmodule.Enums.AvatarStates;
-import mainmodule.Enums.BulletCollisionType;
-import mainmodule.Enums.Bullets;
-import mainmodule.Enums.MoveFuncs;
-import mainmodule.model.BossBirds.BossBird;
+import mainmodule.util.CollisionController;
+import mainmodule.model.pluginA.Enums.AvatarStates;
+import mainmodule.model.pluginA.Enums.BulletCollisionType;
+import mainmodule.model.pluginA.Enums.MoveFuncs;
+import mainmodule.model.pluginA.BossBirds.BossBird;
 import mainmodule.View.Menus.MenuStack;
 import javafx.animation.Transition;
 import javafx.event.EventHandler;
@@ -15,14 +14,16 @@ import javafx.scene.Node;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
+import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.List;
+import org.slf4j.Logger;
 
 public class Bullet extends Rectangle implements Imageable{
     /***
      * bullet has can be used for all bullets and has one movefuncs enum and or enemy(avatar or boss bird) and one transition for explosion
      */
+    static Logger logger = LoggerFactory.getLogger(Bullet.class);
     int speed;
     final int cycleCount;
     final int damageRatio;
@@ -40,6 +41,7 @@ public class Bullet extends Rectangle implements Imageable{
      * @param v : left up x coordination
      * @param v1 : left up y coordination
      */
+
     public Bullet(double v,double v1,BulletFactory bulletFactory) {
         super(v, v1, bulletFactory.getBulletWidth(), bulletFactory.getBulletHeight());
         this.damageRatio = bulletFactory.getDamageRatio();
@@ -78,6 +80,7 @@ public class Bullet extends Rectangle implements Imageable{
         for (Imageable enemy : enemies) {
             if (CollisionController.haveCollision(this.getCurrentImage(),enemy.getCurrentImage(),this.getBoundsInParent(),enemy.getBound())) {
                 if (enemy instanceof Avatar avatar && !avatar.canGetDamage()) return;
+                logger.info("hit enemy : {} " , enemy);
                 startExplosionTransitionAndStopNormalTransition(BulletCollisionType.HIT_ENEMY);
                 return;
             }

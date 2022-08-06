@@ -1,8 +1,7 @@
 package mainmodule.model;
 
-import mainmodule.model.BossBirds.BossBird;
+import mainmodule.model.pluginA.BossBirds.BossBird;
 import mainmodule.View.BossBirdTransitions.BossBirdTransitions;
-
 import java.util.ArrayList;
 import java.util.Stack;
 

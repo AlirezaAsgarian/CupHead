@@ -1,7 +1,7 @@
 package mainmodule.View.BossBirdTransitions;
 
-import mainmodule.Enums.BulletCollisionType;
-import mainmodule.Enums.TransitionType;
+import mainmodule.model.pluginA.Enums.BulletCollisionType;
+import mainmodule.model.pluginA.Enums.TransitionType;
 import mainmodule.model.Bullet;
 import mainmodule.model.TransitionManger;
 import mainmodule.View.Menus.MenuStack;
@@ -33,7 +33,7 @@ public class BulletTransition extends Transition {
         bullet.getMoveFuncs().getMoving().move(bullet);
     }
 
-    private void updateBulletFrame(double v) {
+    protected void updateBulletFrame(double v) {
         int length = bullet.getAnimationImagePatterns().size();
         int frame = calculateFrame(v,length);
         if (isFlexibleSize) {

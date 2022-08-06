@@ -1,9 +1,9 @@
 package mainmodule.View;
 
 import mainmodule.model.Avatar;
-import mainmodule.model.BossBirds.BossBird;
+import mainmodule.model.pluginA.BossBirds.BossBird;
 import mainmodule.model.Game;
-import mainmodule.util.Constants;
+import mainmodule.model.pluginA.util.Constants;
 import mainmodule.View.Menus.MenuStack;
 import mainmodule.View.Menus.ViewController;
 import javafx.event.ActionEvent;

@@ -1,9 +1,9 @@
 package mainmodule.View.BackGroundTransiton;
 
-import mainmodule.Enums.BackGround;
-import mainmodule.Enums.TransitionType;
+import mainmodule.model.pluginA.Enums.BackGround;
+import mainmodule.model.pluginA.Enums.TransitionType;
 import mainmodule.model.TransitionManger;
-import mainmodule.util.Constants;
+import mainmodule.model.pluginA.util.Constants;
 import mainmodule.View.Menus.MenuStack;
 import javafx.animation.Transition;
 import javafx.scene.image.ImageView;

@@ -1,6 +1,6 @@
 package mainmodule.model;
 
-import mainmodule.util.Constants;
+import mainmodule.model.pluginA.util.Constants;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
