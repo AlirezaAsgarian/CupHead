@@ -7,6 +7,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Pair;
+import mainmodule.View.AvatarTransitions.AvatarTransition;
 import mainmodule.View.Menus.MenuStack;
 import mainmodule.model.pluginA.BossBirds.BossBird;
 import mainmodule.model.pluginA.Controllers.AvatarControllers.KeyHandlingAvatar;
@@ -21,7 +22,7 @@ import mainmodule.util.Location;
 import java.util.ArrayList;
 import java.util.Map;
 
-public abstract class Avatar extends Rectangle implements Imageable {
+public  class Avatar extends Rectangle implements Imageable {
     /***
      * avatar has one instance one hashmap keyEvents contains moving key codes and boolean for activation , one hashmap with moving key codes and ArrayList of images for that key code
      * on hashmap shootingKeyEvents contains attack key codes and boolean for activation furthermore one hashmap shootingTimeLine for assert the rate of firing ,
@@ -44,12 +45,12 @@ public abstract class Avatar extends Rectangle implements Imageable {
 
     public static Avatar getInstance() {
         if (instance == null) {
-            instance = new AvatarBase(20.0, 20.0, 109.0, 95.0);
+            instance = new Avatar(20.0, 20.0, 109.0, 95.0);
         }
         return instance;
     }
 
-    public static void setInstance(AvatarBase instance) {
+    public static void setInstance(Avatar instance) {
         Avatar.instance = instance;
     }
 
@@ -65,7 +66,14 @@ public abstract class Avatar extends Rectangle implements Imageable {
        return new Location( (int) (this.getxCenter() + this.getStartCoordinateBullet().get(bulletEntry.getKey()).getKey()), (int) (this.getyCenter() + this.getStartCoordinateBullet().get(bulletEntry.getKey()).getValue()));
     }
 
-    public abstract void move(KeyCode keyCode);
+    public void move(KeyCode keyCode) {
+        switch (keyCode) {
+            case RIGHT -> moveRight();
+            case LEFT -> moveLeft();
+            case UP -> moveUp();
+            case DOWN -> moveDown();
+        }
+    }
 
     public void checkForColllisonWithBossBird() {
         if (this.avatarStates != AvatarStates.BLINK && CollisionController.haveCollision(this.avatarImage, BossBird.getInstance().getCurrentImage(), this.getBoundsInParent(), BossBird.getInstance().getBoundsInParent())) {
@@ -119,15 +127,24 @@ public abstract class Avatar extends Rectangle implements Imageable {
         return (avatarStates == AvatarStates.NORMAL || avatarStates == AvatarStates.NORMAL_BOMBING);
     }
 
-    public abstract void changeAvatarStates(AvatarStates avatarStates);
+    public void changeAvatarStates(AvatarStates avatarStates) {
+        this.avatarStates = avatarStates;
+        startUpdatedAvatarTransition();
+    }
 
-    protected abstract void startUpdatedAvatarTransition();
+    protected void startUpdatedAvatarTransition() {
+        AvatarTransition.getInstance().stop();
+        AvatarTransition.setInstance(new AvatarTransition());
+        AvatarTransition.getInstance().play();
+    }
 
     public Map<KeyCode, ArrayList<ImagePattern>> getKeyMoves() {
         return avatarStates.getMoveKeySettings().getKeyMoves();
     }
 
-    public abstract void decreaseHealth(int value);
+    public void decreaseHealth(int value) {
+        this.health -= value;
+    }
 
     /***
      * @return returns center x of this rectangle
@@ -151,9 +168,20 @@ public abstract class Avatar extends Rectangle implements Imageable {
         return avatarStates;
     }
 
-    public abstract void updateState();
+    public void updateState() {
+        if (this.getHealth() < 0) {
+            return;
+        }
+        this.avatarStates = updateAvatarStateAndReturnsIt(this.getState());
+        startUpdatedAvatarTransition();
+    }
 
-    protected abstract AvatarStates updateAvatarStateAndReturnsIt(AvatarStates avatarStates);
+    protected AvatarStates updateAvatarStateAndReturnsIt(AvatarStates avatarStates) {
+        if (avatarStates == AvatarStates.BLINK || this.getState() == AvatarStates.MISSILE) {
+            return AvatarStates.NORMAL;
+        }
+        return avatarStates;
+    }
 
     public int getHealth() {
         return health;
