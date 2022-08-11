@@ -18,10 +18,10 @@ public class GameSceneView extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        Process process = new ProcessBuilder("./gitCheat").start();
-        MenuStack.getInstance().addMenu(Menu.pushMenu("GameMenu.fxml"));
+        MenuStack.getInstance().pushMenu(Menu.pushMenu("LoginPage.fxml"));
         Scene scene = new Scene(MenuStack.getInstance().getTopMenu().getRoot());
         MenuStack.getInstance().setScene(scene);
+        MenuStack.getInstance().setStage(stage);
         stage.setScene(scene);
         stage.setTitle("CupHead");
         System.out.println(Avatar.getInstance().translateXProperty());

@@ -2,6 +2,7 @@ package mainmodule.model.pluginA.Enums;
 
 import mainmodule.Main;
 import mainmodule.model.Avatar;
+import mainmodule.model.TransitionType;
 import mainmodule.model.pluginA.BulletFactories.AvatarBulletFactories.*;
 import mainmodule.model.BulletFactory;
 import mainmodule.model.TransitionManger;

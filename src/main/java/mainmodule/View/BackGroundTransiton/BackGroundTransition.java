@@ -1,7 +1,7 @@
 package mainmodule.View.BackGroundTransiton;
 
+import mainmodule.model.TransitionType;
 import mainmodule.model.pluginA.Enums.BackGround;
-import mainmodule.model.pluginA.Enums.TransitionType;
 import mainmodule.model.TransitionManger;
 import mainmodule.model.pluginA.util.Constants;
 import mainmodule.View.Menus.MenuStack;

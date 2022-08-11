@@ -3,7 +3,6 @@ package mainmodule.View.BossBirdTransitions;
 import mainmodule.model.pluginA.BossBirds.bossBirdStateEnums.BossBirdStates;
 import mainmodule.util.Location;
 import mainmodule.model.pluginA.Enums.BulletTransitionFactory;
-import mainmodule.model.pluginA.Enums.TransitionType;
 import mainmodule.model.*;
 import mainmodule.model.pluginA.BossBirds.BossBird;
 import mainmodule.model.BulletFactoryCreator;

@@ -1,9 +1,10 @@
-package mainmodule.util;
+package mainmodule.model.pluginA.Controllers.CollisionController;
 
 import javafx.geometry.Bounds;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
 
+import mainmodule.util.Location;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

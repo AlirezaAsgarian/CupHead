@@ -1,7 +1,7 @@
 package mainmodule.View.BossBirdTransitions;
 
+import mainmodule.model.TransitionType;
 import mainmodule.model.pluginA.Enums.BulletCollisionType;
-import mainmodule.model.pluginA.Enums.TransitionType;
 import mainmodule.model.Bullet;
 import mainmodule.model.TransitionManger;
 import mainmodule.View.Menus.MenuStack;

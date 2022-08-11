@@ -33,7 +33,7 @@ public class GameController {
     public static void processResultOfEndGamePopUp(String result){
         if(result.equals("Retry")){
             MenuStack.getInstance().backToPreviousMenu();
-            MenuStack.getInstance().addMenu(Menu.pushMenu("Game.fxml"));
+            MenuStack.getInstance().pushMenu(Menu.pushMenu("Game.fxml"));
         } else {
             MenuStack.getInstance().backToPreviousMenu();
         }

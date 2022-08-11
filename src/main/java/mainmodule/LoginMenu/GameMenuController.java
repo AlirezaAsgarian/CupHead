@@ -14,6 +14,6 @@ public class GameMenuController implements ViewController {
     }
 
     public void startGame(ActionEvent actionEvent) {
-        MenuStack.getInstance().addMenu(Menu.pushMenu("Game.fxml"));
+        MenuStack.getInstance().pushMenu(Menu.pushMenu("Game.fxml"));
     }
 }
