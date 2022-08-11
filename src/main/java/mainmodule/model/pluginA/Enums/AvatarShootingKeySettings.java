@@ -5,7 +5,7 @@ import mainmodule.model.Avatar;
 import mainmodule.model.TransitionType;
 import mainmodule.model.pluginA.BulletFactories.AvatarBulletFactories.*;
 import mainmodule.model.BulletFactory;
-import mainmodule.model.TransitionManger;
+import mainmodule.model.TransitionManager;
 import mainmodule.model.pluginA.util.Constants;
 import mainmodule.View.Menus.MenuStack;
 import javafx.animation.Transition;
@@ -68,7 +68,7 @@ public enum AvatarShootingKeySettings {
             {
                 setCycleCount(1);
                 setCycleDuration(Duration.millis(2000));
-                TransitionManger.addTransition(TransitionType.BULLET_TRANSITION, this);
+                TransitionManager.addTransition(TransitionType.BULLET_TRANSITION, this);
             }
 
             @Override
@@ -81,7 +81,7 @@ public enum AvatarShootingKeySettings {
                     Avatar.getInstance().setOpacity(1);
                     MenuStack.getInstance().getTopMenu().getRoot().getChildren().remove(boomImageView);
                     Avatar.getInstance().changeAvatarStates(AvatarStates.BLINK);
-                    TransitionManger.removeTransition(TransitionType.BULLET_TRANSITION, this);
+                    TransitionManager.removeTransition(TransitionType.BULLET_TRANSITION, this);
                 });
             }
         };

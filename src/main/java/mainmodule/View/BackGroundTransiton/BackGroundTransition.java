@@ -2,7 +2,7 @@ package mainmodule.View.BackGroundTransiton;
 
 import mainmodule.model.TransitionType;
 import mainmodule.model.pluginA.Enums.BackGround;
-import mainmodule.model.TransitionManger;
+import mainmodule.model.TransitionManager;
 import mainmodule.model.pluginA.util.Constants;
 import mainmodule.View.Menus.MenuStack;
 import javafx.animation.Transition;
@@ -22,8 +22,8 @@ public class BackGroundTransition extends Transition {
         this.backGround2 = new ImageView(backGround.getBackgrounds().get(1));
         this.backGround2.setX(-Constants.Max_Width);
         this.backGround2.setY(0);
-        TransitionManger.addTransition(TransitionType.BACKGROUND_TRANSITION,this);
-        setOnFinished((actionEvent) -> TransitionManger.removeTransition(TransitionType.BACKGROUND_TRANSITION,this));
+        TransitionManager.addTransition(TransitionType.BACKGROUND_TRANSITION,this);
+        setOnFinished((actionEvent) -> TransitionManager.removeTransition(TransitionType.BACKGROUND_TRANSITION,this));
     }
 
     @Override

@@ -1,4 +1,4 @@
-open module MainModule {
+open module CupHeadd {
     requires javafx.controls;
     requires javafx.graphics;
     requires javafx.fxml;
@@ -9,15 +9,13 @@ open module MainModule {
     requires ch.qos.logback.classic;
     requires ch.qos.logback.core;
     requires org.slf4j;
-    requires org.junit.jupiter.engine;
-    requires org.junit.jupiter.api;
     requires org.junit.jupiter.params;
     requires org.testfx;
-    requires org.testfx.junit;
     requires org.testfx.junit5;
     requires  java.sql;
     requires java.sql.rowset;
     requires mysql.connector.java;
+    requires org.testfx.junit;
     exports mainmodule;
     exports mainmodule.View;
     exports mainmodule.model;

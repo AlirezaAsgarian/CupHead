@@ -2,7 +2,7 @@ package mainmodule.model.pluginA.Enums;
 
 import mainmodule.model.Avatar;
 import mainmodule.model.pluginA.BossBirds.BossBird;
-import mainmodule.model.TransitionManger;
+import mainmodule.model.TransitionManager;
 import mainmodule.model.pluginA.util.Constants;
 
 public enum AvatarStates {
@@ -19,14 +19,14 @@ public enum AvatarStates {
     }),
     //    LITTLE,
     MISSILE(false, AvatarShootingKeySettings.MISSILE, true, AvatarMoveKeySettings.MISSLE, Constants.AVATAR_MISSLE_STATE_DURATION, 1, v -> {
-        if (v * 26 > 8 && !TransitionManger.getAvatarTransition().isUniqueActionExecuteOnce()) {
+        if (v * 26 > 8 && !TransitionManager.getAvatarTransition().isUniqueActionExecuteOnce()) {
             Thread thread = Thread.currentThread();
             synchronized (thread) {
                 try {
-                    TransitionManger.getAvatarTransition().setUniqueActionExecuteOnce(true);
-                    TransitionManger.getAvatarTransition().pause();
+                    TransitionManager.getAvatarTransition().setUniqueActionExecuteOnce(true);
+                    TransitionManager.getAvatarTransition().pause();
                     thread.wait(2000);
-                    TransitionManger.getAvatarTransition().play();
+                    TransitionManager.getAvatarTransition().play();
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
@@ -34,7 +34,7 @@ public enum AvatarStates {
         }else if(v * 26 > 8){
                 Avatar.getInstance().moveRight(Constants.AVATAR_MISLLE_SPEED);
                 if (Avatar.getInstance().getBoundsInParent().intersects(BossBird.getInstance().getBoundsInParent())) {
-                    TransitionManger.getAvatarTransition().stop();
+                    TransitionManager.getAvatarTransition().stop();
                     BossBird.getInstance().decreaseHealth(Constants.AVATAR_MISSLE_DAMAGE_RATIO);
                     AvatarShootingKeySettings.boom().play();
                 }

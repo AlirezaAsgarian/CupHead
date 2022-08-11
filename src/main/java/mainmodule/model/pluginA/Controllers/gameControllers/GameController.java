@@ -1,6 +1,6 @@
 package mainmodule.model.pluginA.Controllers.gameControllers;
 
-import mainmodule.model.TransitionManger;
+import mainmodule.model.TransitionManager;
 import mainmodule.View.EndGameDialog;
 import mainmodule.View.Menus.Menu;
 import mainmodule.View.Menus.MenuStack;
@@ -12,8 +12,8 @@ public class GameController {
 
 
     public static void stopGame() {
-        TransitionManger.stopTransitions();
-        TransitionManger.clearTransitions();
+        TransitionManager.stopTransitions();
+        TransitionManager.clearTransitions();
         MenuStack.getInstance().setCurrentGame(null);
     }
     public static void endGame() {

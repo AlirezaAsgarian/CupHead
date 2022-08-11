@@ -5,7 +5,7 @@ import mainmodule.model.pluginA.Controllers.gameControllers.GameController;
 import mainmodule.model.pluginA.Enums.AvatarStates;
 import mainmodule.model.pluginA.Enums.BulletTransitionFactory;
 import mainmodule.model.Avatar;
-import mainmodule.model.TransitionManger;
+import mainmodule.model.TransitionManager;
 import javafx.animation.Transition;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
@@ -53,7 +53,7 @@ public class AvatarTransition extends Transition implements BulletTransitionFact
         this.setOnFinished(actionEvent -> {
             Avatar.getInstance().updateState();
         });
-        TransitionManger.setAvatarTransition(this);
+        TransitionManager.setAvatarTransition(this);
         AvatarTransitionController.setAvatarTransition(this);
     }
 

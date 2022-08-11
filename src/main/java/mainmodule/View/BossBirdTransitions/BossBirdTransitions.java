@@ -31,7 +31,7 @@ public class BossBirdTransitions extends javafx.animation.Transition implements 
         this.bossBird = bossBird;
         setCycleDuration(Duration.millis(1500));
         setCycleCount(this.bossBird.getBossBirdState().getCycleCount().returnCycleNumber(this.bossBird.getBossBirdState().getBound()));
-        TransitionManger.addTransition(TransitionType.BOSS_BIRD_TRANSITION,this);
+        TransitionManager.addTransition(TransitionType.BOSS_BIRD_TRANSITION,this);
         poultryFactoryCreator = new PoultryBulletFactoryCreator();
         initializeSetOnFinishAction();
     }
@@ -40,7 +40,7 @@ public class BossBirdTransitions extends javafx.animation.Transition implements 
         setOnFinished(actionEvent -> {
             boolean isEnd = true;
             if (BossBirdTransitions.this.bossBird.getBossBirdState() == BossBirdStates.Death) {
-                TransitionManger.removeTransition(TransitionType.BOSS_BIRD_TRANSITION,BossBirdTransitions.this);
+                TransitionManager.removeTransition(TransitionType.BOSS_BIRD_TRANSITION,BossBirdTransitions.this);
                 isEnd = false;
             }
             BossBirdTransitions.this.bossBird.changeState();
