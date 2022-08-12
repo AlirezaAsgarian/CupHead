@@ -12,7 +12,7 @@ public class Menu {
     AnchorPane root;
     ViewController controller;
 
-    Menu(AnchorPane root,ViewController controller){
+    public Menu(AnchorPane root, ViewController controller){
         this.root = root;
         this.controller = controller;
     }

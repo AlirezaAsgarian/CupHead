@@ -65,4 +65,8 @@ public interface AvatarBombFactory extends BulletFactory {
     default List<Imageable> getBulletEnemies() {
         return List.of(BossBird.getInstance());
     }
+    @Override
+    default int getHealth(){
+        return 0;
+    }
 }

@@ -16,6 +16,8 @@ open module CupHeadd {
     requires java.sql.rowset;
     requires mysql.connector.java;
     requires org.testfx.junit;
+    requires mockito.junit.jupiter;
+    requires org.mockito;
     exports mainmodule;
     exports mainmodule.View;
     exports mainmodule.model;

@@ -63,4 +63,8 @@ public interface HouseBossBirdEggBulletFactory extends BulletFactory {
     default boolean isFlexible() {
         return false;
     }
+    @Override
+    default int getHealth(){
+        return 0;
+    }
 }

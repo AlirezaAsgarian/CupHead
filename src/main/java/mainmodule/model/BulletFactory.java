@@ -19,4 +19,6 @@ public interface BulletFactory {
     List<Imageable> getBulletEnemies();
 
     boolean isFlexible();
+
+    int getHealth();
 }

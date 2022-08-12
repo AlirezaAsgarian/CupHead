@@ -1,4 +1,4 @@
-package mainmodule.model.pluginA.Controllers.CollisionController.test;
+package mainmodule.model.pluginA.Controllers.CollisionController;
 
 import javafx.geometry.Bounds;
 import javafx.scene.image.Image;

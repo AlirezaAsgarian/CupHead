@@ -16,7 +16,7 @@ import mainmodule.model.pluginA.Enums.AvatarStates;
 import mainmodule.model.pluginA.Enums.Bullets;
 import mainmodule.model.pluginA.util.Constants;
 import mainmodule.model.pluginA.util.SetConstants;
-import mainmodule.model.pluginA.Controllers.CollisionController.test.CollisionController;
+import mainmodule.model.pluginA.Controllers.CollisionController.CollisionController;
 import mainmodule.util.Location;
 
 import java.util.ArrayList;

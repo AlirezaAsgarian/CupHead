@@ -42,9 +42,9 @@ public interface PurplePoultryFactory extends BulletFactory {
 
     @Override
     default List<ImagePattern> getBulletAnimationImagePatterns() {
-        return new ArrayList<>(){{
-            for (int i = 1; i <= 100 ; i++) {
-                add(new ImagePattern(new Image(Main.class.getResource("cuphead_frames/frames/MiniBossFly/purple/"+i+".png").toExternalForm())));
+        return new ArrayList<>() {{
+            for (int i = 1; i <= 100; i++) {
+                add(new ImagePattern(new Image(Main.class.getResource("cuphead_frames/frames/MiniBossFly/purple/" + i + ".png").toExternalForm())));
             }
             Rectangle rectangle = new Rectangle();
         }};
@@ -64,7 +64,14 @@ public interface PurplePoultryFactory extends BulletFactory {
     default List<Imageable> getBulletEnemies() {
         return List.of(Avatar.getInstance());
     }
+
     @Override
-    default boolean isFlexible() {return true;
+    default boolean isFlexible() {
+        return true;
+    }
+
+    @Override
+    default int getHealth() {
+        return 5;
     }
 }

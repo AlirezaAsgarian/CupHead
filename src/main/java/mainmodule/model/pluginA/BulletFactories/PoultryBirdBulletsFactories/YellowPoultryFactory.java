@@ -66,4 +66,8 @@ public interface YellowPoultryFactory extends BulletFactory {
     default boolean isFlexible() {
         return true;
     }
+    @Override
+    default int getHealth(){
+        return 5;
+    }
 }

@@ -24,8 +24,8 @@ public class MenuStack {
         return instance;
     }
 
-    public void setInstance(MenuStack instance) {
-        this.instance = instance;
+    public static void setInstance(MenuStack newInstance) {
+        instance = newInstance;
     }
     public void updateScene(){
         if(scene == null) return;
@@ -82,4 +82,6 @@ public class MenuStack {
     public void setStage(Stage stage) {
         this.stage = stage;
     }
+
+
 }

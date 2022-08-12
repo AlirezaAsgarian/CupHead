@@ -1,4 +1,4 @@
-package mainmodule.model.pluginA.Controllers.CollisionController.test;
+package mainmodule.model.pluginA.Controllers.CollisionController;
 
 import javafx.application.Platform;
 import javafx.scene.Node;
@@ -35,7 +35,7 @@ public class CollisionTest extends ApplicationTest {
     @BeforeEach
     public void launchStage()  {
         try {
-            ApplicationTest.launch(TestStage.class, " --add-exports=javafx.graphics/com.sun.javafx.application=ALL-UNNAMED");
+            ApplicationTest.launch(CollisionTestStage.class, " --add-exports=javafx.graphics/com.sun.javafx.application=ALL-UNNAMED");
             anchorPane = find("#mainAnchorPane");
             avatarIV = find("#avatarIV");
             houseBossBirdIV = find("#houseBossBirdIV");
@@ -47,21 +47,18 @@ public class CollisionTest extends ApplicationTest {
     @Test
     public void twoImagesHaveIntersectsButTheyImagesDonNotHaveCollision(){
         launchStage();
-        waitForWatchingTestCase();
         Assertions.assertTrue(avatarIV.intersects((houseBossBirdIV.getBoundsInParent())));
         Assertions.assertFalse(CollisionController.haveCollision(avatarIV.getImage(),houseBossBirdIV.getImage(),avatarIV.getBoundsInParent(),houseBossBirdIV.getBoundsInParent()));
     }
     @Test
     public void twoImagesHaveIntersectsAndTheyImagesHaveCollision(){
         setAvatarIVAtTestingPositionOfAnchorPane(anchorPane, avatarIV,anchorPane.getPrefWidth() / 2,anchorPane.getPrefHeight() / 2);
-        waitForWatchingTestCase();
         Assertions.assertTrue(avatarIV.intersects((houseBossBirdIV.getBoundsInParent())));
         Assertions.assertTrue(CollisionController.haveCollision(avatarIV.getImage(),houseBossBirdIV.getImage(),avatarIV.getBoundsInParent(),houseBossBirdIV.getBoundsInParent()));
     }
     @Test
     public void twoImagesHaveIntersectsAndTheyImagesHaveCollision2(){
         setAvatarIVAtTestingPositionOfAnchorPane(anchorPane, avatarIV,(anchorPane.getPrefWidth() / 2)  - 300 ,anchorPane.getPrefHeight() / 2 + 100);
-        waitForWatchingTestCase();
         Assertions.assertTrue(avatarIV.intersects((houseBossBirdIV.getBoundsInParent())));
         Assertions.assertTrue(CollisionController.haveCollision(avatarIV.getImage(),houseBossBirdIV.getImage(),avatarIV.getBoundsInParent(),houseBossBirdIV.getBoundsInParent()));
     }
@@ -85,6 +82,7 @@ public class CollisionTest extends ApplicationTest {
             throw new RuntimeException(e);
         }
     }
+
 
 
 

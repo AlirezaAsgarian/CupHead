@@ -64,4 +64,8 @@ public interface BedBossBirdBulletFactoryType2 extends BulletFactory {
     default boolean isFlexible() {
         return false;
     }
+    @Override
+    default int getHealth(){
+        return 0;
+    }
 }

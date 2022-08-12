@@ -2,7 +2,7 @@ package mainmodule.model;
 
 import javafx.geometry.Bounds;
 import javafx.scene.image.Image;
-import mainmodule.model.pluginA.Controllers.CollisionController.test.CollisionController;
+import mainmodule.model.pluginA.Controllers.CollisionController.CollisionController;
 import mainmodule.model.pluginA.Enums.AvatarStates;
 import mainmodule.model.pluginA.Enums.BulletCollisionType;
 import mainmodule.model.pluginA.Enums.MoveFuncs;
@@ -29,9 +29,10 @@ public class Bullet extends Rectangle implements Imageable{
     final int damageRatio;
     int health;
     final int duration;
-    final List<Imageable> enemies;
+    List<Imageable> enemies;
     MoveFuncs moveFuncs;
     boolean isFlexible;
+    boolean isExploded;
     Transition explosion;
     List<ImagePattern> animationImagePatterns;
     Transition bulletTransition;
@@ -53,7 +54,11 @@ public class Bullet extends Rectangle implements Imageable{
         this.animationImagePatterns = bulletFactory.getBulletAnimationImagePatterns();
         this.cycleCount = bulletFactory.getTransitionCycleCount();
         this.isFlexible = bulletFactory.isFlexible();
+        this.health = bulletFactory.getHealth();
+        this.isExploded = false;
         this.setFill(this.animationImagePatterns.get(0));
+        this.setId(v + "_" + v1);
+        System.out.println(this.getId());
     }
 
 
@@ -73,15 +78,20 @@ public class Bullet extends Rectangle implements Imageable{
         return this.health >= 0;
     }
 
+    public boolean isExploded() {
+        return isExploded;
+    }
+
     /***
      * if this bullet has collision with its enemy
      */
     public void checkForCollisionWithEnemy() {
         for (Imageable enemy : enemies) {
             if (CollisionController.haveCollision(this.getCurrentImage(),enemy.getCurrentImage(),this.getBoundsInParent(),enemy.getBound())) {
+                logger.info("{}",enemies.get(0).getClass().getName());
                 if (enemy instanceof Avatar avatar && !avatar.canGetDamage()) return;
                 logger.info("hit enemy : {} " , enemy);
-                startExplosionTransitionAndStopNormalTransition(BulletCollisionType.HIT_ENEMY);
+                startExplosionTransitionAndStopNormalTransition(BulletCollisionType.HIT_ENEMY,this);
                 return;
             }
         }
@@ -124,14 +134,29 @@ public class Bullet extends Rectangle implements Imageable{
     public void checkForCollisionWithBullets() {
         for (Node node :
                 MenuStack.getInstance().getTopMenu().getRoot().getChildren()) {
-            if (node instanceof Bullet bullet && bullet != this && !bullet.getEnemies().equals(this.enemies)) {
+            if (node instanceof Bullet bullet && bullet != this && !bullet.isExploded() && !bullet.getEnemies().equals(this.enemies)) {
                 if (CollisionController.haveCollision(this.currentImage,bullet.getCurrentImage(),this.getBound(),bullet.getBound())) {
-                    this.decreaseHealth(bullet.damageRatio);
-                    if (this.hasHealth()) continue;
-                    startExplosionTransitionAndStopNormalTransition(BulletCollisionType.HIT_BULLET);
+                    decreaseBulletHealths(bullet,this);
+                    checkHealthForExplosionIfNeeded(bullet,this);
                     return;
                 }
             }
+        }
+    }
+
+    private void checkHealthForExplosionIfNeeded(Bullet... bullets) {
+        for (Bullet b: bullets)
+            checkBulletHealthAndExplosionIfBulletDoNotHaveHealth(b);
+    }
+
+    private void decreaseBulletHealths(Bullet bullet1,Bullet bullet2) {
+        bullet1.decreaseHealth(bullet2.damageRatio);
+        bullet2.decreaseHealth(bullet1.damageRatio);
+    }
+
+    private void checkBulletHealthAndExplosionIfBulletDoNotHaveHealth(Bullet b) {
+        if (!b.hasHealth()) {
+            startExplosionTransitionAndStopNormalTransition(BulletCollisionType.HIT_BULLET,b);
         }
     }
 
@@ -139,9 +164,9 @@ public class Bullet extends Rectangle implements Imageable{
         return bullet.getBoundsInParent().intersects(this.getBoundsInParent());
     }
 
-    private void startExplosionTransitionAndStopNormalTransition(BulletCollisionType type) {
-        this.getBulletTransition().stop();
-        this.getExplosion(type).play();
+    private void startExplosionTransitionAndStopNormalTransition(BulletCollisionType type,Bullet bullet) {
+        bullet.getBulletTransition().stop();
+        bullet.getExplosion(type).play();
     }
 
     //getter and setters
@@ -157,6 +182,7 @@ public class Bullet extends Rectangle implements Imageable{
     public Transition getExplosion(BulletCollisionType type) {
         explosion = new Transition() {
             {
+                Bullet.this.isExploded = true;
                 setCycleDuration(Duration.millis(Bullet.this.getMoveFuncs().getExplosionTime()));
                 setCycleCount(1);
                 setImage(Bullet.this.moveFuncs.getExplosion().get(0));
@@ -216,8 +242,13 @@ public class Bullet extends Rectangle implements Imageable{
         return currentImage;
     }
 
+
     @Override
     public Bounds getBound() {
         return this.getBoundsInParent();
+    }
+
+    public void setEnemies(List<Imageable> enemies) {
+        this.enemies = enemies;
     }
 }

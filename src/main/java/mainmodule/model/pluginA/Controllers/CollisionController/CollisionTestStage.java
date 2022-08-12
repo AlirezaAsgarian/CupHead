@@ -1,4 +1,4 @@
-package mainmodule.model.pluginA.Controllers.CollisionController.test;
+package mainmodule.model.pluginA.Controllers.CollisionController;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 import mainmodule.Main;
 import java.net.URL;
 
-public class TestStage extends Application {
+public class CollisionTestStage extends Application {
     static AnchorPane anchorPane;
     static ImageView avatarIV;
     static ImageView houseBossBirdIV;

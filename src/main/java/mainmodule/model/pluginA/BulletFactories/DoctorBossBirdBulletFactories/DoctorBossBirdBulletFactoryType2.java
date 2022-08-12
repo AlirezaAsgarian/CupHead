@@ -66,5 +66,9 @@ public interface DoctorBossBirdBulletFactoryType2 extends BulletFactory {
     default boolean isFlexible() {
         return true;
     }
+    @Override
+    default int getHealth(){
+        return 0;
+    }
 }
 
