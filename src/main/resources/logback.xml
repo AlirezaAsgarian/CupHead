@@ -7,7 +7,7 @@
             </Pattern>
         </encoder>
     </appender>
-    <logger name="mainmodule.model.pluginA.Controllers.CollisionController.CollisionController" level="OFF"/>
+    <logger name="mainmodule.model.pluginA.Controllers.CollisionController.test.CollisionController" level="OFF"/>
     <logger name="mainmodule.model.pluginA.BossBirds.MiniBossBird" level="DEBUG"/>
    <root level="DEBUG">
        <appender-ref ref="STDOUT"/>

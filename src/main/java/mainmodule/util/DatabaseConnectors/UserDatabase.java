@@ -32,7 +32,9 @@ public class UserDatabase {
     }
     private ResultSet getUsersResultSet() throws SQLException {
         Statement stm = createStatement();
-        return stm.executeQuery("SELECT * FROM alireza.user_table");
+        ResultSet resultSet = stm.executeQuery("SELECT * FROM alireza.user_table");
+        stm.close();
+        return resultSet;
     }
     private Statement createStatement() throws SQLException {
         Connection conn = DriverManager.getConnection(DB_URL,USER,PASS);

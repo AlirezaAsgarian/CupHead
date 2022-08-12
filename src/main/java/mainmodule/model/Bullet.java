@@ -2,7 +2,7 @@ package mainmodule.model;
 
 import javafx.geometry.Bounds;
 import javafx.scene.image.Image;
-import mainmodule.model.pluginA.Controllers.CollisionController.CollisionController;
+import mainmodule.model.pluginA.Controllers.CollisionController.test.CollisionController;
 import mainmodule.model.pluginA.Enums.AvatarStates;
 import mainmodule.model.pluginA.Enums.BulletCollisionType;
 import mainmodule.model.pluginA.Enums.MoveFuncs;

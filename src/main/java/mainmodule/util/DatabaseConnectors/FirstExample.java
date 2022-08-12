@@ -9,7 +9,8 @@ public class FirstExample {
 
     public static void main(String[] args) throws SQLException {
         // Open a connection
-        Driver driver = new com.mysql.jdbc.Driver();
+        Driver driver = new com.mysql.cj.jdbc.Driver();
+
         try(Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(QUERY);) {

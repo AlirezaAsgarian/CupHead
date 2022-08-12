@@ -15,15 +15,37 @@ public class TestStage extends Application {
     static ImageView houseBossBirdIV;
     @Override
     public void start(Stage stage) throws Exception {
-        anchorPane = new AnchorPane();
-        avatarIV = initializeComponentImageViewAndReturnsIt((Main.class.getResource("cuphead_frames/frames/images/red.png")));
-        avatarIV.setId("avatarIV");
-        houseBossBirdIV =  initializeComponentImageViewAndReturnsIt(Main.class.getResource("cuphead_frames/frames/BossFly/1.png"));
-        houseBossBirdIV.setId("houseBossBirdIV");
-        anchorPane.getChildren().addAll(avatarIV,houseBossBirdIV);
+        initializeStageComponents();
+        initializeStageScene(stage);
+        stage.show();
+    }
+
+    private void initializeStageComponents() {
+        initializeHouseBossBirdImageView();
+        initializeAvatarImageView();
+        initializeMainPageAnchorPane();
+    }
+
+    private void initializeStageScene(Stage stage) {
         Scene scene = new Scene(anchorPane);
         stage.setScene(scene);
-        stage.show();
+    }
+
+    private void initializeMainPageAnchorPane() {
+        anchorPane = new AnchorPane();
+        anchorPane.setId("mainAnchorPane");
+        anchorPane.setPrefSize(houseBossBirdIV.getImage().getWidth(),houseBossBirdIV.getImage().getHeight());
+        anchorPane.getChildren().addAll(avatarIV,houseBossBirdIV);
+    }
+
+    private void initializeAvatarImageView() {
+        avatarIV = initializeComponentImageViewAndReturnsIt((Main.class.getResource("cuphead_frames/frames/images/red.png")));
+        avatarIV.setId("avatarIV");
+    }
+
+    private void initializeHouseBossBirdImageView() {
+        houseBossBirdIV =  initializeComponentImageViewAndReturnsIt(Main.class.getResource("cuphead_frames/frames/BossFly/1.png"));
+        houseBossBirdIV.setId("houseBossBirdIV");
     }
 
     private ImageView initializeComponentImageViewAndReturnsIt(URL Resource) {
