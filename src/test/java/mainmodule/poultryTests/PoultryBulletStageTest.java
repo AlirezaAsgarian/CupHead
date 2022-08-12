@@ -1,4 +1,4 @@
-package mainmodule.model.pluginA.BulletFactories.PoultryBirdBulletsFactories;
+package mainmodule.poultryTests;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -13,6 +13,7 @@ import mainmodule.View.Menus.ViewController;
 import mainmodule.model.Bullet;
 import mainmodule.model.BulletFactory;
 import mainmodule.model.Game;
+import mainmodule.model.pluginA.BulletFactories.PoultryBirdBulletsFactories.PoultryBulletFactoryCreator;
 import mainmodule.model.pluginA.Enums.BulletTransitionFactory;
 import mainmodule.model.pluginA.util.Constants;
 import mainmodule.model.pluginA.util.SetConstants;

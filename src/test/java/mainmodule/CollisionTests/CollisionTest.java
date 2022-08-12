@@ -1,4 +1,4 @@
-package mainmodule.model.pluginA.Controllers.CollisionController;
+package mainmodule.CollisionTests;
 
 import javafx.application.Platform;
 import javafx.scene.Node;
@@ -7,6 +7,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import mainmodule.model.pluginA.Controllers.CollisionController.CollisionController;
 import org.junit.jupiter.api.*;
 import org.testfx.api.FxToolkit;
 import org.testfx.framework.junit.ApplicationTest;
@@ -28,10 +29,7 @@ public class CollisionTest extends ApplicationTest {
 
 
 
-    @BeforeAll
-    public void setUpStageBeforeAllTest() throws Exception {
 
-    }
     @BeforeEach
     public void launchStage()  {
         try {
@@ -46,7 +44,6 @@ public class CollisionTest extends ApplicationTest {
 
     @Test
     public void twoImagesHaveIntersectsButTheyImagesDonNotHaveCollision(){
-        launchStage();
         Assertions.assertTrue(avatarIV.intersects((houseBossBirdIV.getBoundsInParent())));
         Assertions.assertFalse(CollisionController.haveCollision(avatarIV.getImage(),houseBossBirdIV.getImage(),avatarIV.getBoundsInParent(),houseBossBirdIV.getBoundsInParent()));
     }
@@ -66,7 +63,7 @@ public class CollisionTest extends ApplicationTest {
     private void setAvatarIVAtTestingPositionOfAnchorPane(AnchorPane anchorPane, ImageView avatarIV, double x, double y) {
         avatarIV.setX(x);
         avatarIV.setY(y);
-        Platform.runLater(() -> avatarIV.toFront());
+        Platform.runLater(avatarIV::toFront);
     }
 
     @AfterEach
