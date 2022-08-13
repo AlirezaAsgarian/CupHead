@@ -1,11 +1,13 @@
 package mainmodule.model.pluginA.BossBirds;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import mainmodule.model.pluginA.BossBirds.bossBirdStateEnums.BossBirdStates;
 import mainmodule.util.Location;
 import mainmodule.model.pluginA.Enums.BulletTransitionFactory;
 import mainmodule.model.pluginA.Controllers.BossBirdStateControllers.MiniBossBirdStateController;
 import mainmodule.model.*;
-import mainmodule.model.pluginA.BulletFactories.MiniBossBirdBulletFactories.MiniBossBirdFactoryCreator;
+import mainmodule.model.pluginA.BulletFactories.MiniBossBirdBulletFactories.MiniBossBirdBulletFactoryCreator;
 import mainmodule.model.pluginA.util.Constants;
 import mainmodule.model.pluginA.util.SetConstants;
 import mainmodule.View.BossBirdTransitions.BossBirdTransitions;
@@ -19,12 +21,15 @@ public class MiniBossBird extends BossBird implements BulletTransitionFactory {
 
     ArrayList<MiniBossBirdBullet> miniBossBirdBullets;
 
+
     public MiniBossBird(double v, double v1, double v2, double v3, HashMap<BossBirdStates, ArrayList<ImagePattern>> bossBirdAnimations, int distance_collision_x, int distance_collision_y) {
-        super(v, v1, v2, v3, bossBirdAnimations, distance_collision_x, distance_collision_y,new MiniBossBirdFactoryCreator());
+        super(v, v1, v2, v3, bossBirdAnimations, distance_collision_x, distance_collision_y,new MiniBossBirdBulletFactoryCreator());
         this.bossBirdState = BossBirdStates.TURN_TO_LEFT;
         this.setFill(this.getBossBirdAnimations().get(this.bossBirdState).get(0));
         this.controller = new MiniBossBirdStateController(this);
     }
+
+
 
 
     public ArrayList<MiniBossBirdBullet> getMiniBossBirdBullets() {
@@ -37,10 +42,10 @@ public class MiniBossBird extends BossBird implements BulletTransitionFactory {
     private ArrayList<MiniBossBirdBullet> createMiniBossBirdEggBullets() {
         return new ArrayList<>() {
             {
-                add(new MiniBossBirdBullet(MiniBossBird.this.getxCenter() + Constants.MINI_BOSS_EGG_MIN_DISTANCE + 100, MiniBossBird.this.getyCenter(),  MiniBossBird.this));
-                add(new MiniBossBirdBullet(MiniBossBird.this.getxCenter(), MiniBossBird.this.getyCenter() + Constants.MINI_BOSS_EGG_MIN_DISTANCE + 100, MiniBossBird.this));
-                add(new MiniBossBirdBullet(MiniBossBird.this.getxCenter() - Constants.MINI_BOSS_EGG_MIN_DISTANCE - 100, MiniBossBird.this.getyCenter(), MiniBossBird.this));
-                add(new MiniBossBirdBullet(MiniBossBird.this.getxCenter(), MiniBossBird.this.getyCenter() - Constants.MINI_BOSS_EGG_MIN_DISTANCE - 100, MiniBossBird.this));
+                add(new MiniBossBirdBullet(MiniBossBird.this.getXCenter()+ Constants.MINI_BOSS_EGG_MIN_DISTANCE + 100, MiniBossBird.this.getYCenter(),  MiniBossBird.this));
+                add(new MiniBossBirdBullet(MiniBossBird.this.getXCenter(), MiniBossBird.this.getYCenter() + Constants.MINI_BOSS_EGG_MIN_DISTANCE + 100, MiniBossBird.this));
+                add(new MiniBossBirdBullet(MiniBossBird.this.getXCenter() - Constants.MINI_BOSS_EGG_MIN_DISTANCE - 100, MiniBossBird.this.getYCenter(), MiniBossBird.this));
+                add(new MiniBossBirdBullet(MiniBossBird.this.getXCenter(), MiniBossBird.this.getYCenter() - Constants.MINI_BOSS_EGG_MIN_DISTANCE - 100, MiniBossBird.this));
             }
         };
     }
@@ -109,8 +114,29 @@ public class MiniBossBird extends BossBird implements BulletTransitionFactory {
             //todo check get X and get Y
             startTransitionsOfMiniBossBirdBullets(miniBossBirdBullet,new Location(miniBossBirdBullet.getX(),miniBossBirdBullet.getY()));
         }
+        addListenerForEggBulletsPositionX();
+        addListenerForEggBulletsPositionY();
     }
 
+    private void addListenerForEggBulletsPositionY() {
+        this.yProperty().addListener((observableValue, number, t1) -> {
+            for (MiniBossBirdBullet mb:
+                    MiniBossBird.this.getMiniBossBirdBullets()) {
+                mb.setY(mb.getY() + (t1.doubleValue() - number.doubleValue()));
+                mb.getBulletRotate().setPivotY(MiniBossBird.this.getYCenter());
+            }
+        });
+    }
+
+    private void addListenerForEggBulletsPositionX() {
+        this.xProperty().addListener((observableValue, number, t1) -> {
+            for (MiniBossBirdBullet mb:
+                 MiniBossBird.this.getMiniBossBirdBullets()) {
+                mb.setX(mb.getX() + (t1.doubleValue() - number.doubleValue()));
+                mb.getBulletRotate().setPivotX(MiniBossBird.this.getXCenter());
+            }
+        });
+    }
 
 
     private BossBirdTransitions createBossBirdTransition() {

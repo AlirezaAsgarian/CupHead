@@ -11,8 +11,11 @@ import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.util.Duration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class AvatarTransition extends Transition implements BulletTransitionFactory {
+    static Logger logger = LoggerFactory.getLogger(AvatarTransition.class);
 
     AvatarStates startAvatarState;
     EventHandler<KeyEvent> keyEventEventHandler;

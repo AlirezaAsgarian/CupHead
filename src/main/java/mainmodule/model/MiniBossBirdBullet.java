@@ -1,6 +1,8 @@
 package mainmodule.model;
 
+import javafx.util.Pair;
 import mainmodule.View.BossBirdTransitions.MiniBossBirdSpecialBulletTransition;
+import mainmodule.model.pluginA.BossBirds.BossBird;
 import mainmodule.model.pluginA.BossBirds.MiniBossBird;
 import mainmodule.model.pluginA.BulletFactories.MiniBossBirdBulletFactories.MiniBossBulletEggFactory;
 import mainmodule.model.pluginA.util.Constants;
@@ -8,6 +10,7 @@ import javafx.animation.Transition;
 import javafx.scene.transform.Rotate;
 
 public class MiniBossBirdBullet extends Bullet  {
+
     public MiniBossBirdBullet(double v, double v1, MiniBossBird ownBossBird) {
         super(v, v1, new MiniBossBulletEggFactory() {
         });
@@ -17,8 +20,6 @@ public class MiniBossBirdBullet extends Bullet  {
 
     private void initializeBulletRotationTransform(MiniBossBird ownBossBird) {
         bulletRotate = new Rotate();
-        bulletRotate.setPivotX(ownBossBird.getxCenter());
-        bulletRotate.setPivotY(ownBossBird.getyCenter());
         this.getTransforms().add(bulletRotate);
     }
 
@@ -38,4 +39,15 @@ public class MiniBossBirdBullet extends Bullet  {
     }
 
 
+    public double calculateDistanceWithMiniBossBird() {
+        double xDistance = BossBird.getInstance().getBoundsInParent().getCenterX() - this.getBoundsInParent().getCenterX();
+        double yDistance = BossBird.getInstance().getBoundsInParent().getCenterX() - this.getBoundsInParent().getCenterY();
+        return Math.sqrt(Math.pow(xDistance, 2.0) + Math.pow(yDistance, 2.0));
+    }
+
+    public Pair<Double, Double> calculateXAndYTranslate(Double distance) {
+        double xDistance = BossBird.getInstance().getBoundsInParent().getCenterX() - this.getBoundsInParent().getCenterX();
+        double yDistance = BossBird.getInstance().getBoundsInParent().getCenterX() - this.getBoundsInParent().getCenterY();
+        return new Pair<>(xDistance/distance,yDistance/distance);
+    }
 }

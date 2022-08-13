@@ -91,8 +91,8 @@ public class Constants {
     public static final int MINI_BOSS_EXPLOSION_SIZE = 100;
     public static final int MINI_BOSS_EXPLOSION_TIME = 100;
 
-    public static final int MINI_BOSS_EGG_MAX_DISTANCE = 500;
-    public static final int MINI_BOSS_EGG_MIN_DISTANCE = 100;
+    public static final int MINI_BOSS_EGG_MAX_DISTANCE = 800;
+    public static final int MINI_BOSS_EGG_MIN_DISTANCE = 300;
     public static final int MINI_BOSS_EGG_EXPLOSION_SIZE = 300;
     public static final int MINI_BOSS_EGG_HEIGHT = 106;
     public static final int MINI_BOSS_EGG_WIDTH = 118;

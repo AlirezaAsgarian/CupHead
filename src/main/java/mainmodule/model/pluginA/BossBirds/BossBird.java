@@ -1,5 +1,7 @@
 package mainmodule.model.pluginA.BossBirds;
 
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.geometry.Bounds;
 import javafx.scene.image.Image;
 import mainmodule.model.pluginA.BossBirds.bossBirdStateEnums.BossBirdStates;
@@ -24,6 +26,8 @@ public abstract class BossBird extends Rectangle implements Imageable {
     BossBirdStates bossBirdState;
     BulletFactoryCreator bulletFactoryCreator;
     static int health;
+    DoubleProperty xCenter;
+    DoubleProperty yCenter;
     HashMap<BossBirdStates, ArrayList<ImagePattern>> bossBirdAnimations;
     final int distance_collision_x;
     final int distance_collision_y;
@@ -35,6 +39,8 @@ public abstract class BossBird extends Rectangle implements Imageable {
         this.distance_collision_x = distance_collision_x;
         this.distance_collision_y = distance_collision_y;
         this.bulletFactoryCreator = bulletFactoryCreator;
+        xCenter = new SimpleDoubleProperty(this.getX() + this.getWidth() / 2);
+        yCenter = new SimpleDoubleProperty(this.getY() + this.getHeight() / 2);
     }
 
 
@@ -52,15 +58,27 @@ public abstract class BossBird extends Rectangle implements Imageable {
     /***
      * @return returns center x of this rectangle
      */
-    public double getxCenter() {
-        return this.getX() + this.getWidth() / 2;
+    public Double getXCenter() {
+        return this.getBoundsInParent().getCenterX();
     }
 
     /***
      * @return returns center y of this rectangle
      */
-    public double getyCenter() {
-        return (this.getY() + this.getHeight() / 2);
+    public double getYCenter() {
+       return this.getBoundsInParent().getCenterY();
+    }
+    public DoubleProperty xCenterProperty(){
+        return this.xCenter;
+    }
+
+    public DoubleProperty yCenterProperty() {
+        return yCenter;
+    }
+
+    public void updateCenterPoint(){
+        this.yCenter.set(this.getY() + this.getHeight() / 2);
+        this.xCenter.set(this.getX() + this.getWidth() / 2);
     }
 
 

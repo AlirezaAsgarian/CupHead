@@ -1,4 +1,4 @@
-package mainmodule.poultryTests;
+package mainmodule.BossBirdBulletsTest.MiniBossBirdSpecialBullet;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -7,9 +7,11 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import mainmodule.View.AvatarTransitions.AvatarTransition;
 import mainmodule.View.Menus.Menu;
 import mainmodule.View.Menus.MenuStack;
 import mainmodule.View.Menus.ViewController;
+import mainmodule.model.Avatar;
 import mainmodule.model.Bullet;
 import mainmodule.model.BulletFactory;
 import mainmodule.model.Game;
@@ -27,8 +29,9 @@ import org.testfx.api.FxToolkit;
 import java.util.concurrent.TimeoutException;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class PoultryBulletStageTest extends Application implements BulletTransitionFactory {
+public class MiniBossBirdSpecialBulletStageTest extends Application implements BulletTransitionFactory {
     AnchorPane anchorPane;
+    @Override
     public void start(Stage stage) throws Exception {
         initializeStageComponents();
         Scene scene = new Scene(anchorPane);
@@ -37,21 +40,20 @@ public class PoultryBulletStageTest extends Application implements BulletTransit
     }
 
     private void initializeStageComponents() {
-        anchorPane = initializeMainPageAnchorPage();
-        initializeMenuStack(anchorPane);
+        initializeMainPageAnchorPane();
+        initializeMenuStack();
     }
 
-    private AnchorPane initializeMainPageAnchorPage() {
-        AnchorPane anchorPane = new AnchorPane();
-        anchorPane.setPrefSize(720,200);
-        anchorPane.setId("mainAnchorPane");
-        return anchorPane;
+    private void initializeMainPageAnchorPane() {
+        anchorPane = new AnchorPane();
+        anchorPane.setPrefSize(1280,720);
+        anchorPane.setId("mainPageAnchorPane");
     }
 
 
-
-    private void initializeMenuStack(AnchorPane anchorPane) {
+    private void initializeMenuStack() {
         MenuStack.getInstance().pushMenu(new Menu(anchorPane, new ViewController() {}));
         MenuStack.getInstance().setCurrentGame(new Game(new ProgressBar()));
     }
+
 }

@@ -17,12 +17,6 @@ public class BedBossBirdBulletFactoryCreator implements BulletFactoryCreator
 
     @Override
     public BulletFactory getNewBossBirdBulletFactory(int random) {
-        switch (random){
-            case 0 ->  this.bulletFactories.get(0);
-            case 1 ->  this.bulletFactories.get(1);
-            case 2 ->  this.bulletFactories.get(2);
-            case 3 ->  this.bulletFactories.get(3);
-        }
-        throw new RuntimeException();
+        return this.bulletFactories.get(random);
     }
 }

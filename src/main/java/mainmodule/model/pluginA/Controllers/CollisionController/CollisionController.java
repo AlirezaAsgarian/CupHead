@@ -23,7 +23,7 @@ public class CollisionController {
             for (int y = 1; y < i1.getHeight() - 1; y++) {
                 Location coordinate1 = new Location(x, y);
                 Location coordinate2 = calculateSecondPointCoordinate(coordinate1, b1, b2);
-                if (!isBorderPoint(coordinate2, b2.getWidth(), b2.getHeight()) && isSecondImageBoundContainsCurrentPoint(b2, (int) (coordinate1.getX() + b1.getMinX()), (int) (coordinate1.getY() + b1.getMinY())) && pointHasCollision(pr1, pr2, coordinate1, coordinate2))
+                if (!isBorderPoint(coordinate2, b2.getWidth(), b2.getHeight()) && isSecondImageBoundContainsCurrentPoint(b2, (int) (coordinate1.getX() + b1.getMinX()), (int) (coordinate1.getY() + b1.getMinY())) && isTwoPointsHaveOpacityBiggerThanZero(pr1, pr2, coordinate1, coordinate2))
                     return true;
             }
         }
@@ -51,7 +51,7 @@ public class CollisionController {
 
     }
 
-    private static boolean pointHasCollision(PixelReader pr1, PixelReader pr2, Location currentPoint, Location secondImageCoordinate) {
+    private static boolean isTwoPointsHaveOpacityBiggerThanZero(PixelReader pr1, PixelReader pr2, Location currentPoint, Location secondImageCoordinate) {
         return !PixelOpacityIsZero(pr1, currentPoint.getX(), currentPoint.getY()) && !PixelOpacityIsZero(pr2, secondImageCoordinate.getX(), secondImageCoordinate.getY());
     }
 

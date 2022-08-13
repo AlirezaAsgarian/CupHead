@@ -16,12 +16,12 @@ import java.util.List;
 public interface BedBossBirdBulletFactoryType3 extends BulletFactory {
     @Override
     default int getBulletHeight() {
-        return Constants.BED_BOSS_BIRD_BULLET2_HEIGHT;
+        return Constants.BED_BOSS_BIRD_BULLET3_HEIGHT;
     }
 
     @Override
     default int getBulletWidth() {
-        return Constants.BED_BOSS_BIRD_BULLET2_WIDTH;
+        return Constants.BED_BOSS_BIRD_BULLET3_WIDTH;
     }
 
     @Override

@@ -7,12 +7,12 @@ import mainmodule.model.pluginA.util.Constants;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MiniBossBirdFactoryCreator implements BulletFactoryCreator {
+public class MiniBossBirdBulletFactoryCreator implements BulletFactoryCreator {
 
     ArrayList<BulletFactory> bulletFactories;
     MiniBossBulletEggFactory miniBossBulletEggFactory;
 
-    public MiniBossBirdFactoryCreator() {
+    public MiniBossBirdBulletFactoryCreator() {
         bulletFactories = new ArrayList<>(List.of(new MiniBossBulletToLeft() {},new MiniBossBulletToRight(){}));
         miniBossBulletEggFactory = new MiniBossBulletEggFactory() {};
     }

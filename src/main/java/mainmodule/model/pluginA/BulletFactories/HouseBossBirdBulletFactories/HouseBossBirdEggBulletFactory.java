@@ -2,6 +2,7 @@ package mainmodule.model.pluginA.BulletFactories.HouseBossBirdBulletFactories;
 
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
+import mainmodule.model.Bullet;
 import mainmodule.model.pluginA.Enums.MoveFuncs;
 import mainmodule.Main;
 import mainmodule.model.Avatar;
@@ -13,6 +14,7 @@ import mainmodule.model.pluginA.util.SetConstants;
 import java.util.List;
 
 public interface HouseBossBirdEggBulletFactory extends BulletFactory {
+
     @Override
     default int getDamageRatio() {
         return SetConstants.EGG_BULLET_DAMAGE_RATIO;
