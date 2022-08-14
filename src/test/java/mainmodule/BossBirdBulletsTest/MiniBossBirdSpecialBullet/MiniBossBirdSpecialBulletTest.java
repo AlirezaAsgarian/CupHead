@@ -35,6 +35,7 @@ public class MiniBossBirdSpecialBulletTest extends ApplicationTest implements Co
     public void test() throws InterruptedException {
         MiniBossBird miniBossBird = (MiniBossBird) BossBirdEnums.SECOND_BOSS_BIRD.createNewBossBird();
         miniBossBird.decreaseHealth(-200);
+        BossBird.setInstance(miniBossBird);
         applyChangeOnJavaFXApplication(miniBossBird::initializeNewBossBirdAndItsTransitions);
         Thread.sleep(10000);
     }

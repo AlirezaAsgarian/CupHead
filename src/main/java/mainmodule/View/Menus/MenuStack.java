@@ -1,5 +1,6 @@
 package mainmodule.View.Menus;
 
+import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import mainmodule.model.Bullet;
@@ -76,6 +77,9 @@ public class MenuStack {
 
 
     public void addNodeToCurrentMenuChildrens(Bullet bullet) {
+        instance.getTopMenu().getRoot().getChildren().add(bullet);
+    }
+    public void addNodeToCurrentMenuChildrens(Node bullet) {
         instance.getTopMenu().getRoot().getChildren().add(bullet);
     }
 

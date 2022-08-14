@@ -20,6 +20,7 @@ public class MiniBossBirdBullet extends Bullet  {
 
     private void initializeBulletRotationTransform(MiniBossBird ownBossBird) {
         bulletRotate = new Rotate();
+        bulletRotate.setPivotX(ownBossBird.getXCenter()); bulletRotate.setPivotY(ownBossBird.getYCenter());
         this.getTransforms().add(bulletRotate);
     }
 

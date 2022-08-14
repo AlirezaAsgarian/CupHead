@@ -86,13 +86,15 @@ public class Constants {
     public static final int MINI_BOSS_BIRD_BIRD_BULLET_TO_RIGHT_INDEX = 1;
     public static final int MINI_BOSS_BIRD_BIRD_BULLET_TO_LEFT_INDEX = 0;
     public static final int SPECIAL_BULLET_SELECTION_NUMBER = 4;
+    public static final double MINI_BOSS_WIDTH = 187;
+    public static final double MINI_BOSS_HEIGHT = 224;
 
     public static int MINI_BOSS_BULLET_DURATION  = 3200;
     public static final int MINI_BOSS_EXPLOSION_SIZE = 100;
     public static final int MINI_BOSS_EXPLOSION_TIME = 100;
 
     public static final int MINI_BOSS_EGG_MAX_DISTANCE = 800;
-    public static final int MINI_BOSS_EGG_MIN_DISTANCE = 300;
+    public static final int MINI_BOSS_EGG_MIN_DISTANCE = 100;
     public static final int MINI_BOSS_EGG_EXPLOSION_SIZE = 300;
     public static final int MINI_BOSS_EGG_HEIGHT = 106;
     public static final int MINI_BOSS_EGG_WIDTH = 118;

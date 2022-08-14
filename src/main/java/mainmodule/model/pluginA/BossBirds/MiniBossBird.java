@@ -1,7 +1,5 @@
 package mainmodule.model.pluginA.BossBirds;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import mainmodule.model.pluginA.BossBirds.bossBirdStateEnums.BossBirdStates;
 import mainmodule.util.Location;
 import mainmodule.model.pluginA.Enums.BulletTransitionFactory;
@@ -114,6 +112,11 @@ public class MiniBossBird extends BossBird implements BulletTransitionFactory {
             //todo check get X and get Y
             startTransitionsOfMiniBossBirdBullets(miniBossBirdBullet,new Location(miniBossBirdBullet.getX(),miniBossBirdBullet.getY()));
         }
+        applyListenersForEggBullets();
+    }
+
+    private void applyListenersForEggBullets() {
+        bindPivotRotationPointsToCenterOfBossBird();
         addListenerForEggBulletsPositionX();
         addListenerForEggBulletsPositionY();
     }
@@ -123,7 +126,6 @@ public class MiniBossBird extends BossBird implements BulletTransitionFactory {
             for (MiniBossBirdBullet mb:
                     MiniBossBird.this.getMiniBossBirdBullets()) {
                 mb.setY(mb.getY() + (t1.doubleValue() - number.doubleValue()));
-                mb.getBulletRotate().setPivotY(MiniBossBird.this.getYCenter());
             }
         });
     }
@@ -133,9 +135,16 @@ public class MiniBossBird extends BossBird implements BulletTransitionFactory {
             for (MiniBossBirdBullet mb:
                  MiniBossBird.this.getMiniBossBirdBullets()) {
                 mb.setX(mb.getX() + (t1.doubleValue() - number.doubleValue()));
-                mb.getBulletRotate().setPivotX(MiniBossBird.this.getXCenter());
             }
         });
+    }
+
+    private void bindPivotRotationPointsToCenterOfBossBird() {
+        for (MiniBossBirdBullet mb:
+             MiniBossBird.this.getMiniBossBirdBullets()) {
+            mb.getBulletRotate().pivotXProperty().bind(this.xProperty().add(Constants.MINI_BOSS_WIDTH / 2));
+            mb.getBulletRotate().pivotYProperty().bind(this.yProperty().add(Constants.MINI_BOSS_HEIGHT / 2));
+        }
     }
 
 

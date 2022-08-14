@@ -66,9 +66,10 @@ public abstract class BossBird extends Rectangle implements Imageable {
      * @return returns center y of this rectangle
      */
     public double getYCenter() {
-       return this.getBoundsInParent().getCenterY();
+       return this.getBoundsInParent().getCenterY() ;
     }
     public DoubleProperty xCenterProperty(){
+        xCenter.set(this.getX() + 93.5);
         return this.xCenter;
     }
 
