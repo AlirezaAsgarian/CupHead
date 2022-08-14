@@ -43,7 +43,7 @@ public class HouseBossBird extends BossBird {
     public void initializeNewBossBirdAndItsTransitions() {
         setFullHealth();
         BossBirdTransitions bossBirdTransitions = new BossBirdTransitions(this);
-        BossBirdManger.getInstance().getBossBirdTransitions().add(bossBirdTransitions);
+        BossBirdManger.getInstance().addBossBirdTransitions(bossBirdTransitions);
         bossBirdTransitions.play();
     }
 

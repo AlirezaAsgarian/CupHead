@@ -22,7 +22,7 @@ public class TransitionManager {
     public static void removeTransition(TransitionType transitionType, Transition bossBirdTransition) {
         switch (transitionType){
             case BOSS_BIRD_TRANSITION -> {bossBirdTransitions.remove((BossBirdTransitions) bossBirdTransition);}
-            case BULLET_TRANSITION -> {bulletTransitions.remove((BulletTransition) bossBirdTransition);}
+            case BULLET_TRANSITION -> {bulletTransitions.remove(bossBirdTransition);}
             case BACKGROUND_TRANSITION -> {backGroundTransitions.remove((BackGroundTransition) bossBirdTransition);}
         }
     }
@@ -30,7 +30,7 @@ public class TransitionManager {
     public static void addTransition(TransitionType transitionType, Transition transition) {
         switch (transitionType){
             case BOSS_BIRD_TRANSITION -> {bossBirdTransitions.add((BossBirdTransitions) transition);}
-            case BULLET_TRANSITION -> {bulletTransitions.add((BulletTransition) transition);}
+            case BULLET_TRANSITION -> {bulletTransitions.add(transition);}
             case BACKGROUND_TRANSITION -> {backGroundTransitions.add((BackGroundTransition) transition);}
         }
     }

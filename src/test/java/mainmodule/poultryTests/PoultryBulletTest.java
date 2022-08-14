@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import mainmodule.View.AvatarTransitions.AvatarTransition;
 import mainmodule.model.Avatar;
 import mainmodule.model.Bullet;
+import mainmodule.model.TransitionManager;
 import mainmodule.model.pluginA.BossBirds.BossBird;
 import mainmodule.model.pluginA.BulletFactories.AvatarBulletFactories.AvatarBulletFactory;
 import mainmodule.model.pluginA.BulletFactories.PoultryBirdBulletsFactories.PoultryBulletFactoryCreator;
@@ -24,6 +25,7 @@ import org.slf4j.LoggerFactory;
 import org.testfx.api.FxToolkit;
 import org.testfx.framework.junit.ApplicationTest;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
 import java.util.stream.Stream;
@@ -53,7 +55,7 @@ public class PoultryBulletTest extends ApplicationTest implements BulletTransiti
     }
 
     private  void initializePoultryBullet(int selectionNumber) {
-        applyChangeOnJavaFXApplication(() -> createPoultryTransitionAndPlayIt(selectionNumber));
+        applyChangeOnJavaFXApplication(() -> createPoultryTransitionAndPlayIt(selectionNumber,0));
         anchorPane = find("#mainAnchorPane");
     }
     private static Stream<Arguments> yellowAndPurplePoultryArguments(){
@@ -85,9 +87,24 @@ public class PoultryBulletTest extends ApplicationTest implements BulletTransiti
         Assertions.assertThrows(IndexOutOfBoundsException.class,() -> anchorPane.getChildren().get(1));
         applyChangeOnJavaFXApplication(() -> AvatarTransition.getInstance().stop());
     }
-    private void createPoultryTransitionAndPlayIt(int selectionNumber) {
+    private void createPoultryTransitionAndPlayIt(int selectionNumber,int... positions) {
         PoultryBulletFactoryCreator poultryBulletFactory = new PoultryBulletFactoryCreator();
-        createBulletTransition(poultryBulletFactory.getNewBossBirdBulletFactory(selectionNumber),new Location(600 ,SetConstants.BOSS_BIRD_POULTRY_Y)).play();
+        Arrays.stream(positions).forEach((i) -> {
+                SetConstants.setBossBirdPoultryY(i * 100);
+                createBulletTransition(poultryBulletFactory.getNewBossBirdBulletFactory(selectionNumber),new Location(600 ,SetConstants.BOSS_BIRD_POULTRY_Y)).play();
+           }
+        );
+    }
+    @ParameterizedTest
+    @MethodSource("yellowAndPurplePoultryArguments")
+    public void seePoultryPositions(int selectionNumber) throws InterruptedException {
+        initializeAllPoultryBullet(selectionNumber);
+        Thread.sleep(1000);
+    }
+
+    private void initializeAllPoultryBullet(int selectionNumber) {
+        applyChangeOnJavaFXApplication(() -> createPoultryTransitionAndPlayIt(selectionNumber,0,1,2,3,4,5,6));
+        anchorPane = find("#mainAnchorPane");
     }
 
 
@@ -107,6 +124,7 @@ public class PoultryBulletTest extends ApplicationTest implements BulletTransiti
 
     @AfterEach
     public void afterEachTest() throws TimeoutException {
+        TransitionManager.stopTransitions();
         FxToolkit.cleanupStages();
         release(new KeyCode[]{});
         release(new MouseButton[]{});

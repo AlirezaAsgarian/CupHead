@@ -6,9 +6,11 @@ import mainmodule.BossBirdBulletsTest.BossBirdBulletStageTest;
 import mainmodule.ComponentFinder;
 import mainmodule.JavaFXThreadModifier;
 import mainmodule.model.Avatar;
+import mainmodule.model.TransitionManager;
 import mainmodule.model.pluginA.BossBirds.BossBird;
 import mainmodule.model.pluginA.BossBirds.BossBirdEnums;
 import mainmodule.model.pluginA.BossBirds.MiniBossBird;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.api.FxRobot;
@@ -37,8 +39,13 @@ public class MiniBossBirdSpecialBulletTest extends ApplicationTest implements Co
         miniBossBird.decreaseHealth(-200);
         BossBird.setInstance(miniBossBird);
         applyChangeOnJavaFXApplication(miniBossBird::initializeNewBossBirdAndItsTransitions);
-        Thread.sleep(10000);
+        Thread.sleep(1000);
     }
+    @AfterEach
+    public void cleaningPageAfterTest(){
+        TransitionManager.stopTransitions();
+    }
+
 
     @Override
     public <T extends Node> T find(String query) {

@@ -4,10 +4,13 @@ import mainmodule.model.Avatar;
 import mainmodule.model.pluginA.util.Constants;
 import mainmodule.View.AvatarTransitions.AvatarTransition;
 import javafx.scene.input.KeyCode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
 public class AvatarTransitionController {
+    static Logger logger = LoggerFactory.getLogger(AvatarTransitionController.class);
     private static AvatarTransition avatarTransition;
 
     public static void setAvatarTransition(AvatarTransition avatarTransition) {

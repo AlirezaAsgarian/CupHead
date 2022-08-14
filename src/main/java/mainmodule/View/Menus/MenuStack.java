@@ -87,5 +87,7 @@ public class MenuStack {
         this.stage = stage;
     }
 
-
+    public Scene getScene() {
+        return scene;
+    }
 }

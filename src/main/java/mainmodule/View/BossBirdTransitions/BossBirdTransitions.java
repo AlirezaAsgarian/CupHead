@@ -89,20 +89,9 @@ public class BossBirdTransitions extends javafx.animation.Transition implements 
         if (this.bossBird.isReadyForShooting(frame) && bossBirdBulletTransition == null) {
             startBossBirdNewBulletTransition();
         }
-        logger.debug("bossBird image width {} , height {}",bossBirdImagePattern.get(frame - 1).getImage().getWidth(),bossBirdImagePattern.get(frame - 1).getImage().getHeight());
-        paintCenterOfBossBird();
         this.bossBird.setImage(bossBirdImagePattern.get(frame - 1));
     }
 
-    private void paintCenterOfBossBird() {
-        Circle point = new Circle(40);
-        point.setCenterX(BossBird.getInstance().getBoundsInParent().getCenterX());
-        point.setCenterY(BossBird.getInstance().getBoundsInParent().getCenterY());
-        point.setFill(Color.YELLOW);
-        MenuStack.getInstance().addNodeToCurrentMenuChildrens(point);
-        point.toFront();
-
-    }
 
     private MiniBossBird getInstance() {
         return (MiniBossBird) BossBird.getInstance();

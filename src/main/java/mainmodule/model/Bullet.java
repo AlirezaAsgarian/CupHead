@@ -58,7 +58,6 @@ public class Bullet extends Rectangle implements Imageable{
         this.isExploded = false;
         this.setFill(this.animationImagePatterns.get(0));
         this.setId(v + "_" + v1);
-        System.out.println(this.getId());
     }
 
 
@@ -101,6 +100,7 @@ public class Bullet extends Rectangle implements Imageable{
         switch (type) {
             case HIT_ENEMY -> {
                 return event -> {
+                    logger.debug("{}",this);
                     affectBulletDamageToEnemy();
                     removeBulletFromScreen();
                 };

@@ -43,7 +43,7 @@ public class PoultryBulletStageTest extends Application implements BulletTransit
 
     private AnchorPane initializeMainPageAnchorPage() {
         AnchorPane anchorPane = new AnchorPane();
-        anchorPane.setPrefSize(720,200);
+        anchorPane.setPrefSize(1280,720);
         anchorPane.setId("mainAnchorPane");
         return anchorPane;
     }
