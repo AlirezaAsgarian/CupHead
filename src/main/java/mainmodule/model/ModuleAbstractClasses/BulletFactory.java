@@ -1,6 +1,7 @@
-package mainmodule.model;
+package mainmodule.model.ModuleAbstractClasses;
 
 import javafx.scene.paint.ImagePattern;
+import mainmodule.model.Imageable;
 import mainmodule.model.pluginA.Enums.MoveFuncs;
 
 import java.util.List;

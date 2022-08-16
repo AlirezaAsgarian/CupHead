@@ -1,8 +1,8 @@
 package mainmodule.model.pluginA.Enums;
 
-import mainmodule.model.Avatar;
+import mainmodule.model.ModuleAbstractClasses.Avatar;
 import mainmodule.model.pluginA.BossBirds.BossBird;
-import mainmodule.model.TransitionManager;
+import mainmodule.model.ModuleAbstractClasses.TransitionManager;
 import mainmodule.model.pluginA.util.Constants;
 
 public enum AvatarStates {

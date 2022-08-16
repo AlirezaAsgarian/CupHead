@@ -5,21 +5,15 @@ import javafx.scene.Node;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.media.MediaView;
-import mainmodule.BossBirdBulletsTest.BossBirdBulletStageTest;
 import mainmodule.View.AvatarTransitions.AvatarTransition;
-import mainmodule.View.BossBirdTransitions.BossBirdTransitions;
-import mainmodule.model.Avatar;
-import mainmodule.model.BossBirdManger;
-import mainmodule.model.Game;
-import mainmodule.model.TransitionManager;
+import mainmodule.model.ModuleAbstractClasses.Avatar;
+import mainmodule.model.ModuleAbstractClasses.TransitionManager;
 import mainmodule.model.pluginA.BossBirds.BossBird;
 import mainmodule.model.pluginA.Enums.AvatarStates;
 import org.junit.jupiter.api.*;
 import org.testfx.api.FxToolkit;
 import org.testfx.framework.junit.ApplicationTest;
 
-import java.security.KeyStore;
 import java.util.Map;
 import java.util.concurrent.TimeoutException;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)

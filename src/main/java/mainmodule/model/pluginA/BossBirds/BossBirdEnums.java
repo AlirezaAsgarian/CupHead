@@ -3,7 +3,6 @@ package mainmodule.model.pluginA.BossBirds;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import mainmodule.Main;
-import mainmodule.model.BulletFactory;
 import mainmodule.model.pluginA.BossBirds.bossBirdStateEnums.BossBirdStates;
 import mainmodule.model.pluginA.BulletFactories.BedBossBirdBulletFactories.BedBossBirdBulletFactoryType1;
 import mainmodule.model.pluginA.BulletFactories.BedBossBirdBulletFactories.BedBossBirdBulletFactoryType2;
@@ -11,23 +10,14 @@ import mainmodule.model.pluginA.BulletFactories.BedBossBirdBulletFactories.BedBo
 import mainmodule.model.pluginA.BulletFactories.BedBossBirdBulletFactories.BedBossBirdBulletFactoryType4;
 import mainmodule.model.pluginA.BulletFactories.DoctorBossBirdBulletFactories.DoctorBossBirdBulletFactoryType1;
 import mainmodule.model.pluginA.BulletFactories.DoctorBossBirdBulletFactories.DoctorBossBirdBulletFactoryType2;
-import mainmodule.model.pluginA.Enums.Bullets;
 import mainmodule.model.pluginA.util.Constants;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import mainmodule.Main;
-import javafx.scene.image.Image;
-import javafx.scene.paint.ImagePattern;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-    public enum BossBirdEnums {
+public enum BossBirdEnums {
         FIRST_BOSS_BIRD(() -> new HouseBossBird(Constants.Max_Width - Constants.BOSS_1_WIDTH, Constants.Max_Height - Constants.BOSS_1_HEIGHT, Constants.BOSS_1_WIDTH, Constants.BOSS_1_HEIGHT, new HashMap<>(Map.of(BossBirdStates.FLYING, new ArrayList<ImagePattern>() {{
             for (int i = 1; i <= 6; i++) {
                 add(new ImagePattern(new Image(Main.class.getResource("cuphead_frames/frames/BossFly/" + i + ".png").toExternalForm())));

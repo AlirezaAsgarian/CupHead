@@ -1,9 +1,9 @@
 package mainmodule.View.BossBirdTransitions;
 
-import mainmodule.model.TransitionManager;
-import mainmodule.model.TransitionType;
+import mainmodule.model.ModuleAbstractClasses.TransitionManager;
+import mainmodule.model.ModuleAbstractClasses.TransitionType;
 import mainmodule.model.pluginA.Enums.BulletCollisionType;
-import mainmodule.model.Bullet;
+import mainmodule.model.ModuleAbstractClasses.Bullet;
 import mainmodule.View.Menus.MenuStack;
 import javafx.animation.Transition;
 import javafx.util.Duration;

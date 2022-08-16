@@ -1,5 +1,8 @@
 package mainmodule.model.pluginA.BossBirds;
 
+import mainmodule.model.ModuleAbstractClasses.Avatar;
+import mainmodule.model.ModuleAbstractClasses.BossBirdManger;
+import mainmodule.model.ModuleAbstractClasses.BulletFactory;
 import mainmodule.model.pluginA.BossBirds.bossBirdStateEnums.BossBirdStates;
 import mainmodule.util.Location;
 import mainmodule.model.pluginA.Enums.BulletTransitionFactory;

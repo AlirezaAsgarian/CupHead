@@ -1,11 +1,9 @@
-package mainmodule.model;
+package mainmodule.model.ModuleAbstractClasses;
 
 import javafx.animation.Transition;
 import mainmodule.View.AvatarTransitions.AvatarTransition;
 import mainmodule.View.BackGroundTransiton.BackGroundTransition;
 import mainmodule.View.BossBirdTransitions.BossBirdTransitions;
-import mainmodule.View.BossBirdTransitions.BulletTransition;
-
 import java.util.ArrayList;
 import java.util.List;
 

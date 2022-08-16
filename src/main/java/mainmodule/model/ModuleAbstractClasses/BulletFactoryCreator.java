@@ -1,6 +1,6 @@
-package mainmodule.model;
+package mainmodule.model.ModuleAbstractClasses;
 
-import mainmodule.model.BulletFactory;
+import mainmodule.model.ModuleAbstractClasses.BulletFactory;
 
 public interface BulletFactoryCreator {
     public BulletFactory getNewBossBirdBulletFactory(int randomNumber);

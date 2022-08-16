@@ -1,11 +1,11 @@
 package mainmodule.model.pluginA.Enums;
 
 import mainmodule.Main;
-import mainmodule.model.Avatar;
-import mainmodule.model.TransitionType;
+import mainmodule.model.ModuleAbstractClasses.Avatar;
+import mainmodule.model.ModuleAbstractClasses.TransitionType;
 import mainmodule.model.pluginA.BulletFactories.AvatarBulletFactories.*;
-import mainmodule.model.BulletFactory;
-import mainmodule.model.TransitionManager;
+import mainmodule.model.ModuleAbstractClasses.BulletFactory;
+import mainmodule.model.ModuleAbstractClasses.TransitionManager;
 import mainmodule.model.pluginA.util.Constants;
 import mainmodule.View.Menus.MenuStack;
 import javafx.animation.Transition;

@@ -3,7 +3,7 @@ package mainmodule.model.pluginA.Controllers.AvatarControllers;
 import mainmodule.model.pluginA.Enums.AvatarShootingKeySettings;
 import mainmodule.model.pluginA.Enums.AvatarStates;
 import mainmodule.model.pluginA.Enums.KeyEventType;
-import mainmodule.model.Avatar;
+import mainmodule.model.ModuleAbstractClasses.Avatar;
 import mainmodule.model.ImageHandler;
 import mainmodule.model.pluginA.util.Constants;
 import javafx.scene.input.KeyCode;

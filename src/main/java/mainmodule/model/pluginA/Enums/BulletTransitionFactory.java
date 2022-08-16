@@ -1,9 +1,9 @@
 package mainmodule.model.pluginA.Enums;
 
 import mainmodule.util.Location;
-import mainmodule.model.Bullet;
+import mainmodule.model.ModuleAbstractClasses.Bullet;
 import mainmodule.View.BossBirdTransitions.BulletTransition;
-import mainmodule.model.BulletFactory;
+import mainmodule.model.ModuleAbstractClasses.BulletFactory;
 
 public interface BulletTransitionFactory {
 

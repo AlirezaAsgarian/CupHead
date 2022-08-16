@@ -5,7 +5,7 @@ import javafx.scene.paint.ImagePattern;
 import mainmodule.model.pluginA.Enums.MoveFuncs;
 import mainmodule.Main;
 import mainmodule.model.pluginA.BossBirds.BossBird;
-import mainmodule.model.BulletFactory;
+import mainmodule.model.ModuleAbstractClasses.BulletFactory;
 import mainmodule.model.Imageable;
 import mainmodule.model.pluginA.util.Constants;
 import mainmodule.model.pluginA.util.SetConstants;

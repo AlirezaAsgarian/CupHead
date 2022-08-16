@@ -1,8 +1,8 @@
 package mainmodule.View.BackGroundTransiton;
 
-import mainmodule.model.TransitionType;
+import mainmodule.model.ModuleAbstractClasses.TransitionType;
 import mainmodule.model.pluginA.Enums.BackGround;
-import mainmodule.model.TransitionManager;
+import mainmodule.model.ModuleAbstractClasses.TransitionManager;
 import mainmodule.model.pluginA.util.Constants;
 import mainmodule.View.Menus.MenuStack;
 import javafx.animation.Transition;

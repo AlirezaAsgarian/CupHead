@@ -2,11 +2,10 @@ package mainmodule.model.pluginA.BulletFactories.HouseBossBirdBulletFactories;
 
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
-import mainmodule.model.Bullet;
 import mainmodule.model.pluginA.Enums.MoveFuncs;
 import mainmodule.Main;
-import mainmodule.model.Avatar;
-import mainmodule.model.BulletFactory;
+import mainmodule.model.ModuleAbstractClasses.Avatar;
+import mainmodule.model.ModuleAbstractClasses.BulletFactory;
 import mainmodule.model.Imageable;
 import mainmodule.model.pluginA.util.Constants;
 import mainmodule.model.pluginA.util.SetConstants;

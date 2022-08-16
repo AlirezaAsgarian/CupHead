@@ -1,7 +1,7 @@
 package mainmodule.model.pluginA.Enums;
 
 import mainmodule.Main;
-import mainmodule.model.Avatar;
+import mainmodule.model.ModuleAbstractClasses.Avatar;
 import mainmodule.model.pluginA.BossBirds.BossBird;
 import mainmodule.model.pluginA.util.Constants;
 import mainmodule.model.pluginA.util.SetConstants;

@@ -1,6 +1,6 @@
 package mainmodule.View;
 
-import mainmodule.model.Avatar;
+import mainmodule.model.ModuleAbstractClasses.Avatar;
 import mainmodule.model.pluginA.BossBirds.BossBird;
 import mainmodule.model.Game;
 import mainmodule.model.pluginA.util.Constants;

@@ -1,7 +1,7 @@
 package mainmodule.model.pluginA.BulletFactories.MiniBossBirdBulletFactories;
 
-import mainmodule.model.BulletFactoryCreator;
-import mainmodule.model.BulletFactory;
+import mainmodule.model.ModuleAbstractClasses.BulletFactoryCreator;
+import mainmodule.model.ModuleAbstractClasses.BulletFactory;
 import mainmodule.model.pluginA.util.Constants;
 
 import java.util.ArrayList;

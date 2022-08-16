@@ -2,33 +2,22 @@ package mainmodule.AvatarTests.AvatarMovingTest;
 
 import javafx.application.Platform;
 import javafx.event.EventTarget;
-import javafx.event.EventType;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import mainmodule.BossBirdBulletsTest.BossBirdBulletStageTest;
 import mainmodule.View.AvatarTransitions.AvatarTransition;
-import mainmodule.model.Avatar;
-import mainmodule.model.pluginA.BossBirds.BossBird;
-import mainmodule.model.pluginA.BulletFactories.HouseBossBirdBulletFactories.HouseBossBirdBulletFactoryCreator;
-import mainmodule.model.pluginA.Enums.AvatarStates;
-import mainmodule.model.pluginA.util.Constants;
+import mainmodule.model.ModuleAbstractClasses.Avatar;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 import org.testfx.api.FxToolkit;
 import org.testfx.framework.junit.ApplicationTest;
 
-import javax.crypto.spec.PSource;
 import java.util.concurrent.TimeoutException;
-import java.util.stream.Stream;
 
 public class AvatarMovingTests extends ApplicationTest {
     AnchorPane anchorPane;

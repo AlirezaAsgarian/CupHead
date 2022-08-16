@@ -5,17 +5,15 @@ import javafx.scene.layout.AnchorPane;
 import mainmodule.BossBirdBulletsTest.BossBirdBulletStageTest;
 import mainmodule.ComponentFinder;
 import mainmodule.JavaFXThreadModifier;
-import mainmodule.model.Avatar;
-import mainmodule.model.TransitionManager;
+import mainmodule.model.ModuleAbstractClasses.Avatar;
+import mainmodule.model.ModuleAbstractClasses.TransitionManager;
 import mainmodule.model.pluginA.BossBirds.BossBird;
 import mainmodule.model.pluginA.BossBirds.BossBirdEnums;
 import mainmodule.model.pluginA.BossBirds.MiniBossBird;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.testfx.api.FxRobot;
 import org.testfx.framework.junit.ApplicationTest;
-import org.testfx.service.finder.NodeFinder;
 
 public class MiniBossBirdSpecialBulletTest extends ApplicationTest implements ComponentFinder, JavaFXThreadModifier {
 

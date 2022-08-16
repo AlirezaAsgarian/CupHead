@@ -1,4 +1,4 @@
-package mainmodule.model;
+package mainmodule.model.ModuleAbstractClasses;
 
 import mainmodule.model.pluginA.BossBirds.BossBird;
 import mainmodule.View.BossBirdTransitions.BossBirdTransitions;

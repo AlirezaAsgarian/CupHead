@@ -1,15 +1,14 @@
 package mainmodule.View.BossBirdTransitions;
 
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import mainmodule.View.Menus.MenuStack;
+import mainmodule.model.ModuleAbstractClasses.Avatar;
+import mainmodule.model.ModuleAbstractClasses.TransitionManager;
+import mainmodule.model.ModuleAbstractClasses.TransitionType;
 import mainmodule.model.pluginA.BossBirds.MiniBossBird;
 import mainmodule.model.pluginA.BossBirds.bossBirdStateEnums.BossBirdStates;
 import mainmodule.util.Location;
 import mainmodule.model.pluginA.Enums.BulletTransitionFactory;
-import mainmodule.model.*;
 import mainmodule.model.pluginA.BossBirds.BossBird;
-import mainmodule.model.BulletFactoryCreator;
+import mainmodule.model.ModuleAbstractClasses.BulletFactoryCreator;
 import mainmodule.model.pluginA.BulletFactories.PoultryBirdBulletsFactories.PoultryBulletFactoryCreator;
 import mainmodule.model.pluginA.util.Constants;
 import mainmodule.model.pluginA.util.SetConstants;

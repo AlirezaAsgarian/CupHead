@@ -25,4 +25,5 @@ open module CupHeadd {
     exports mainmodule.LoginMenu;
     exports mainmodule.model.pluginA.BossBirds;
     exports mainmodule.model.pluginA.BossBirds.bossBirdStateEnums;
+    exports mainmodule.model.ModuleAbstractClasses;
 }

@@ -1,5 +1,7 @@
 package mainmodule.model;
 
+import mainmodule.model.ModuleAbstractClasses.Avatar;
+import mainmodule.model.ModuleAbstractClasses.BossBirdManger;
 import mainmodule.model.pluginA.Enums.AvatarStates;
 import mainmodule.model.pluginA.Enums.BackGround;
 import mainmodule.Main;

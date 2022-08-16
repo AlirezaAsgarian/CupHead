@@ -6,15 +6,12 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import mainmodule.View.AvatarTransitions.AvatarTransition;
-import mainmodule.View.BossBirdTransitions.BossBirdTransitions;
 import mainmodule.View.Menus.Menu;
 import mainmodule.View.Menus.MenuStack;
 import mainmodule.View.Menus.ViewController;
-import mainmodule.model.Avatar;
+import mainmodule.model.ModuleAbstractClasses.Avatar;
 import mainmodule.model.Game;
 import mainmodule.model.pluginA.BossBirds.BossBird;
-import mainmodule.model.pluginA.BossBirds.BossBirdEnums;
-import mainmodule.model.pluginA.BossBirds.HouseBossBird;
 import mainmodule.model.pluginA.Enums.BulletTransitionFactory;
 
 public class AvatarShootingStageTest extends Application implements BulletTransitionFactory {

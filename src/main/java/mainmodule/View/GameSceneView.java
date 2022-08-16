@@ -1,7 +1,7 @@
 package mainmodule.View;
 // به نام خدایی که هر لحظه یاور ماست
 
-import mainmodule.model.Avatar;
+import mainmodule.model.ModuleAbstractClasses.Avatar;
 import mainmodule.View.Menus.Menu;
 import mainmodule.View.Menus.MenuStack;
 import javafx.application.Application;

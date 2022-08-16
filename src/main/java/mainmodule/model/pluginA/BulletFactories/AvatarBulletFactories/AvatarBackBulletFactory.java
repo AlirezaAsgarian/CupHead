@@ -3,7 +3,7 @@ package mainmodule.model.pluginA.BulletFactories.AvatarBulletFactories;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import mainmodule.Main;
-import mainmodule.model.BulletFactory;
+import mainmodule.model.ModuleAbstractClasses.BulletFactory;
 import mainmodule.model.Imageable;
 import mainmodule.model.pluginA.BossBirds.BossBird;
 import mainmodule.model.pluginA.Enums.MoveFuncs;

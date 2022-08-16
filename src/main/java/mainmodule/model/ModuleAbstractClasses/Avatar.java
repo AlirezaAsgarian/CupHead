@@ -1,4 +1,4 @@
-package mainmodule.model;
+package mainmodule.model.ModuleAbstractClasses;
 
 import javafx.geometry.Bounds;
 import javafx.scene.image.Image;
@@ -9,6 +9,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.util.Pair;
 import mainmodule.View.AvatarTransitions.AvatarTransition;
 import mainmodule.View.Menus.MenuStack;
+import mainmodule.model.HealthBar;
+import mainmodule.model.Imageable;
 import mainmodule.model.pluginA.BossBirds.BossBird;
 import mainmodule.model.pluginA.Controllers.AvatarControllers.KeyHandlingAvatar;
 import mainmodule.model.pluginA.Enums.AvatarShootingKeySettings;

@@ -3,7 +3,7 @@ package mainmodule.View.Menus;
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import mainmodule.model.Bullet;
+import mainmodule.model.ModuleAbstractClasses.Bullet;
 import mainmodule.model.Game;
 import javafx.scene.Scene;
 

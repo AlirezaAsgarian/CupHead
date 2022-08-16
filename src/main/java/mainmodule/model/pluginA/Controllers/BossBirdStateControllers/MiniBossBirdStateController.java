@@ -1,5 +1,6 @@
 package mainmodule.model.pluginA.Controllers.BossBirdStateControllers;
 
+import mainmodule.model.ModuleAbstractClasses.BossBirdManger;
 import mainmodule.model.pluginA.BossBirds.bossBirdStateEnums.BossBirdStates;
 import mainmodule.model.pluginA.Enums.BulletCollisionType;
 import mainmodule.model.*;

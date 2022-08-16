@@ -2,6 +2,7 @@ package mainmodule.model;
 
 import javafx.util.Pair;
 import mainmodule.View.BossBirdTransitions.MiniBossBirdSpecialBulletTransition;
+import mainmodule.model.ModuleAbstractClasses.Bullet;
 import mainmodule.model.pluginA.BossBirds.BossBird;
 import mainmodule.model.pluginA.BossBirds.MiniBossBird;
 import mainmodule.model.pluginA.BulletFactories.MiniBossBirdBulletFactories.MiniBossBulletEggFactory;
@@ -9,7 +10,7 @@ import mainmodule.model.pluginA.util.Constants;
 import javafx.animation.Transition;
 import javafx.scene.transform.Rotate;
 
-public class MiniBossBirdBullet extends Bullet  {
+public class MiniBossBirdBullet extends Bullet {
 
     public MiniBossBirdBullet(double v, double v1, MiniBossBird ownBossBird) {
         super(v, v1, new MiniBossBulletEggFactory() {

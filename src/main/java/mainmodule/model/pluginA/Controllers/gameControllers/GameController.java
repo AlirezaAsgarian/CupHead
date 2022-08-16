@@ -1,6 +1,6 @@
 package mainmodule.model.pluginA.Controllers.gameControllers;
 
-import mainmodule.model.TransitionManager;
+import mainmodule.model.ModuleAbstractClasses.TransitionManager;
 import mainmodule.View.EndGameDialog;
 import mainmodule.View.Menus.Menu;
 import mainmodule.View.Menus.MenuStack;

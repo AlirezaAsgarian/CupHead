@@ -1,10 +1,7 @@
 package mainmodule.View.BossBirdTransitions;
 
-import javafx.util.Pair;
-import mainmodule.model.Bullet;
+import mainmodule.model.ModuleAbstractClasses.Bullet;
 import mainmodule.model.MiniBossBirdBullet;
-import mainmodule.model.pluginA.BossBirds.BossBird;
-import mainmodule.model.pluginA.util.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

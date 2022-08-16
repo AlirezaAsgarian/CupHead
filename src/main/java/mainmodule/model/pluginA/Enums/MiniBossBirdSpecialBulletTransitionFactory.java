@@ -2,7 +2,7 @@ package mainmodule.model.pluginA.Enums;
 
 import mainmodule.util.Location;
 import mainmodule.View.BossBirdTransitions.BulletTransition;
-import mainmodule.model.BulletFactory;
+import mainmodule.model.ModuleAbstractClasses.BulletFactory;
 
 public interface MiniBossBirdSpecialBulletTransitionFactory extends BulletTransitionFactory{
 

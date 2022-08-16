@@ -4,7 +4,7 @@ import mainmodule.util.Location;
 import mainmodule.model.pluginA.Controllers.BossBirdStateControllers.DoctorBossBirdStateController;
 import mainmodule.model.pluginA.BossBirds.bossBirdStateEnums.BossBirdStates;
 import mainmodule.model.pluginA.BulletFactories.DoctorBossBirdBulletFactories.DoctorBossBirdBulletFactoryCreator;
-import mainmodule.model.BulletFactory;
+import mainmodule.model.ModuleAbstractClasses.BulletFactory;
 import mainmodule.model.pluginA.util.Constants;
 import javafx.scene.paint.ImagePattern;
 

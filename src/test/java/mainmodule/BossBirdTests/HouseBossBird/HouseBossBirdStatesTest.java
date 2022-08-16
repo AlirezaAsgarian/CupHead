@@ -2,13 +2,12 @@ package mainmodule.BossBirdTests.HouseBossBird;
 
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
-import mainmodule.model.TransitionManager;
+import mainmodule.model.ModuleAbstractClasses.TransitionManager;
 import mainmodule.model.pluginA.BossBirds.BossBird;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit.ApplicationTest;
-import org.testfx.service.query.NodeQuery;
 
 public class HouseBossBirdStatesTest extends ApplicationTest {
 

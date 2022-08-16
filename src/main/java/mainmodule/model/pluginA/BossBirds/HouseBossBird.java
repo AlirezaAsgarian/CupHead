@@ -1,9 +1,10 @@
 package mainmodule.model.pluginA.BossBirds;
 
+import mainmodule.model.ModuleAbstractClasses.BossBirdManger;
+import mainmodule.model.ModuleAbstractClasses.BulletFactory;
 import mainmodule.model.pluginA.BossBirds.bossBirdStateEnums.BossBirdStates;
 import mainmodule.model.pluginA.Controllers.BossBirdStateControllers.HouseBossBirdStateController;
 import mainmodule.util.Location;
-import mainmodule.model.*;
 import mainmodule.model.pluginA.BulletFactories.HouseBossBirdBulletFactories.HouseBossBirdBulletFactoryCreator;
 import mainmodule.model.pluginA.util.Constants;
 import mainmodule.View.BossBirdTransitions.BossBirdTransitions;

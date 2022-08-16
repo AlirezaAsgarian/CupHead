@@ -1,7 +1,7 @@
 package mainmodule.model.pluginA.Controllers.BossBirdStateControllers;
 
 import mainmodule.model.pluginA.Controllers.gameControllers.GameController;
-import mainmodule.model.BossBirdManger;
+import mainmodule.model.ModuleAbstractClasses.BossBirdManger;
 import mainmodule.model.pluginA.BossBirds.bossBirdStateEnums.BossBirdStates;
 import mainmodule.model.pluginA.BossBirds.BedBossBird;
 import mainmodule.model.pluginA.BossBirds.BossBird;

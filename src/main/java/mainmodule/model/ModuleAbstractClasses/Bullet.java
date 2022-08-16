@@ -1,7 +1,8 @@
-package mainmodule.model;
+package mainmodule.model.ModuleAbstractClasses;
 
 import javafx.geometry.Bounds;
 import javafx.scene.image.Image;
+import mainmodule.model.Imageable;
 import mainmodule.model.pluginA.Controllers.CollisionController.CollisionController;
 import mainmodule.model.pluginA.Enums.AvatarStates;
 import mainmodule.model.pluginA.Enums.BulletCollisionType;
@@ -19,7 +20,7 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 import org.slf4j.Logger;
 
-public class Bullet extends Rectangle implements Imageable{
+public class Bullet extends Rectangle implements Imageable {
     /***
      * bullet has can be used for all bullets and has one movefuncs enum and or enemy(avatar or boss bird) and one transition for explosion
      */
@@ -43,7 +44,7 @@ public class Bullet extends Rectangle implements Imageable{
      * @param v1 : left up y coordination
      */
 
-    public Bullet(double v,double v1,BulletFactory bulletFactory) {
+    public Bullet(double v, double v1, BulletFactory bulletFactory) {
         super(v, v1, bulletFactory.getBulletWidth(), bulletFactory.getBulletHeight());
         this.damageRatio = bulletFactory.getDamageRatio();
         this.duration = bulletFactory.getAnimationDuration();

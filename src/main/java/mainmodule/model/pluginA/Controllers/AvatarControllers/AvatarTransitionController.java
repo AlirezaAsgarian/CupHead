@@ -1,6 +1,6 @@
 package mainmodule.model.pluginA.Controllers.AvatarControllers;
 
-import mainmodule.model.Avatar;
+import mainmodule.model.ModuleAbstractClasses.Avatar;
 import mainmodule.model.pluginA.util.Constants;
 import mainmodule.View.AvatarTransitions.AvatarTransition;
 import javafx.scene.input.KeyCode;
