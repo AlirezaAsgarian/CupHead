@@ -11,12 +11,7 @@
 
     <artifactId>MainModule</artifactId>
     <dependencies>
-        <dependency>
-            <groupId>org.example</groupId>
-            <artifactId>moduleAbstracts</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
+
         <dependency>
             <groupId>org.example</groupId>
             <artifactId>PluginA</artifactId>

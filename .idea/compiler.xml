@@ -9,9 +9,13 @@
         <module name="PluginA" />
         <module name="MainModule" />
         <module name="moduleAbstracts" />
-        <module name="Shared" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="AbstractClassesAndTransitionsModule" target="18" />
+      <module name="PluginBossBirdsTypeA" target="18" />
+      <module name="Shared" target="18" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">

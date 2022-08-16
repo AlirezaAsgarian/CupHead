@@ -1,8 +1,8 @@
-module PluginA {
-    exports pluginA.BossBirds;
-    exports pluginA.util;
-    exports pluginA.BulletFactories.PoultryBirdBulletsFactories;
-    requires moduleAbstracts;
+module PluginBossBirdsTypeA {
+    exports BossBirdsTypeA.BossBirds;
+    exports BossBirdsTypeA.BossBirdStack;
+    exports BossBirdsTypeA.BulletFactories.PoultryBirdBulletsFactories;
+    requires AbstractClassesAndTransitionsModule;
     requires javafx.controls;
     requires javafx.graphics;
     requires javafx.fxml;
