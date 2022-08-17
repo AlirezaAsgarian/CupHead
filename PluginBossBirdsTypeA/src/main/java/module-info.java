@@ -20,7 +20,7 @@ module PluginBossBirdsTypeA {
     requires org.junit.jupiter.params;
     requires org.testfx;
     requires org.testfx.junit5;
-    requires  java.sql;
+    requires java.sql;
     requires java.sql.rowset;
     requires mysql.connector.java;
     requires org.testfx.junit;
