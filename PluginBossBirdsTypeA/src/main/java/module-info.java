@@ -2,6 +2,10 @@ module PluginBossBirdsTypeA {
     exports BossBirdsTypeA.BossBirds;
     exports BossBirdsTypeA.BossBirdStack;
     exports BossBirdsTypeA.BulletFactories.PoultryBirdBulletsFactories;
+    exports BossBirdsTypeA.BulletFactories.HouseBossBirdBulletFactories;
+    exports BossBirdsTypeA.BulletFactories.MiniBossBirdBulletFactories;
+    exports BossBirdsTypeA.BulletFactories.DoctorBossBirdBulletFactories;
+    exports BossBirdsTypeA.BulletFactories.BedBossBirdBulletFactories;
     requires AbstractClassesAndTransitionsModule;
     requires javafx.controls;
     requires javafx.graphics;
