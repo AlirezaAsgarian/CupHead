@@ -6,20 +6,20 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="moduleAbstracts" />
-        <module name="PluginA" />
-        <module name="MainModule" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="AbstractClassesAndTransitionsModule" target="18" />
+      <module name="MainModule" target="18" />
+      <module name="moduleAbstracts" target="18" />
+      <module name="PluginA" target="18" />
       <module name="PluginBossBirdsTypeA" target="18" />
       <module name="Shared" target="18" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="CupHeadd" options="--add-exports javafx.graphics/com.sun.javafx.scene=CupHeadd" />
+      <module name="CupHeadd" options="" />
     </option>
   </component>
 </project>
